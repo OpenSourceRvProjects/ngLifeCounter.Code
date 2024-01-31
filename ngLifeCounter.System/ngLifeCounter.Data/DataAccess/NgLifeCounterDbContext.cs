@@ -1,0 +1,98 @@
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+
+namespace ngLifeCounter.Data.DataAccess;
+
+public partial class NgLifeCounterDbContext : DbContext
+{
+    public NgLifeCounterDbContext()
+    {
+    }
+
+    public NgLifeCounterDbContext(DbContextOptions<NgLifeCounterDbContext> options)
+        : base(options)
+    {
+    }
+
+    public virtual DbSet<EventCounter> EventCounters { get; set; }
+
+    public virtual DbSet<PersonalProfile> PersonalProfiles { get; set; }
+
+    public virtual DbSet<Relapse> Relapses { get; set; }
+
+    public virtual DbSet<User> Users { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+		//Scaffold - DbContext "Server=.\SQLEXPRESS;Database=NgLifeCounterDB;Trusted_Connection=True;Encrypt=False" Microsoft.EntityFrameworkCore.SqlServer - OutputDir DataAccess - F
+
+	}
+
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<EventCounter>(entity =>
+        {
+            entity.ToTable("EventCounter");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+
+            entity.HasOne(d => d.PersonalProfile).WithMany(p => p.EventCounters)
+                .HasForeignKey(d => d.PersonalProfileId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__EventCoun__Perso__3F466844");
+
+            entity.HasOne(d => d.User).WithMany(p => p.EventCounters)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__EventCoun__UserI__3E52440B");
+        });
+
+        modelBuilder.Entity<PersonalProfile>(entity =>
+        {
+            entity.ToTable("PersonalProfile");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.CreationDate).HasColumnType("datetime");
+
+            entity.HasOne(d => d.User).WithMany(p => p.PersonalProfiles)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__PersonalP__UserI__3A81B327");
+        });
+
+        modelBuilder.Entity<Relapse>(entity =>
+        {
+            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.EventCounterId).HasColumnName("EventCounterID");
+            entity.Property(e => e.PersonalProfileId).HasColumnName("PersonalProfileID");
+            entity.Property(e => e.UserId).HasColumnName("UserID");
+
+            entity.HasOne(d => d.EventCounter).WithMany(p => p.Relapses)
+                .HasForeignKey(d => d.EventCounterId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_EventCounterRelapses");
+
+            entity.HasOne(d => d.PersonalProfile).WithMany(p => p.Relapses)
+                .HasForeignKey(d => d.PersonalProfileId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_PersonalProfileRelapses");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Relapses)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_UserRelapses");
+        });
+
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.CreationDate).HasColumnType("datetime");
+        });
+
+        OnModelCreatingPartial(modelBuilder);
+    }
+
+    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+}

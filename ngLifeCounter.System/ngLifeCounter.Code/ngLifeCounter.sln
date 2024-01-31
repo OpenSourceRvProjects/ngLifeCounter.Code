@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34511.84
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ngLifeCounter.MVC", "ngLifeCounter.MVC.csproj", "{9F0D3A8E-47D3-4488-B129-EC323F22CA67}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ngLifeCounter.Data", "..\ngLifeCounter.Data\ngLifeCounter.Data.csproj", "{3D251459-5FDF-4B08-8541-B7A7AF28864B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ngLifeCounter.Backend", "..\ngLifeCounter.Backend\ngLifeCounter.Backend.csproj", "{419B16F1-F65C-4FDD-893F-0DFD46C8C8FA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ngLifeCounter.Models", "..\ngLifeCounter.Models\ngLifeCounter.Models.csproj", "{9D3F7A76-4EC4-4F05-BFDE-42E2F9E35830}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ngLifeCounter.Security", "..\ngLifeCounter.Security\ngLifeCounter.Security.csproj", "{F7A11343-9CA9-480D-A594-79FBDDD19783}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9F0D3A8E-47D3-4488-B129-EC323F22CA67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F0D3A8E-47D3-4488-B129-EC323F22CA67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F0D3A8E-47D3-4488-B129-EC323F22CA67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F0D3A8E-47D3-4488-B129-EC323F22CA67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D251459-5FDF-4B08-8541-B7A7AF28864B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D251459-5FDF-4B08-8541-B7A7AF28864B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D251459-5FDF-4B08-8541-B7A7AF28864B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D251459-5FDF-4B08-8541-B7A7AF28864B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{419B16F1-F65C-4FDD-893F-0DFD46C8C8FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{419B16F1-F65C-4FDD-893F-0DFD46C8C8FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{419B16F1-F65C-4FDD-893F-0DFD46C8C8FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{419B16F1-F65C-4FDD-893F-0DFD46C8C8FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D3F7A76-4EC4-4F05-BFDE-42E2F9E35830}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D3F7A76-4EC4-4F05-BFDE-42E2F9E35830}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D3F7A76-4EC4-4F05-BFDE-42E2F9E35830}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D3F7A76-4EC4-4F05-BFDE-42E2F9E35830}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7A11343-9CA9-480D-A594-79FBDDD19783}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7A11343-9CA9-480D-A594-79FBDDD19783}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7A11343-9CA9-480D-A594-79FBDDD19783}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7A11343-9CA9-480D-A594-79FBDDD19783}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D97885C4-3E36-4695-9ED9-3CFED3254DF4}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ngLifeCounter.Data\ngLifeCounter.Data.csproj" />
+    <ProjectReference Include="..\ngLifeCounter.Models\ngLifeCounter.Models.csproj" />
+    <ProjectReference Include="..\ngLifeCounter.Security\ngLifeCounter.Security.csproj" />
+  </ItemGroup>
+
+</Project>

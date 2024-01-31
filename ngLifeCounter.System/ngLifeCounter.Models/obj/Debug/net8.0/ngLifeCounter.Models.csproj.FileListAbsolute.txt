@@ -1,0 +1,11 @@
+C:\Users\rolan\Desktop\Code\angularLifeCounterMVC\ngLifeCounter.Models\bin\Debug\net8.0\ngLifeCounter.Models.deps.json
+C:\Users\rolan\Desktop\Code\angularLifeCounterMVC\ngLifeCounter.Models\bin\Debug\net8.0\ngLifeCounter.Models.dll
+C:\Users\rolan\Desktop\Code\angularLifeCounterMVC\ngLifeCounter.Models\bin\Debug\net8.0\ngLifeCounter.Models.pdb
+C:\Users\rolan\Desktop\Code\angularLifeCounterMVC\ngLifeCounter.Models\obj\Debug\net8.0\ngLifeCounter.Models.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\rolan\Desktop\Code\angularLifeCounterMVC\ngLifeCounter.Models\obj\Debug\net8.0\ngLifeCounter.Models.AssemblyInfoInputs.cache
+C:\Users\rolan\Desktop\Code\angularLifeCounterMVC\ngLifeCounter.Models\obj\Debug\net8.0\ngLifeCounter.Models.AssemblyInfo.cs
+C:\Users\rolan\Desktop\Code\angularLifeCounterMVC\ngLifeCounter.Models\obj\Debug\net8.0\ngLifeCounter.Models.csproj.CoreCompileInputs.cache
+C:\Users\rolan\Desktop\Code\angularLifeCounterMVC\ngLifeCounter.Models\obj\Debug\net8.0\ngLifeCounter.Models.dll
+C:\Users\rolan\Desktop\Code\angularLifeCounterMVC\ngLifeCounter.Models\obj\Debug\net8.0\refint\ngLifeCounter.Models.dll
+C:\Users\rolan\Desktop\Code\angularLifeCounterMVC\ngLifeCounter.Models\obj\Debug\net8.0\ngLifeCounter.Models.pdb
+C:\Users\rolan\Desktop\Code\angularLifeCounterMVC\ngLifeCounter.Models\obj\Debug\net8.0\ref\ngLifeCounter.Models.dll

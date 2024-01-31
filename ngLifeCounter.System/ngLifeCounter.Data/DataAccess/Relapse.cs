@@ -1,0 +1,31 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace ngLifeCounter.Data.DataAccess;
+
+public partial class Relapse
+{
+    public Guid Id { get; set; }
+
+    public int RelapseDay { get; set; }
+
+    public int RelapseMonth { get; set; }
+
+    public long RelapseYear { get; set; }
+
+    public int? RelapseHour { get; set; }
+
+    public int? RelapseMinute { get; set; }
+
+    public Guid UserId { get; set; }
+
+    public Guid PersonalProfileId { get; set; }
+
+    public Guid EventCounterId { get; set; }
+
+    public virtual EventCounter EventCounter { get; set; } = null!;
+
+    public virtual PersonalProfile PersonalProfile { get; set; } = null!;
+
+    public virtual User User { get; set; } = null!;
+}
