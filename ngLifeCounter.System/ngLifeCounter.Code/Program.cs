@@ -3,6 +3,7 @@ using Microsoft.OpenApi.Models;
 using ngLifeCounter.Backend.Infrastructure;
 using ngLifeCounter.Backend.Services;
 using ngLifeCounter.Data.DataAccess;
+using ngLifeCounter.MVC;
 using ngLifeCounter.Security.Core;
 using ngLifeCounter.Security.Infraestructure;
 
@@ -13,9 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddTransient<IAccountUserService, AccountUserService>();
-builder.Services.AddTransient<IEncryptCore,  EncryptCore>();
-builder.Services.AddTransient<ITokenCore,  TokenCore>();
+builder.Services.InjectServices();
 
 builder.Services.AddSwaggerGen(option =>
 {
