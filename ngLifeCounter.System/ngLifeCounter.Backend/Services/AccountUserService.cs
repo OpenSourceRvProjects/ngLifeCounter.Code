@@ -16,17 +16,41 @@ namespace ngLifeCounter.Backend.Services
 	{
 		private NgLifeCounterDbContext _dbContext;
 		private IEncryptCore _encryptCore;
+		private IDecryptCore _decryptCore;
 		private ITokenCore _tokenCore;
 
-		public AccountUserService(NgLifeCounterDbContext dbContext, IEncryptCore encryptCore, ITokenCore tokenCore)
+		public AccountUserService(NgLifeCounterDbContext dbContext, IEncryptCore encryptCore, ITokenCore tokenCore, IDecryptCore decryptCore)
 		{
 			_dbContext = dbContext;
 			_encryptCore = encryptCore;
+			_decryptCore = decryptCore;
 			_tokenCore = tokenCore;
+		}
+
+		public async Task<string> LoginAndRetrieveToken(string username, string password)
+		{
+			var personalProfile = _dbContext.PersonalProfiles.Include(i=> i.User).FirstOrDefault(f=> f.User.UserName == username);
+
+			var user = personalProfile.User;
+
+			if (user == null)
+			{
+				throw new Exception("User does not exist");
+			}
+
+			var isValidPassword = await _decryptCore.ValidatePassword(user.PasswordHash, user.Salt, password);
+
+			if (isValidPassword)
+			{
+				return GenerateToken(user, personalProfile);
+			}
+
+			return "";
 		}
 
 		public async Task<RegisterResultModel> RegisterUserAccount(RegisterModel newRegister)
 		{
+			
 			var result = new RegisterResultModel();
 			var user = await _dbContext.Users.FirstOrDefaultAsync(f => f.UserName == newRegister.UserName);
 			if (user == null)
@@ -43,21 +67,47 @@ namespace ngLifeCounter.Backend.Services
 					CreationDate = DateTime.Now,
 				};
 
-				_dbContext.Add(newUser);
-				_dbContext.SaveChanges();
-
-				var tokenInfo = new List<KeyValuePair<string, string>>()
+				var newProfileUser = new PersonalProfile()
 				{
-					new KeyValuePair<string, string>("userID", newUser.Id.ToString()),
-					new KeyValuePair<string, string>("userName", newUser.UserName),
-					new KeyValuePair<string, string>("allowSysAdminAccess", newUser.AllowSysAdminAccess.ToString()),
+					Id = Guid.NewGuid(),
+					CreationDate = DateTime.Now,
+					Name = newRegister.Name,
+					LastName1 = newRegister.LastName1,
+					LastName2 = newRegister.LastName2,
+					UserId = newUser.Id,
+					
 				};
-				result.UserToken = _tokenCore.RunTokenGeneration(tokenInfo, newUser.Id);
-			}
 
+				try
+				{
+					_dbContext.Add(newUser);
+					_dbContext.Add(newProfileUser);
+					_dbContext.SaveChanges();
+				}
+				catch (Exception ex)
+				{
+
+					throw;
+				}
+
+				string token = GenerateToken(newUser, newProfileUser);
+				result.UserToken = token;
+			}
 
 			return result;
 		}
 
+		private string GenerateToken(User newUser, PersonalProfile newProfileUser)
+		{
+			var tokenInfo = new List<KeyValuePair<string, string>>()
+				{
+					new KeyValuePair<string, string>("userID", newUser.Id.ToString()),
+					new KeyValuePair<string, string>("name", newProfileUser.Name),
+					new KeyValuePair<string, string>("userName", newUser.UserName),
+					new KeyValuePair<string, string>("allowSysAdminAccess", newUser.AllowSysAdminAccess.ToString()),
+				};
+			var token = _tokenCore.RunTokenGeneration(tokenInfo, newUser.Id);
+			return token;
+		}
 	}
 }
