@@ -29,7 +29,7 @@ namespace ngLifeCounter.Backend.Services
 
 		public async Task<string> LoginAndRetrieveToken(string username, string password)
 		{
-			var personalProfile = _dbContext.PersonalProfiles.Include(i=> i.User).FirstOrDefault(f=> f.User.UserName == username);
+			var personalProfile = _dbContext.PersonalProfiles.Include(i => i.User).FirstOrDefault(f => f.User.UserName == username);
 
 			var user = personalProfile.User;
 
@@ -50,49 +50,52 @@ namespace ngLifeCounter.Backend.Services
 
 		public async Task<RegisterResultModel> RegisterUserAccount(RegisterModel newRegister)
 		{
-			
+
 			var result = new RegisterResultModel();
 			var user = await _dbContext.Users.FirstOrDefaultAsync(f => f.UserName == newRegister.UserName);
-			if (user == null)
+
+			if (user != null)
+			{
+				throw new Exception("User already exist");
+			}
+			
+			var encryptResult = await _encryptCore.RunEncrypt(newRegister.Password);
+			var newUser = new User()
+			{
+				Id = Guid.NewGuid(),
+				UserName = newRegister.UserName,
+				PasswordHash = encryptResult.EncodeddPassword,
+				Email = newRegister.Email,
+				Salt = encryptResult.Salt,
+				CreationDate = DateTime.Now,
+			};
+
+			var newProfileUser = new PersonalProfile()
+			{
+				Id = Guid.NewGuid(),
+				CreationDate = DateTime.Now,
+				Name = newRegister.Name,
+				LastName1 = newRegister.LastName1,
+				LastName2 = newRegister.LastName2,
+				UserId = newUser.Id,
+
+			};
+
+			try
+			{
+				_dbContext.Add(newUser);
+				_dbContext.Add(newProfileUser);
+				_dbContext.SaveChanges();
+			}
+			catch (Exception ex)
 			{
 
-				var encryptResult = await _encryptCore.RunEncrypt(newRegister.Password);
-				var newUser = new User()
-				{
-					Id = Guid.NewGuid(),
-					UserName = newRegister.UserName,
-					PasswordHash = encryptResult.EncodeddPassword,
-					Email = newRegister.Email,
-					Salt = encryptResult.Salt,
-					CreationDate = DateTime.Now,
-				};
-
-				var newProfileUser = new PersonalProfile()
-				{
-					Id = Guid.NewGuid(),
-					CreationDate = DateTime.Now,
-					Name = newRegister.Name,
-					LastName1 = newRegister.LastName1,
-					LastName2 = newRegister.LastName2,
-					UserId = newUser.Id,
-					
-				};
-
-				try
-				{
-					_dbContext.Add(newUser);
-					_dbContext.Add(newProfileUser);
-					_dbContext.SaveChanges();
-				}
-				catch (Exception ex)
-				{
-
-					throw;
-				}
-
-				string token = GenerateToken(newUser, newProfileUser);
-				result.UserToken = token;
+				throw ex;
 			}
+
+			string token = GenerateToken(newUser, newProfileUser);
+			result.UserToken = token;
+
 
 			return result;
 		}

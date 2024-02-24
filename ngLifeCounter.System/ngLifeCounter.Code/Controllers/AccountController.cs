@@ -38,8 +38,15 @@ namespace ngLifeCounter.MVC.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Post([FromBody] RegisterModel newRegister)
 		{
-			var result = await _accountService.RegisterUserAccount(newRegister);
-			return Ok(result);
+			try
+			{
+				var result = await _accountService.RegisterUserAccount(newRegister);
+				return Ok(result);
+			}
+			catch (Exception ex)
+			{
+				return BadRequest(ex.Message);
+			}
 		}
 
 		// PUT api/<AccountController>/5
