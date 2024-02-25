@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IRegisterModel } from 'src/app/Models/Account/IRegisterModel';
+import { AccountService } from 'src/app/Services/Accounts/account.service';
 
 @Component({
   selector: 'app-register',
@@ -11,13 +12,15 @@ export class RegisterComponent implements OnInit {
   registerModel : IRegisterModel = <IRegisterModel>{};
   passwordConfirmation? : string;
   errorMessage? : string;
+  processing? : boolean;
 
-  constructor() {
+  constructor(private accountService: AccountService) {
   }
 
   ngOnInit(){
     this.passwordConfirmation = "";
     this.errorMessage = "";
+    this.processing = false;
   }
 
   registerAccount() {
@@ -39,7 +42,15 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
+    //error 400 if I not send this value
+    this.registerModel.lastName2 = ".";
 
-    alert(this.registerModel.name);
+    this.accountService.registerAccount(this.registerModel).subscribe({next : (data)=>{
+        alert("Usuario guardado satisfactoriamente");
+
+    }, error : (err)=> {
+      debugger;
+      alert("Error " + err)
+    }})
   }
 }

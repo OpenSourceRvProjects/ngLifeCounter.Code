@@ -20,7 +20,7 @@ namespace ngLifeCounter.MVC.Controllers
 
         // GET: api/<AccountController>
         [HttpGet]
-		[Route("account/login")]
+		[Route("login")]
 		public async Task<IActionResult> Get(string userName, string password)
 		{
 			var token = await _accountService.LoginAndRetrieveToken(userName, password);
@@ -36,6 +36,7 @@ namespace ngLifeCounter.MVC.Controllers
 
 		// POST api/<AccountController>
 		[HttpPost]
+		[Route("signUp")]
 		public async Task<IActionResult> Post([FromBody] RegisterModel newRegister)
 		{
 			try
