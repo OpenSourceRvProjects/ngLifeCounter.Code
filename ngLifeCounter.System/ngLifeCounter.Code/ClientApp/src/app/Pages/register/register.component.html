@@ -35,9 +35,9 @@
 
 <!-- <--comment--> 
     <div *ngIf="!processing && !isFinishRegister" class="container">
-        <div class="row">
+        <div class="row vh-100 d-flex justify-content-center align-items-center">
             <div class="col-md-12">
-                <div class="form-container">
+                <div class="form-container" style="margin-top: 0px;">
                     <h2 class="text-center mb-4">Life Counter. Registro</h2>
 
                     <form>
@@ -85,7 +85,7 @@
         </div>
     </div>
 
-    <div *ngIf="!processing" class="vh-100 d-flex justify-content-center align-items-center">
+    <div *ngIf="!processing && isFinishRegister" class="vh-100 d-flex justify-content-center align-items-center">
             <div class="col-md-4">
                 <div class="border border-3 border-success"></div>
                 <div class="card  bg-white shadow p-5">

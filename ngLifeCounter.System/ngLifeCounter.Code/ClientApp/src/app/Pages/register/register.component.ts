@@ -64,6 +64,11 @@ export class RegisterComponent implements OnInit {
       this.errorMessage = "Tu nombre de usuario es tu identidad, se creativo!";
       return;
     }
+    
+    if (!this.validateEmail(this.registerModel.email)){
+      this.errorMessage = "El correo no tiene formato válido";
+      return;
+    }
 
     //error 400 if I not send this value
     this.registerModel.lastName2 = ".";
@@ -79,4 +84,14 @@ export class RegisterComponent implements OnInit {
       this.errorMessage = err.error
     }})
   }
+
+
+  validateEmail(email : string) {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
+  
 }

@@ -55,7 +55,6 @@ namespace ngLifeCounter.Backend.Services
 
 		public async Task<RegisterResultModel> RegisterUserAccount(RegisterModel newRegister)
 		{
-
 			var anonimizedRequest = newRegister;
 			anonimizedRequest.Password = "******************";
 
@@ -76,6 +75,15 @@ namespace ngLifeCounter.Backend.Services
 				_dbContext.SaveChanges();
 				throw new Exception("User already exist");
 			}
+
+			var userEmail = await _dbContext.Users.FirstOrDefaultAsync(f => f.Email == newRegister.Email);
+			if (userEmail != null)
+			{
+				_dbContext.Add(newRequest);
+				_dbContext.SaveChanges();
+				throw new Exception("Email already used");
+			}
+
 
 			var encryptResult = await _encryptCore.RunEncrypt(newRegister.Password);
 			var newUser = new User()
@@ -115,7 +123,6 @@ namespace ngLifeCounter.Backend.Services
 
 			string token = GenerateToken(newUser, newProfileUser);
 			result.UserToken = token;
-
 
 			return result;
 		}
