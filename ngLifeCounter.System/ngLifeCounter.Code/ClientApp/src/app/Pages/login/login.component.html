@@ -1,1 +1,36 @@
-<p>login works!</p>
+<div class="backgroundLookAndFeel"> 
+    <div class="container">
+        <div class="row vh-100 d-flex justify-content-center align-items-center">
+            <div class="col-md-12">
+                <div class="form-container" style="margin-top: 0px;">
+                    <h2 class="text-center mb-4">Life Counter</h2>
+                    <h2 class="text-center mb-4">Ingresar</h2>
+                    <form>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Nickname (Username)</label>
+                            <input type="text" [(ngModel)]="userName" class="form-control text-center" id="userName" name="userName" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Contraseña:</label>
+                            <input type="password" [(ngModel)]="password" class="form-control text-center" id="password" name="password" required>
+                        </div>
+
+                        <div class="text-center">
+                            <h4 style="color: red;">{{errorMessage}}</h4>
+                        </div>
+                        
+                        <div class="col-12">
+                                    <button type="submit" class="btn btn-register w-100" (click)="login()">Ingresar</button>
+                        </div>
+
+                        <br>
+                        <div class="col-12 text-center">
+                            <a href="/register" type="submit" >¿No tienes cuenta? ¡Registrate!</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
