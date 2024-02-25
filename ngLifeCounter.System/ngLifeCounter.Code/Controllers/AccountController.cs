@@ -10,7 +10,7 @@ namespace ngLifeCounter.MVC.Controllers
 	[ApiController]
 	public class AccountController : ControllerBase
 	{
-
+		private IHttpContextAccessor _accessor;
 		private IAccountUserService _accountService;
 
         public AccountController(IAccountUserService accountService)

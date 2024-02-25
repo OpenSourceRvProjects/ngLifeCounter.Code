@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using System.Text.Json;
 
 namespace ngLifeCounter.Backend.Services
 {
@@ -18,13 +20,16 @@ namespace ngLifeCounter.Backend.Services
 		private IEncryptCore _encryptCore;
 		private IDecryptCore _decryptCore;
 		private ITokenCore _tokenCore;
+		private IHttpContextAccessor _accessor;
 
-		public AccountUserService(NgLifeCounterDbContext dbContext, IEncryptCore encryptCore, ITokenCore tokenCore, IDecryptCore decryptCore)
+		public AccountUserService(NgLifeCounterDbContext dbContext, IEncryptCore encryptCore,
+			ITokenCore tokenCore, IDecryptCore decryptCore, IHttpContextAccessor accessor)
 		{
 			_dbContext = dbContext;
 			_encryptCore = encryptCore;
 			_decryptCore = decryptCore;
 			_tokenCore = tokenCore;
+			_accessor = accessor;
 		}
 
 		public async Task<string> LoginAndRetrieveToken(string username, string password)
@@ -51,14 +56,27 @@ namespace ngLifeCounter.Backend.Services
 		public async Task<RegisterResultModel> RegisterUserAccount(RegisterModel newRegister)
 		{
 
+			var anonimizedRequest = newRegister;
+			anonimizedRequest.Password = "******************";
+
+			var newRequest = new SignUpRequest()
+			{
+				Id = Guid.NewGuid(),
+				Ip = _accessor.HttpContext.Connection.RemoteIpAddress.ToString(),
+				RequestObject = JsonSerializer.Serialize(anonimizedRequest),
+				CreationDate = DateTime.Now,
+			};
+
 			var result = new RegisterResultModel();
 			var user = await _dbContext.Users.FirstOrDefaultAsync(f => f.UserName == newRegister.UserName);
 
 			if (user != null)
 			{
+				_dbContext.Add(newRequest);
+				_dbContext.SaveChanges();
 				throw new Exception("User already exist");
 			}
-			
+
 			var encryptResult = await _encryptCore.RunEncrypt(newRegister.Password);
 			var newUser = new User()
 			{
@@ -83,8 +101,10 @@ namespace ngLifeCounter.Backend.Services
 
 			try
 			{
+				newRequest.UserId = newUser.Id;
 				_dbContext.Add(newUser);
 				_dbContext.Add(newProfileUser);
+				_dbContext.Add(newRequest);
 				_dbContext.SaveChanges();
 			}
 			catch (Exception ex)

@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ngLifeCounter.Data.DataAccess;
@@ -14,6 +16,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.InjectServices();
+builder.Services.AddHttpContextAccessor();
+builder.Services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
 builder.Services.AddSwaggerGen(option =>
 {

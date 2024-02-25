@@ -24,4 +24,6 @@ public partial class User
     public virtual ICollection<PersonalProfile> PersonalProfiles { get; set; } = new List<PersonalProfile>();
 
     public virtual ICollection<Relapse> Relapses { get; set; } = new List<Relapse>();
+
+    public virtual ICollection<SignUpRequest> SignUpRequests { get; set; } = new List<SignUpRequest>();
 }

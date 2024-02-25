@@ -12,7 +12,7 @@ const routes: Routes = [
 //     // component: LoginComponent,
     
 //   },
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: '', component: RegisterComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       {path: 'register', component: RegisterComponent}

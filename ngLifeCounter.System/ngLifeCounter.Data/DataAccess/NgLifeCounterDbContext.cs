@@ -21,16 +21,14 @@ public partial class NgLifeCounterDbContext : DbContext
 
     public virtual DbSet<Relapse> Relapses { get; set; }
 
+    public virtual DbSet<SignUpRequest> SignUpRequests { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
+	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+	{
 		//Scaffold - DbContext "Server=.\SQLEXPRESS;Database=NgLifeCounterDB;Trusted_Connection=True;Encrypt=False" Microsoft.EntityFrameworkCore.SqlServer - OutputDir DataAccess - F
-
 	}
-
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+	protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<EventCounter>(entity =>
         {
@@ -83,6 +81,18 @@ public partial class NgLifeCounterDbContext : DbContext
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_UserRelapses");
+        });
+
+        modelBuilder.Entity<SignUpRequest>(entity =>
+        {
+            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.CreationDate).HasColumnType("datetime");
+            entity.Property(e => e.Ip).HasColumnName("IP");
+            entity.Property(e => e.UserId).HasColumnName("UserID");
+
+            entity.HasOne(d => d.User).WithMany(p => p.SignUpRequests)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("FK__SignUpReq__UserI__5DCAEF64");
         });
 
         modelBuilder.Entity<User>(entity =>

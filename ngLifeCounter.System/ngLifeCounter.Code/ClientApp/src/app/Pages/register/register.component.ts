@@ -13,6 +13,7 @@ export class RegisterComponent implements OnInit {
   passwordConfirmation? : string;
   errorMessage? : string;
   processing? : boolean;
+  isFinishRegister? : boolean;
 
   constructor(private accountService: AccountService) {
   }
@@ -21,6 +22,7 @@ export class RegisterComponent implements OnInit {
     this.passwordConfirmation = "";
     this.errorMessage = "";
     this.processing = false;
+    this.isFinishRegister =  false;
   }
 
   registerAccount() {
@@ -42,15 +44,39 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
+    if (this.registerModel.password == undefined || this.registerModel.password === "" || this.registerModel.name.trim() === ""){
+      this.errorMessage = "Crea una contraseña para ti";
+      return;
+    }
+
+
+    if (this.registerModel.password !== this.passwordConfirmation){
+      this.errorMessage = "Ups!, la contraseña que ingresaste no coincide con la confirmación";
+      return;
+    }
+
+    if (this.registerModel.password.length < 3){
+      this.errorMessage = "Tu contraseña es super insegura! ingresa una con más caracteres";
+      return;
+    }
+
+    if (this.registerModel.userName.length < 3){
+      this.errorMessage = "Tu nombre de usuario es tu identidad, se creativo!";
+      return;
+    }
+
     //error 400 if I not send this value
     this.registerModel.lastName2 = ".";
-
+    this.processing = true;
     this.accountService.registerAccount(this.registerModel).subscribe({next : (data)=>{
-        alert("Usuario guardado satisfactoriamente");
+      this.processing = false;  
+      this.isFinishRegister = true;
 
     }, error : (err)=> {
       debugger;
-      alert("Error " + err)
+      // alert("Error " + err.error)
+      this.processing = false;
+      this.errorMessage = err.error
     }})
   }
 }
