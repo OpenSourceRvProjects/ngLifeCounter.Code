@@ -3,8 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
-import { RegisterComponent } from './Pages/register/register.component';
-import { LoginComponent } from './Pages/login/login.component';
+import { LoginComponent } from './modules/login/login/login.component';
+import { RegisterComponent } from './modules/register/register/register.component';
 // import { LoginComponent } from './Views/login/login.component';
 
 const routes: Routes = [
