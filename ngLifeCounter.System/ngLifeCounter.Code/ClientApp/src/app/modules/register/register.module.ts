@@ -4,6 +4,7 @@ import { UserPrivacyComponent } from './user-privacy/user-privacy.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from '../login/login/login.component';
 import { FormsModule } from '@angular/forms';
+import { RegisterRoutingModule } from './register-routing.module';
 
 
 
@@ -14,6 +15,7 @@ import { FormsModule } from '@angular/forms';
     UserPrivacyComponent
   ],
   imports: [
+    RegisterRoutingModule,
     FormsModule,
     CommonModule
   ]
