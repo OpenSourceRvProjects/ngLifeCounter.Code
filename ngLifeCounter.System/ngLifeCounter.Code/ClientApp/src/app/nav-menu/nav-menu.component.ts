@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 })
 export class NavMenuComponent {
   isExpanded = false;
+
+  @ViewChild('mySidenav') myDiv!: ElementRef;
   constructor(private router: Router){
 
   }
@@ -18,7 +20,8 @@ export class NavMenuComponent {
     // this.router.config.push(...LoginRoutingModule.getRoutes());
     // this.router.config.push(...RegisterRoutingModule.getRoutes());
 
-    this.router.config.filter(f=> f.data?.showInNavBar)
+    this.router.config
+    // .filter(f=> f.data?.showInNavBar)
     .forEach(
       fe=> this.links.push(
         {text: fe.data?.name.toString(), path: fe.path ? fe.path : ''},
@@ -32,4 +35,14 @@ export class NavMenuComponent {
   toggle() {
     this.isExpanded = !this.isExpanded;
   }
+
+//   openNav() {
+//     this.myDiv.nativeElement.getElementById("mySidenav").style.display = "block";
+//     // document.getElementById("mySidenav").style.display = "block";
+//   }
+  
+//  closeNav() {
+//   this.myDiv.nativeElement.style.display = "none";
+//     // document.getElementById("mySidenav").style.display = "none";
+//   }
 }

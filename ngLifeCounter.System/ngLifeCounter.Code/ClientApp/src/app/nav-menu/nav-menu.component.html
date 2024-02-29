@@ -1,78 +1,103 @@
-<!-- <header>
-  <nav
-    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
-  >
-    <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']">ngLifeCounter</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target=".navbar-collapse"
-        aria-label="Toggle navigation"
-        [attr.aria-expanded]="isExpanded"
-        (click)="toggle()"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div
-        class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
-        [ngClass]="{ show: isExpanded }"
-      >
-        <ul class="navbar-nav flex-grow">
-          <li
-            class="nav-item"
-            [routerLinkActive]="['link-active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/counter']"
-              >Counter</a
-            >
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/fetch-data']"
-              >Fetch data</a
-            >
-          </li>
-        </ul>
-      </div>
+
+<!-- <div class="pos-f-t">
+  <div class="collapse" id="navbarToggleExternalContent">
+    <div class="bg-dark p-4">
+      <h4 class="text-white">Collapsed content</h4>
+      <span class="text-muted">Toggleable via the navbar brand.</span>
     </div>
+  </div>
+  <nav class="navbar navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" (click)="toggle()" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
   </nav>
-</header> -->
+</div> -->
 
-
-<header *ngIf="false">
-  <nav style="background-color: green" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3">
+<header *ngIf="true">
+  <nav style="background-color:green" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3">
     <div class="container">
-
-      <button class="navbar-toggler"
+  
+      <button class="navbar-toggler d-block"
               type="button"
               data-toggle="collapse"
-              data-target=".navbar-collapse"
+              data-target="#navbarToggleExternalContent"
               aria-label="Toggle navigation"
-              [attr.aria-expanded]="isExpanded"
+              [attr.aria-expanded]="false"
               (click)="toggle()">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="navbar-brand" [routerLink]="['/']">Life counter</a>
-
-      <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
+      <a  class="navbar-brand" [routerLink]="['/']">Life counter</a>
+  
+      <!-- <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
            [ngClass]="{ show: isExpanded }">
         <ul class="navbar-nav flex-grow">
-
-
+  
+  
           <li *ngFor="let link of links" class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link" style="color:white" (click)="toggle()" [routerLink]="link.path">{{link.text}}</a>
           </li>
           <li>
-            <!-- <a class="nav-link" (click)="logOut()" >Salir</a> -->
+            <a class="nav-link"  >Salir</a>
           </li>
-
+  
         </ul>
-      </div>
+      </div> -->
     </div>
   </nav>
 </header>
+
+<style>
+
+  body {
+    font-family: "Lato", sans-serif;
+  }
+  
+  .sidenav {
+    /* display: none; */
+    
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 60px;
+  }
+  
+  .sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
+    display: block;
+  }
+  
+  .sidenav a:hover {
+    color: gray;
+  }
+  
+  .sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+  
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+  }
+  </style>
+
+<div class="container"> 
+  <div *ngIf="isExpanded" id="mySidenav" class="sidenav" style="background: rgb(2,0,36);
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(28,67,41,1) 0%, rgba(36,89,43,1) 0%, rgba(38,95,43,1) 47%, rgba(72,187,50,1) 100%, rgba(0,212,255,1) 100%);
+  ">
+    <a href="javascript:void(0)" class="closebtn" (click)="toggle()">&times;</a>
+    <a *ngFor="let link of links" class="nav-item" [routerLink]="link.path" [routerLinkActive]="['link-active']"  (click)="toggle()">{{link.text}}</a>
+    <a href="#">Salir</a>
+  </div>
+</div> 
