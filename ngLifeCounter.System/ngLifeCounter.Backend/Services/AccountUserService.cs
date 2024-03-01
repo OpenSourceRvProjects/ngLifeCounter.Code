@@ -55,8 +55,13 @@ namespace ngLifeCounter.Backend.Services
 
 		public async Task<RegisterResultModel> RegisterUserAccount(RegisterModel newRegister)
 		{
-			var anonimizedRequest = newRegister;
-			anonimizedRequest.Password = "******************";
+			var anonimizedRequest = new RegisterModel() { 
+				Email = newRegister.Email,
+				LastName1 = newRegister.LastName1,
+				LastName2 = newRegister.LastName2,
+				Name = newRegister.Name,
+				Password = "******************"
+			};
 
 			var newRequest = new SignUpRequest()
 			{
