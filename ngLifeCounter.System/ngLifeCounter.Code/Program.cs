@@ -1,6 +1,8 @@
+using AspNetCoreRateLimit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -18,6 +20,16 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.InjectServices();
 builder.Services.AddHttpContextAccessor();
 builder.Services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
+builder.Services.AddMemoryCache();
+
+var config = builder.Configuration.GetSection("IpRateLimiting");
+builder.Services.Configure<IpRateLimitOptions>(builder.Configuration.GetSection("IpRateLimiting"));
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+builder.Services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+builder.Services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
+
 
 builder.Services.AddSwaggerGen(option =>
 {
@@ -81,6 +93,8 @@ builder.Services.AddDbContext<NgLifeCounterDbContext>(options => options.
 	   UseSqlServer(builder.Configuration.GetConnectionString("dbConnection")));
 
 var app = builder.Build();
+
+app.UseIpRateLimiting();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
