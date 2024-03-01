@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { LocalStorageService } from '../Services/Storage/local-storage.service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -10,7 +11,7 @@ export class NavMenuComponent {
   isExpanded = false;
 
   @ViewChild('mySidenav') myDiv!: ElementRef;
-  constructor(private router: Router){
+  constructor(private router: Router, public localStorageService: LocalStorageService){
 
   }
   links: Array<{ text: string, path: string  }> = [];
@@ -21,7 +22,7 @@ export class NavMenuComponent {
     // this.router.config.push(...RegisterRoutingModule.getRoutes());
 
     this.router.config
-    // .filter(f=> f.data?.showInNavBar)
+    .filter(f=> f.data?.showInNavBar)
     .forEach(
       fe=> this.links.push(
         {text: fe.data?.name.toString(), path: fe.path ? fe.path : ''},
@@ -34,6 +35,12 @@ export class NavMenuComponent {
 
   toggle() {
     this.isExpanded = !this.isExpanded;
+  }
+
+  logout(){
+    this.localStorageService.removeUserData();
+    this.toggle();
+    this.router.navigate(['/login'])
   }
 
 //   openNav() {

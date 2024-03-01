@@ -25,7 +25,7 @@ namespace ngLifeCounter.MVC.Controllers
 		public async Task<IActionResult> Get(string userName, string password)
 		{
 			var token = await _accountService.LoginAndRetrieveToken(userName, password);
-			return Ok(new {token = token});
+			return Ok(token);
 		}
 
 		// GET api/<AccountController>/5

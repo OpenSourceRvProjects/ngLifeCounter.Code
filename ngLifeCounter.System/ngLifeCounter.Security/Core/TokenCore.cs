@@ -39,7 +39,7 @@ namespace ngLifeCounter.Security.Core
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["security:JWT_PrivateKey"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var expiration = permClaims.Any(a => a.Type == "allowDeleteActionToken" && a.Value == "true") ?
-                DateTime.Now.AddSeconds(30) : new DateTime(9999,12,31);
+                DateTime.Now.AddSeconds(30) : DateTime.Now.AddDays(365);
 
             var token = new JwtSecurityToken(_configuration["security:issuer"],
               tokenAudience, claims: permClaims,

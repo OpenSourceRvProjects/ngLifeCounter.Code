@@ -15,4 +15,8 @@ export class AccountService {
     return this.http.post(this.baseUrl + "api/Account/signUp", body );
   }
 
+  login (userName: string, password: string ){
+    return this.http.get(this.baseUrl + `api/Account/login?userName=${userName}&password=${password}`);
+  }
+
 }

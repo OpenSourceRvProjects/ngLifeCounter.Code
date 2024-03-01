@@ -9,7 +9,7 @@ namespace ngLifeCounter.Backend.Infrastructure
 {
 	public interface IAccountUserService
 	{
-		Task<string> LoginAndRetrieveToken(string username, string password);
+		Task<LoginTokenDataModel> LoginAndRetrieveToken(string username, string password);
 		Task<RegisterResultModel> RegisterUserAccount(RegisterModel newRegister);
 	}
 }

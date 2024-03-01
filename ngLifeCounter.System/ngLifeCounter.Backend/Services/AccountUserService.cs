@@ -32,11 +32,12 @@ namespace ngLifeCounter.Backend.Services
 			_accessor = accessor;
 		}
 
-		public async Task<string> LoginAndRetrieveToken(string username, string password)
+		public async Task<LoginTokenDataModel> LoginAndRetrieveToken(string username, string password)
 		{
+			var response = new LoginTokenDataModel();
 			var personalProfile = _dbContext.PersonalProfiles.Include(i => i.User).FirstOrDefault(f => f.User.UserName == username);
-
 			var user = personalProfile.User;
+			string token = string.Empty;
 
 			if (user == null)
 			{
@@ -47,10 +48,14 @@ namespace ngLifeCounter.Backend.Services
 
 			if (isValidPassword)
 			{
-				return GenerateToken(user, personalProfile);
+				response.Token = GenerateToken(user, personalProfile);
+				response.UserName = user.UserName;
+				response.Name = personalProfile.Name;
+				response.LastName = personalProfile.LastName1 ?? string.Empty;
+
 			}
 
-			return "";
+			return response;
 		}
 
 		public async Task<RegisterResultModel> RegisterUserAccount(RegisterModel newRegister)
@@ -139,6 +144,7 @@ namespace ngLifeCounter.Backend.Services
 					new KeyValuePair<string, string>("userID", newUser.Id.ToString()),
 					new KeyValuePair<string, string>("name", newProfileUser.Name),
 					new KeyValuePair<string, string>("userName", newUser.UserName),
+					new KeyValuePair<string, string>("tokenServerCreationDate", DateTime.Now.ToString()),
 					new KeyValuePair<string, string>("allowSysAdminAccess", newUser.AllowSysAdminAccess.ToString()),
 				};
 			var token = _tokenCore.RunTokenGeneration(tokenInfo, newUser.Id);
