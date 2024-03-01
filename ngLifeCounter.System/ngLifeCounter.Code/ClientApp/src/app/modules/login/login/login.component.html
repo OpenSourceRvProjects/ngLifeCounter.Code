@@ -20,7 +20,7 @@
                             <h4 style="color: red;">{{errorMessage}}</h4>
                         </div>
                         
-                        <div class="col-12">
+                        <div *ngIf="!processing" class="col-12">
                                     <button type="submit" class="btn btn-register w-100" (click)="login()">Ingresar</button>
                         </div>
 

@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
     this.accountService.login(this.userName, this.password)
     .subscribe({next: (data: any)=>{
       debugger;
-      if (data.token.trim() !== ''){
+      if (data.token != null ){
         this.localStorage.saveUserData(data);
         this.processing = false;
         this.router.navigate(['/']);
@@ -43,6 +43,8 @@ export class LoginComponent implements OnInit {
         }
       }
     , error: (err)=>{
+      alert("Error! Usuario no existe o fuera de servicio");
+      this.processing = false;  
 
     }})
   }
