@@ -53,6 +53,23 @@ namespace ngLifeCounter.Backend.Services
 				response.Name = personalProfile.Name;
 				response.LastName = personalProfile.LastName1 ?? string.Empty;
 
+				try
+				{
+					var newCorrectLogin = new CorrectLogin()
+					{
+						Id = Guid.NewGuid(),
+						UserId = user.Id,
+						LoginDate = DateTime.Now,
+						IpAddress = _accessor.HttpContext.Connection.RemoteIpAddress.ToString(),
+					};
+
+					_dbContext.Add(newCorrectLogin);
+					_dbContext.SaveChanges();
+				}
+				catch (Exception ex)
+				{
+				}
+
 			}
 
 			return response;

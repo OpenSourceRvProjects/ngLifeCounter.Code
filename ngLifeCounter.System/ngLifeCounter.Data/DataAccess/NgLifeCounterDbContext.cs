@@ -15,6 +15,8 @@ public partial class NgLifeCounterDbContext : DbContext
     {
     }
 
+    public virtual DbSet<CorrectLogin> CorrectLogins { get; set; }
+
     public virtual DbSet<EventCounter> EventCounters { get; set; }
 
     public virtual DbSet<PersonalProfile> PersonalProfiles { get; set; }
@@ -24,12 +26,30 @@ public partial class NgLifeCounterDbContext : DbContext
     public virtual DbSet<SignUpRequest> SignUpRequests { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
+
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{
 		//Scaffold - DbContext "Server=.\SQLEXPRESS;Database=NgLifeCounterDB;Trusted_Connection=True;Encrypt=False" Microsoft.EntityFrameworkCore.SqlServer - OutputDir DataAccess - F
 	}
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<CorrectLogin>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__CorrectL__3214EC07EDCE4682");
+
+            entity.ToTable("CorrectLogin");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.IpAddress).HasColumnName("IP_Address");
+            entity.Property(e => e.LoginDate).HasColumnType("datetime");
+            entity.Property(e => e.UserId).HasColumnName("UserID");
+
+            entity.HasOne(d => d.User).WithMany(p => p.CorrectLogins)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__CorrectLo__UserI__6FE99F9F");
+        });
+
         modelBuilder.Entity<EventCounter>(entity =>
         {
             entity.ToTable("EventCounter");
