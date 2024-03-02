@@ -43,8 +43,14 @@ export class LoginComponent implements OnInit {
         }
       }
     , error: (err)=>{
-      alert("Error! Usuario no existe o fuera de servicio");
-      this.processing = false;  
+      debugger;
+      if (err.status == 429){
+        alert("Demasiados intentos, intentalo en unos momentos mas");
+      }
+      else
+        alert("Error! Usuario no existe o fuera de servicio");
+      
+        this.processing = false;  
 
     }})
   }
