@@ -6,7 +6,7 @@ import { UserPrivacyComponent } from "./user-privacy/user-privacy.component";
 const routes: Routes = [
 
     { path: 'register', component: RegisterComponent, data: {name : "Registro"}},
-    { path: 'privacy', component: UserPrivacyComponent, data: {name : "Privacidad"}},
+    { path: 'privacy', component: UserPrivacyComponent, data: {name : "Aviso de privacidad", showInNavBar : true}},
 ]
 
 @NgModule({
