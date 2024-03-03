@@ -15,6 +15,7 @@ import { RegisterComponent } from './modules/register/register/register.componen
 import { RegisterModule } from './modules/register/register.module';
 import { LoginModule } from './modules/login/login.module';
 import { HomeRoutingModule } from './modules/home/home-routing.module';
+import { CounterModule } from './modules/counter/counter.module';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,7 @@ import { HomeRoutingModule } from './modules/home/home-routing.module';
     AppRoutingModule,
     RegisterModule,
     LoginModule,
-    
+    CounterModule,
     // RouterModule.forRoot([
     //   { path: '', component: HomeComponent, pathMatch: 'full' },
     //   { path: 'counter', component: CounterComponent },

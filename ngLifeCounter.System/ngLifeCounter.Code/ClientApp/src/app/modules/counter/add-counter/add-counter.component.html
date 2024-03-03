@@ -1,1 +1,54 @@
-<p>add-counter works!</p>
+<div  class="container">
+    <div class="row vh-100 d-flex justify-content-center align-items-center">
+        <div class="col-md-12">
+            <div class="form-container" style="margin-top: 0px;">
+                <h2 class="text-center mb-4">Agregar evento</h2>
+
+                <form>
+                    <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                            <label for="firstName" class="form-label">Nombre evento</label>
+                            <input type="text" [(ngModel)]="newCounterEvent.eventName" class="form-control" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="lastName" class="form-label">Año evento:</label>
+                            <input type="number" [(ngModel)]="newCounterEvent.year" class="form-control" id="lastName" name="lastName" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="month" class="form-label">Mes evento:</label>
+                        <input type="number" [(ngModel)]="newCounterEvent.month" class="form-control" id="email" name="email" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="day" class="form-label">Día evento</label>
+                        <input type="number" [(ngModel)]="newCounterEvent.day" class="form-control" id="userName" name="userName" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="day" class="form-label">Hora</label>
+                        <input type="number" [(ngModel)]="newCounterEvent.hour" class="form-control" id="userName" name="userName" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="day" class="form-label">Minutos</label>
+                        <input type="number" [(ngModel)]="newCounterEvent.minutes" class="form-control" id="userName" name="userName" required>
+                    </div>
+
+                    <div class="text-center">
+                        <!-- <h4 style="color: red;">{{errorMessage}}</h4> -->
+                    </div>
+                    
+                    <div class="col-12">
+                                <button type="submit" class="btn btn-register w-100" (click)="addEvent()">Registrar*</button>
+                    </div>
+
+                    <br>
+                   
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
