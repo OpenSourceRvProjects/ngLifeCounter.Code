@@ -53,8 +53,11 @@ namespace ngLifeCounter.Backend.Services
 				response.Name = personalProfile.Name;
 				response.LastName = personalProfile.LastName1 ?? string.Empty;
 
+				
+
 				try
 				{
+					//_accessor.HttpContext.Session.SetString("userID", user.Id.ToString());
 					var newCorrectLogin = new CorrectLogin()
 					{
 						Id = Guid.NewGuid(),
@@ -73,6 +76,12 @@ namespace ngLifeCounter.Backend.Services
 			}
 
 			return response;
+		}
+
+		public void Logout()
+		{
+			_accessor.HttpContext.Session.Remove("userID");
+
 		}
 
 		public async Task<RegisterResultModel> RegisterUserAccount(RegisterModel newRegister)

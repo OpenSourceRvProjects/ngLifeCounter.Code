@@ -14,6 +14,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+
+builder.Services.AddMvc()
+		.AddSessionStateTempDataProvider();
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSession();
+
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddEndpointsApiExplorer();
 
@@ -106,6 +114,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
+app.UseSession();
 
 app.UseHttpsRedirection();
 
