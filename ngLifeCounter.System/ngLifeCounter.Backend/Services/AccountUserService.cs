@@ -57,7 +57,7 @@ namespace ngLifeCounter.Backend.Services
 
 				try
 				{
-					//_accessor.HttpContext.Session.SetString("userID", user.Id.ToString());
+					_accessor.HttpContext.Session.SetString("userID", user.Id.ToString());
 					var newCorrectLogin = new CorrectLogin()
 					{
 						Id = Guid.NewGuid(),

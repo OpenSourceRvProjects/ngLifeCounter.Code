@@ -23,6 +23,16 @@ public partial class EventCounter
 
     public Guid PersonalProfileId { get; set; }
 
+    public bool IsPublic { get; set; }
+
+    public DateTime CreationDate { get; set; }
+
+    public bool Status { get; set; }
+
+    public string? CustomEventImageCollection { get; set; }
+
+    public string? CustomMessage { get; set; }
+
     public virtual PersonalProfile PersonalProfile { get; set; } = null!;
 
     public virtual ICollection<Relapse> Relapses { get; set; } = new List<Relapse>();

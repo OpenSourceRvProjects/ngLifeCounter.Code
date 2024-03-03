@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ngLifeCounter.Backend.Infrastructure;
+using ngLifeCounter.Models.EventCounter;
 using ngLifeCounter.MVC.Filters;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -9,18 +11,20 @@ namespace ngLifeCounter.MVC.Controllers
 	[Route("api/[controller]")]
 	[ApiController]
 	[Authorize]
+	[LoggedUserDataFilter]
 	public class EventCounterController : ControllerBase
 	{
 
 		private IHttpContextAccessor _accessor;
+		private IEventCounterService _eventService;
 
-        public EventCounterController(IHttpContextAccessor accessor)
-        {
-				_accessor = accessor;
-        }
-        // GET: api/<EventCounterController>
-        [HttpGet]
-		[LoggedUserDataFilter]
+		public EventCounterController(IHttpContextAccessor accessor, IEventCounterService eventService)
+		{
+			_accessor = accessor;
+			_eventService = eventService;
+		}
+		// GET: api/<EventCounterController>
+		[HttpGet]
 		public async Task<ActionResult> Get()
 		{
 
@@ -38,8 +42,10 @@ namespace ngLifeCounter.MVC.Controllers
 
 		// POST api/<EventCounterController>
 		[HttpPost]
-		public void Post([FromBody] string value)
+		public async Task<IActionResult> Post([FromBody] NewEventCounterModel newEvent)
 		{
+			await _eventService.AddEventCounter(newEvent);
+			return Ok();
 		}
 
 		// PUT api/<EventCounterController>/5

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace ngLifeCounter.MVC.Filters
 {
@@ -7,16 +8,23 @@ namespace ngLifeCounter.MVC.Filters
 		public override void OnActionExecuting(ActionExecutingContext context)
 		{
 
+			//if (context.HttpContext.Session.GetString("userID") == null)
+			//{
 			var tokenHeader = context.HttpContext.Request.Headers["Authorization"];
 			var bearerToken = tokenHeader.FirstOrDefault();
 
 			var token = bearerToken?.Split("Bearer ")[1];
+			var tokenDataDecoded = FilterHelper.GetTokenDataByStringValue(token);
+
+			var userID = tokenDataDecoded.Claims.Where(W => W.Type == "userID").FirstOrDefault().Value;
+			context.HttpContext.Session.SetString("userID", userID);
+
+			//}
 		}
 
-		public void OnActionExecuted(ActionExecutedContext context)
+		public override void OnActionExecuted(ActionExecutedContext context)
 		{
-			var ts = DateTime.Parse(context.ActionDescriptor.RouteValues["timestamp"]).AddHours(1).ToString();
-			context.HttpContext.Response.Headers["X-EXPIRY-TIMESTAMP"] = ts;
+
 		}
 
 		public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)

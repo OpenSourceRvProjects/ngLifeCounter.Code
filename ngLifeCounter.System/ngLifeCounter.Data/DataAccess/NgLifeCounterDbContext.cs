@@ -31,6 +31,7 @@ public partial class NgLifeCounterDbContext : DbContext
 	{
 		//Scaffold - DbContext "Server=.\SQLEXPRESS;Database=NgLifeCounterDB;Trusted_Connection=True;Encrypt=False" Microsoft.EntityFrameworkCore.SqlServer - OutputDir DataAccess - F
 	}
+
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<CorrectLogin>(entity =>
@@ -55,6 +56,10 @@ public partial class NgLifeCounterDbContext : DbContext
             entity.ToTable("EventCounter");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.CreationDate).HasColumnType("datetime");
+            entity.Property(e => e.Status)
+                .HasDefaultValue(true)
+                .HasColumnName("status");
 
             entity.HasOne(d => d.PersonalProfile).WithMany(p => p.EventCounters)
                 .HasForeignKey(d => d.PersonalProfileId)
