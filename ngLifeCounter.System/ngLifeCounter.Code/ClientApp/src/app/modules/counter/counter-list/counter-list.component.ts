@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { IEventCounterItemModel } from 'src/app/Models/EventCounter/IEventCounterItemModel';
+import { EventService } from 'src/app/Services/Events/event.service';
 
 @Component({
   selector: 'app-counter-list',
@@ -7,4 +9,24 @@ import { Component } from '@angular/core';
 })
 export class CounterListComponent {
 
+
+  constructor(private eventService: EventService) {
+  }
+
+  counterList : IEventCounterItemModel[] = [];
+
+  ngOnInit(){
+    this.getCountersList();
+  }
+
+  getCountersList(){
+    this.eventService.getEvents()
+    .subscribe({next: (data : any)=> {
+      this.counterList =  data;
+      
+    }, 
+    error : (err)=> {
+
+    }})
+  }
 }

@@ -10,5 +10,6 @@ namespace ngLifeCounter.Backend.Infrastructure
 	public interface IEventCounterService
 	{
 		Task AddEventCounter(NewEventCounterModel eventCounter);
+		Task <List<EventCounterItemModel>> GetCounterList();
 	}
 }

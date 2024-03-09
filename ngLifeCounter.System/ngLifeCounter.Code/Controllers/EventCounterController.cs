@@ -27,9 +27,8 @@ namespace ngLifeCounter.MVC.Controllers
 		[HttpGet]
 		public async Task<ActionResult> Get()
 		{
-
-			var userID = _accessor.HttpContext.Session.GetString("userID");
-			return Ok(new string[] { "value1", "value2" });
+			var eventList = await _eventService.GetCounterList();
+			return Ok(eventList);
 		}
 
 		// GET api/<EventCounterController>/5

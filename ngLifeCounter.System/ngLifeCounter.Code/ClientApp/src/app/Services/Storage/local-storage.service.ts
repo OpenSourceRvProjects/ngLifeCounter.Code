@@ -11,6 +11,14 @@ export class LocalStorageService {
     localStorage.setItem("ngLifeCounter.ObjectInfo", JSON.stringify(user));
   }
 
+  avtiveCounterView(){
+    localStorage.setItem("ngLifeCounter.IsCounterViwe", "1")
+  }
+
+  desactivateCounterView(){
+    localStorage.removeItem("ngLifeCounter.IsCounterViwe");
+  }
+
   removeUserData(){
     localStorage.removeItem("ngLifeCounter.ObjectInfo");
   }
@@ -20,6 +28,14 @@ export class LocalStorageService {
     if (data !== null)
       return JSON.parse(data);
     else 
+      return false;
+  }
+
+  getCounterView() {
+    let data = localStorage.getItem("ngLifeCounter.IsCounterViwe");
+    if (data !== null)
+    return JSON.parse(data);
+      else 
       return false;
   }
 }

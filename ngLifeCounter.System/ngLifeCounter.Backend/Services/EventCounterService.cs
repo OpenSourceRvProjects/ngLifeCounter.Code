@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using ngLifeCounter.Backend.Infrastructure;
 using ngLifeCounter.Data.DataAccess;
 using ngLifeCounter.Models.EventCounter;
@@ -56,7 +57,7 @@ namespace ngLifeCounter.Backend.Services
 					PersonalProfileId = personalProfileID,
 					Status = true
 				};
-				
+
 				await _dbContext.AddAsync(newEventCounterDB);
 				await _dbContext.SaveChangesAsync();
 			}
@@ -64,6 +65,25 @@ namespace ngLifeCounter.Backend.Services
 			{
 				throw new Exception("DB error: " + ex.Message);
 			}
+		}
+
+		public async Task<List<EventCounterItemModel>> GetCounterList()
+		{
+			var currentUserID = Guid.Parse(_accessor.HttpContext.Session.GetString("userID"));
+			var counters = await _dbContext.EventCounters.Where(w => w.UserId == currentUserID)
+				.Select(s => new EventCounterItemModel
+				{
+					Id = s.Id,
+					EventName= s.EventName,
+					IsPublic= s.IsPublic,
+					DateString = s.StartDay.ToString("00") + "/" 
+					+ s.StartMonth.ToString("00") + "/"
+					+ s.StartYear,
+					CreationDate = s.CreationDate
+				}).OrderByDescending(o=> o.CreationDate)
+				.ToListAsync();
+
+			return counters;
 		}
 	}
 }

@@ -25,4 +25,9 @@ export class EventService {
     return this.http.post(this.baseUrl + "api/EventCounter", newEvent, {headers})
   }
 
+  getEvents(){
+    var headers = this.initHeaders();
+    return this.http.get(this.baseUrl +"api/EventCounter", {headers})
+  }
+
 }

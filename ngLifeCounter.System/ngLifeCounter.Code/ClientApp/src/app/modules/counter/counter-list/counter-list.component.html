@@ -1,1 +1,20 @@
-<p>counter-list works!</p>
+<div class="container table-responsive">
+    <table class="table caption-top">
+        <caption>Tus contadores</caption>
+        <thead>
+          <tr>
+            <th scope="col">Nombre evento</th>
+            <th scope="col">Fecha evento</th>
+            <th style="text-align: center;" scope="col">Público</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let e of counterList; index as i">
+            <td>{{e.eventName}}</td>
+            <td>{{e.dateString}}</td>
+            <td style="text-align: center;"><input [(ngModel)]="e.isPublic" type="checkbox"></td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+
