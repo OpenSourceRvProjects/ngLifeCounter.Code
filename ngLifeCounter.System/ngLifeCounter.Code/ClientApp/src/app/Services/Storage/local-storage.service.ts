@@ -31,10 +31,10 @@ export class LocalStorageService {
       return false;
   }
 
-  getCounterView() {
+  isCounterActive() {
     let data = localStorage.getItem("ngLifeCounter.IsCounterViwe");
     if (data !== null)
-    return JSON.parse(data);
+    return true;
       else 
       return false;
   }

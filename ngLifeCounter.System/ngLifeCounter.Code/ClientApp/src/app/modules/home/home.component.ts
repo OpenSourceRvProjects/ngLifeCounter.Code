@@ -11,9 +11,11 @@ export class HomeComponent {
   username?: string;
 
   constructor(private localStorage: LocalStorageService) {
-
   }
+
+  
   ngOnInit(){
+    this.localStorage.desactivateCounterView();
     this.username = "";
     this.username = this.localStorage.getUserData().userName;
   }

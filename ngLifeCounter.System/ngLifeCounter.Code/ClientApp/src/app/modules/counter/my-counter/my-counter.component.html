@@ -1,8 +1,7 @@
 <style>
-    .center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+.image-container {
+  display: flex;
+  justify-content: center;
 }
 
 .backgroundGrad{
@@ -11,9 +10,14 @@
 }
 </style>
 
-<body class="backgroundGrad">
-    <div class="row">
-      
+<div class="backgroundGrad" style="width: 100%; height: 100%;">
+    <div >
+        <br>
+        <br>
+        <div class="image-container">
+             <img  style="display: flex; justify-content: center;" id="doggie" src="https://onedrive.live.com/embed?resid=E530B3F2B44ACA4B%21107019&authkey=%21AAWWKDbBtKS39_A" width="380" 
+            height="400" style="border-radius: 50%;">
+        </div>
         <br>
         <h2 id="noAlcoholDays" style="text-align: center; color: white;">100</h2>
         <br>
@@ -27,6 +31,12 @@
         <hr>
         <h2 id="completedYears" style="text-align: center; color: white;  "></h2>
         <br>
+        <div class="text-center">
+            <button (click)="goToListPage()" class="btn btn-success text">
+                Ir a otros contadores
+               </button>
+        </div>
     </div>
+   
 
-</body>
+</div>

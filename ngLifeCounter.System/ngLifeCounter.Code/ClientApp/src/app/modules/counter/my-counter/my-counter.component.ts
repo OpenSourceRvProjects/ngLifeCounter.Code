@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/Services/Storage/local-storage.service';
 
 @Component({
@@ -8,10 +9,24 @@ import { LocalStorageService } from 'src/app/Services/Storage/local-storage.serv
 })
 export class MyCounterComponent {
 
-  constructor(private localStorageService: LocalStorageService){}
+  constructor(private localStorageService: LocalStorageService, private router: Router, private route: ActivatedRoute){}
+  id: string = "";
+  private sub: any;
 
-  ngOninit(){
+  ngOnInit(){
     this.localStorageService.avtiveCounterView();
+    this.sub = this.route.queryParams.subscribe(params=>{
+      debugger;
+      this.id = params['id'];
+      this.getEvent();
+    });
   }
 
+  getEvent(){
+      alert(this.id)
+  }
+
+  goToListPage() {
+    this.router.navigate(['/counter/list']);
+  }
 }

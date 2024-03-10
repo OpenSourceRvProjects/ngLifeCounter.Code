@@ -1,6 +1,6 @@
 
 
-<header *ngIf="localStorageService.getUserData() && localStorageService.getCounterView()">
+<header *ngIf="localStorageService.getUserData() && !localStorageService.isCounterActive()">
   <nav style="background: rgb(2,0,36);
   background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(28,67,41,1) 0%, rgba(36,89,43,1) 0%, rgba(38,95,43,1) 47%, rgba(72,187,50,1) 100%, rgba(0,212,255,1) 100%);
   " class="navbar navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3">

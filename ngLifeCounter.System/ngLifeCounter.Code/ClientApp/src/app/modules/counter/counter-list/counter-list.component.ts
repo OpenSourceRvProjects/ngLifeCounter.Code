@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IEventCounterItemModel } from 'src/app/Models/EventCounter/IEventCounterItemModel';
 import { EventService } from 'src/app/Services/Events/event.service';
+import { LocalStorageService } from 'src/app/Services/Storage/local-storage.service';
 
 @Component({
   selector: 'app-counter-list',
@@ -10,12 +11,13 @@ import { EventService } from 'src/app/Services/Events/event.service';
 export class CounterListComponent {
 
 
-  constructor(private eventService: EventService) {
+  constructor(private eventService: EventService, private localStorageService: LocalStorageService) {
   }
 
   counterList : IEventCounterItemModel[] = [];
 
   ngOnInit(){
+    this.localStorageService.desactivateCounterView();
     this.getCountersList();
   }
 

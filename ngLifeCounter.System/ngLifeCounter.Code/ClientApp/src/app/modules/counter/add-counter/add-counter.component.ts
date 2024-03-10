@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { IRegisterModel } from 'src/app/Models/Account/IRegisterModel';
 import { INewEventCounterModel } from 'src/app/Models/EventCounter/INewEventCounterModel';
 import { EventService } from 'src/app/Services/Events/event.service';
+import { LocalStorageService } from 'src/app/Services/Storage/local-storage.service';
 
 
 @Component({
@@ -16,8 +17,11 @@ export class AddCounterComponent {
   processing : boolean = false;
   errorMessage: string = "";
 
-  constructor(private eventCounterService: EventService, private router: Router){}
+  constructor(private eventCounterService: EventService, private router: Router, private localStorageService: LocalStorageService){}
 
+  ngOnInit(){
+    this.localStorageService.desactivateCounterView();
+  }
 
   addEvent(){
     debugger;
