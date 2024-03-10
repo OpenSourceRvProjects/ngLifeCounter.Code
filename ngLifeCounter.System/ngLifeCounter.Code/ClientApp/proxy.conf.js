@@ -9,7 +9,8 @@ const PROXY_CONFIG = [
       "/weatherforecast",
       "/api/Account/signUp",
       "/api/Account/login",
-      "/api/EventCounter"
+      "/api/EventCounter",
+      "/api/EventCounter/getById"
    ],
     proxyTimeout: 100000,
     target: target,

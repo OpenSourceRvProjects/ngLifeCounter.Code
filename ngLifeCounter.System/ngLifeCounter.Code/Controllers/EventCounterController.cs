@@ -11,7 +11,6 @@ namespace ngLifeCounter.MVC.Controllers
 	[Route("api/[controller]")]
 	[ApiController]
 	[Authorize]
-	[LoggedUserDataFilter]
 	public class EventCounterController : ControllerBase
 	{
 
@@ -25,6 +24,7 @@ namespace ngLifeCounter.MVC.Controllers
 		}
 		// GET: api/<EventCounterController>
 		[HttpGet]
+		[LoggedUserDataFilter]
 		public async Task<ActionResult> Get()
 		{
 			var eventList = await _eventService.GetCounterList();
@@ -32,15 +32,22 @@ namespace ngLifeCounter.MVC.Controllers
 		}
 
 		// GET api/<EventCounterController>/5
-		[HttpGet("{id}")]
-		public string Get(int id)
+		[HttpGet]
+		[AllowAnonymous]
+		[Route("getById")]
+		public async Task<IActionResult> Get(Guid counterID)
 		{
-
-			return "value";
+			var counterData = await _eventService.GetCounterData(counterID);
+			if (counterData == null)
+			{
+				return Unauthorized();
+			}
+			return Ok(counterData);
 		}
 
 		// POST api/<EventCounterController>
 		[HttpPost]
+		[LoggedUserDataFilter]
 		public async Task<IActionResult> Post([FromBody] NewEventCounterModel newEvent)
 		{
 			await _eventService.AddEventCounter(newEvent);

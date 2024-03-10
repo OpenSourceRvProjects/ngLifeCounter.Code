@@ -5,6 +5,7 @@ using ngLifeCounter.Data.DataAccess;
 using ngLifeCounter.Models.EventCounter;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -65,6 +66,56 @@ namespace ngLifeCounter.Backend.Services
 			{
 				throw new Exception("DB error: " + ex.Message);
 			}
+		}
+
+		public async Task<CounterDataModel> GetCounterData(Guid id)
+		{
+			var counterDB = await _dbContext.EventCounters.FirstOrDefaultAsync(f=> f.Id == id);
+			CounterDataModel counterData = null;
+
+			if (counterDB.IsPublic)
+			{
+				counterData = GetDataFromDBModel(counterDB);
+
+			}
+			else
+			{
+				var tokenHeader = _accessor.HttpContext.Request.Headers["Authorization"];
+				var bearerToken = tokenHeader.FirstOrDefault();
+
+
+				if (bearerToken == null)
+				{
+					return counterData;
+				}
+				var rawToken = bearerToken?.Split("Bearer ")[1];
+				var handler = new JwtSecurityTokenHandler();
+				var jwtSecurityToken = handler.ReadJwtToken(rawToken);
+
+				var userID = jwtSecurityToken.Claims.Where(W => W.Type == "userID").FirstOrDefault().Value;
+				var userIDGuid = Guid.Parse(userID);
+
+				if (userIDGuid == counterDB.UserId)
+				{
+					counterData = GetDataFromDBModel(counterDB);
+				}
+			}
+			return counterData;
+
+		}
+
+		private static CounterDataModel GetDataFromDBModel(EventCounter counterDB)
+		{
+			return new CounterDataModel()
+			{
+				CounterID = counterDB.Id,
+				Name = counterDB.EventName,
+				Year = (int)counterDB.StartYear,
+				Month = counterDB.StartMonth,
+				Day = counterDB.StartDay,
+				Hour = (int)counterDB.Hour,
+				Minutes = (int)counterDB.Minutes,
+			};
 		}
 
 		public async Task<List<EventCounterItemModel>> GetCounterList()

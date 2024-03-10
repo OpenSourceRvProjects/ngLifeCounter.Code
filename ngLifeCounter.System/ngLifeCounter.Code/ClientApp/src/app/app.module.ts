@@ -30,9 +30,9 @@ import { CounterModule } from './modules/counter/counter.module';
     // FormsModule,
     HomeRoutingModule,
     AppRoutingModule,
+    CounterModule,
     RegisterModule,
     LoginModule,
-    CounterModule,
     // RouterModule.forRoot([
     //   { path: '', component: HomeComponent, pathMatch: 'full' },
     //   { path: 'counter', component: CounterComponent },
