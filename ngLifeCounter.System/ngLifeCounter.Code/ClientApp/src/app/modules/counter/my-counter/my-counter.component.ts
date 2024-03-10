@@ -33,6 +33,8 @@ export class MyCounterComponent {
    minutesInAnHour = 60;
    SecondsInAMinute  = 60;
 
+   isCountDown : boolean = false;
+
   _startDate : Date = new Date();
   private subscription?: Subscription;
 
@@ -67,8 +69,11 @@ export class MyCounterComponent {
     this.viewMinutes = Math.floor((timeDifference) / (this.milliSecondsInASecond * this.minutesInAnHour) % this.SecondsInAMinute);
     this.viewHour = Math.floor((timeDifference) / (this.milliSecondsInASecond * this.minutesInAnHour * this.SecondsInAMinute) % this.hoursInADay);
     this.viewDay = Math.floor((timeDifference) / (this.milliSecondsInASecond * this.minutesInAnHour * this.SecondsInAMinute * this.hoursInADay));
-  
+    this.isCountDown = false;
+
     if (this.viewSeconds < 0){
+      this.isCountDown = true;
+      this.eventName = this.eventName
       this.viewSeconds = this.viewSeconds * -1;
       this.viewMinutes = (this.viewMinutes * -1) - 1;
       this.viewHour = (this.viewHour * -1) - 1;
