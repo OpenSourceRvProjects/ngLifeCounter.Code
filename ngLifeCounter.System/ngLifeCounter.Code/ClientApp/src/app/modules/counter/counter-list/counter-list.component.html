@@ -10,7 +10,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let e of counterList; index as i">
-            <td>{{e.eventName}}</td>
+            <td><a href="counter/myCounter?id={{e.id}}"> {{e.eventName}}</a></td>
             <td>{{e.dateString}}</td>
             <td style="text-align: center;"><input [(ngModel)]="e.isPublic" type="checkbox"></td>
           </tr>

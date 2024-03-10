@@ -16,7 +16,6 @@ export class MyCounterComponent {
   ngOnInit(){
     this.localStorageService.avtiveCounterView();
     this.sub = this.route.queryParams.subscribe(params=>{
-      debugger;
       this.id = params['id'];
       this.getEvent();
     });
