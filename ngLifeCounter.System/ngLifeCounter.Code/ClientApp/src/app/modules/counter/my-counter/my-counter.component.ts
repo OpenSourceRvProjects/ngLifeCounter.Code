@@ -71,10 +71,10 @@ export class MyCounterComponent {
     this.viewDay = Math.floor((timeDifference) / (this.milliSecondsInASecond * this.minutesInAnHour * this.SecondsInAMinute * this.hoursInADay));
     this.isCountDown = false;
 
-    if (this.viewSeconds < 0){
+    if (this.viewSeconds <= 0){
       this.isCountDown = true;
       this.eventName = this.eventName
-      this.viewSeconds = this.viewSeconds * -1;
+      this.viewSeconds = (this.viewSeconds * -1) -1;
       this.viewMinutes = (this.viewMinutes * -1) - 1;
       this.viewHour = (this.viewHour * -1) - 1;
       this.viewDay = (this.viewDay * -1)  -1;
