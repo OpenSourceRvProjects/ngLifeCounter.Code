@@ -10,26 +10,29 @@
 }
 </style>
 
-<div class="backgroundGrad" style="width: 100%; height: 100%;">
+<div class="backgroundGrad" style="width: auto; height: 1000px">
     <div >
         <br>
         <br>
         <div class="image-container">
-             <img  style="display: flex; justify-content: center;" id="doggie" src="https://onedrive.live.com/embed?resid=E530B3F2B44ACA4B%21107019&authkey=%21AAWWKDbBtKS39_A" width="380" 
-            height="400" style="border-radius: 50%;">
+             <!-- <img  style="display: flex; justify-content: center;" id="doggie" src="https://onedrive.live.com/embed?resid=E530B3F2B44ACA4B%21107019&authkey=%21AAWWKDbBtKS39_A" width="280" 
+            height="300" style="border-radius: 50%;"> -->
+            <img  style="display: flex; justify-content: center;" id="doggie" [src]="dogURL" width="280" 
+            height="300" style="border-radius: 50%;">
+            
         </div>
         <br>
-        <h2 id="noAlcoholDays" style="text-align: center; color: white;">{{viewDay}} días</h2>
+        <h4 style="text-align: center; color: white;">{{eventName}}</h4>
         <br>
-        <h2 id="noAlcoholHours" style="text-align: center; color: white;">{{viewHour}} horas</h2>
+        <h4 id="noAlcoholDays" style="text-align: center; color: white;">{{viewDay}} días</h4>
         <br>
-        <h2 id="noAlcoholMinutes" style="text-align: center; color: white;">{{viewMinutes}} minutos</h2>
+        <h4 id="noAlcoholHours" style="text-align: center; color: white;">{{viewHour}} horas</h4>
         <br>
-        <h2 id="noAlcoholSeconds" style="text-align: center; color: white;">{{viewSeconds}} segundos</h2>
+        <h4 id="noAlcoholMinutes" style="text-align: center; color: white;">{{viewMinutes}} minutos</h4>
         <br>
-        <h2 style="text-align: center; color: white;">{{eventName}}</h2>
+        <h4 id="noAlcoholSeconds" style="text-align: center; color: white;">{{viewSeconds}} segundos</h4>
         <hr>
-        <h2 id="completedYears" style="text-align: center; color: white;  "></h2>
+        <h4 id="completedYears" style="text-align: center; color: white;  "></h4>
         <br>
         <div class="text-center">
             <button (click)="goToListPage()" class="btn btn-success text">

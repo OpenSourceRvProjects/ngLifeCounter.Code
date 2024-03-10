@@ -1,18 +1,19 @@
 <div class="container table-responsive">
     <table class="table caption-top">
         <caption>Tus contadores</caption>
-        <thead>
+        <thead class="table-success">
           <tr>
             <th scope="col">Nombre evento</th>
             <th scope="col">Fecha evento</th>
             <th style="text-align: center;" scope="col">Público</th>
+         
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let e of counterList; index as i">
             <td><a href="counter/myCounter?id={{e.id}}"> {{e.eventName}}</a></td>
             <td>{{e.dateString}}</td>
-            <td style="text-align: center;"><input [(ngModel)]="e.isPublic" type="checkbox"></td>
+            <td style="text-align: center;"><input disabled="true" [(ngModel)]="e.isPublic" type="checkbox"></td>
           </tr>
         </tbody>
       </table>

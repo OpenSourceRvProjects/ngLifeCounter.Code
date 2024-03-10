@@ -64,6 +64,18 @@ export class RegisterComponent implements OnInit {
       this.errorMessage = "Tu nombre de usuario es tu identidad, se creativo!";
       return;
     }
+
+    if (this.checkWhitespace(this.registerModel.userName))
+    {
+      this.errorMessage = "Tu nombre de usuario no puede contener espacios en blanco";
+      return;
+    }
+
+    if (this.checkWhitespace(this.registerModel.password))
+    {
+      this.errorMessage = "No es recomendable que tu contraseña tenga espacios en blanco";
+      return;
+    }
     
     if (!this.validateEmail(this.registerModel.email)){
       this.errorMessage = "El correo no tiene formato válido";
@@ -93,6 +105,16 @@ export class RegisterComponent implements OnInit {
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       );
   };
+
+   checkWhitespace(str : string) { 
+    let whitespace = new Set([" ", "\t", "\n"]); 
+    for (let i = 0; i < str.length; i++) { 
+        if (whitespace.has(str[i])) { 
+            return true; 
+        } 
+    } 
+    return false; 
+} 
 
   goToLoginPage(){
     window.location.href = "/login";

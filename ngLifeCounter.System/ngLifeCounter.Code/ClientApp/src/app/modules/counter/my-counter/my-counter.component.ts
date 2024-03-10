@@ -26,7 +26,7 @@ export class MyCounterComponent {
   viewSeconds: number = 0;
 
   eventName : string = "";
-
+  dogURL : string = "";
 
    milliSecondsInASecond = 1000;
    hoursInADay = 24;
@@ -38,6 +38,7 @@ export class MyCounterComponent {
 
   ngOnInit(){
     this.localStorageService.avtiveCounterView();
+    this.getDoggie();
     this.sub = this.route.queryParams.subscribe(params=>{
       this.id = params['id'];
       this.getEvent();
@@ -60,7 +61,6 @@ export class MyCounterComponent {
 
   putCounterTimeData (){
 
-    debugger;
     var timeDifference = (new Date().getTime()) - this._startDate.valueOf();
 
     this.viewSeconds = Math.floor((timeDifference) / (this.milliSecondsInASecond) % this.SecondsInAMinute);
@@ -71,5 +71,13 @@ export class MyCounterComponent {
 
   goToListPage() {
     this.router.navigate(['/counter/list']);
+  }
+
+  getDoggie(){
+    fetch('https://dog.ceo/api/breeds/image/random')
+        .then(response => response.json())
+        .then(data =>{
+            this.dogURL = data.message;
+        });
   }
 }

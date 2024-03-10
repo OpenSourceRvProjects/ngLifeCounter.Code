@@ -39,20 +39,38 @@
                     </div>
 
                     <div class="row mb-3">
-                        <div class="col-md-6 mb-3">
+                        <!-- <div class="col-md-6 mb-3">
                             <label for="month" class="form-label">Mes evento:</label>
                             <input type="number" [(ngModel)]="newCounterEvent.month" class="form-control" id="email" name="email" required>
+                        </div> -->
+                        <div class="col-md-6 mb-3">
+                            <label for="month" class="form-label">Mes evento:</label>
+                            <select class="form-control" [(ngModel)]="selectedMonth" name="selector1">
+                                <option *ngFor="let m of monthsList" [ngValue]="m">
+                                  {{m.text}}
+                                </option>
+                             </select>
+
+                             <!-- <select class="form-control" [(ngModel)]="selectedMonth" name="selector">
+                                <option [ngValue]="i" *ngFor="let i of monthsList">{{i.monthName}}</option>
+                            </select> -->
                         </div>
                         <div class="col-md-6">
                             <label for="day" class="form-label">Día evento</label>
-                            <input type="number" [(ngModel)]="newCounterEvent.day" class="form-control" id="userName" name="userName" required>
+                            <input type="number" min="1" max="31" [(ngModel)]="newCounterEvent.day" class="form-control" id="day" name="day" required>
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <div class="col-md-6 mb-3">
                             <label for="day" class="form-label">Hora</label>
-                            <input type="number" [(ngModel)]="newCounterEvent.hour" class="form-control" id="userName" name="userName" required>
+                            <!-- <input type="number" [(ngModel)]="newCounterEvent.hour" class="form-control" id="userName" name="userName" required> -->
+                            <select class="form-control" [(ngModel)]="selectedHour" name="selector2">
+                                <option *ngFor="let h of hourList" [ngValue]="h">
+                                  {{h.text}}
+                                </option>
+                             </select>
+                        
                         </div>
                         <div class="col-md-6">
                             <label for="day" class="form-label">Minutos</label>
