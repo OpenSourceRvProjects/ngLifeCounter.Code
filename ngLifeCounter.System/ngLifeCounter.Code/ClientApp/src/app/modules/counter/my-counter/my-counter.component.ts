@@ -67,6 +67,14 @@ export class MyCounterComponent {
     this.viewMinutes = Math.floor((timeDifference) / (this.milliSecondsInASecond * this.minutesInAnHour) % this.SecondsInAMinute);
     this.viewHour = Math.floor((timeDifference) / (this.milliSecondsInASecond * this.minutesInAnHour * this.SecondsInAMinute) % this.hoursInADay);
     this.viewDay = Math.floor((timeDifference) / (this.milliSecondsInASecond * this.minutesInAnHour * this.SecondsInAMinute * this.hoursInADay));
+  
+    if (this.viewSeconds < 0){
+      this.viewSeconds = this.viewSeconds * -1;
+      this.viewMinutes = (this.viewMinutes * -1) - 1;
+      this.viewHour = (this.viewHour * -1) - 1;
+      this.viewDay = (this.viewDay * -1)  -1;
+    }
+  
   }
 
   goToListPage() {
