@@ -60,6 +60,24 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "DEV"
       }
+    },
+    "qa-env": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "QA",
+        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"
+      }
+    },
+
+    //dotnet run --launch-Profile "local-swagger"
+    "qa-swagger": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "QA"
+      }
     }
   }
 }
