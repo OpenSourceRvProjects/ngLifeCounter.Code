@@ -6,19 +6,19 @@
   " class="navbar navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3">
     <div class="container-fluid text-center">
 
-        <div class="row justify-content-center">
-    <div class="col-5">
-     
-    </div>
-    <div class="col-5">
-      
-    </div>
-  </div>
+      <div class="row justify-content-center">
+        <div class="col-5">
+
+        </div>
+        <div class="col-5">
+
+        </div>
+      </div>
       <div class="d-flex justify-content-center">
-        <h4 style="color: white;padding-left: 25px;"  [routerLink]="['/']"> Life counter</h4>
+        <h4 style="color: white;padding-left: 25px;" [routerLink]="['/']"> Life counter</h4>
 
       </div>
-     
+
       <button class="navbar-toggler"
               type="button"
               data-bs-toggle="collapse"
@@ -29,25 +29,33 @@
               (click)="toggle()">
         <span class="navbar-toggler-icon" style="color: white;"></span>
       </button>
-      
-      
+
+
       <!-- https://stackoverflow.com/questions/76048115/how-to-make-navbar-in-bootstrap-always-stays-collapsed-no-matter-the-screen-siz -->
       <div class="collapse navbar-collapse"
            [ngClass]="{ show: isExpanded }">
         <ul class="navbar-nav flex-grow">
-  
-  
+
+
           <li *ngFor="let link of links" class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link" style="color:white" (click)="toggle()" [routerLink]="link.path">{{link.text}}</a>
           </li>
           <li>
             <a class="nav-link" (click)="logout()">Salir</a>
           </li>
-  
+
         </ul>
       </div>
     </div>
   </nav>
+
+  <div class="container">
+    <div role="alert" class="alert alert-warning d-flex justify-content-center">
+      <span style="margin-top: 8px;">
+        Ambiente de PRUEBAS, <a href="/environmentInfo" target="_blank">¿Qué significa ésto?</a>
+      </span>
+    </div>
+  </div>
 </header>
 
 <style>

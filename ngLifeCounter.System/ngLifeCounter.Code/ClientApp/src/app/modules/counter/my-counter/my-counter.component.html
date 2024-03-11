@@ -11,35 +11,43 @@
 </style>
 
 <div class="backgroundGrad" style="width: auto; height: 1000px">
-    <div >
-        <br>
-        <br>
-        <div class="image-container">
-             <!-- <img  style="display: flex; justify-content: center;" id="doggie" src="https://onedrive.live.com/embed?resid=E530B3F2B44ACA4B%21107019&authkey=%21AAWWKDbBtKS39_A" width="280" 
-            height="300" style="border-radius: 50%;"> -->
-            <img  style="display: flex; justify-content: center;" id="doggie" [src]="dogURL" width="280" 
-            height="300" style="border-radius: 50%;">
-            
-        </div>
-        <br>
-        <h4 style="text-align: center; color: white;">{{eventName}} {{isCountDown ? ': faltan ' : ' desde hace'}}</h4>
-        <br>
-        <h4 id="noAlcoholDays" style="text-align: center; color: white;">{{viewDay}} días</h4>
-        <br>
-        <h4 id="noAlcoholHours" style="text-align: center; color: white;">{{viewHour}} horas</h4>
-        <br>
-        <h4 id="noAlcoholMinutes" style="text-align: center; color: white;">{{viewMinutes}} minutos</h4>
-        <br>
-        <h4 id="noAlcoholSeconds" style="text-align: center; color: white;">{{viewSeconds}} segundos</h4>
-        <hr>
-        <h4 id="completedYears" style="text-align: center; color: white;  "></h4>
-        <br>
-        <div class="text-center">
-            <button (click)="goToListPage()" class="btn btn-success text">
-                Ir a otros contadores
-               </button>
-        </div>
+  <br />
+  <div class="container">
+    <div role="alert" class="alert alert-warning d-flex justify-content-center">
+      <span style="margin-top: 8px;">
+        Ambiente de PRUEBAS, <a href="/environmentInfo" target="_blank">¿Qué significa ésto?</a> 
+      </span>
     </div>
-   
+  </div>
+  <div>
+    <br>
+    <br>
+    <div class="image-container">
+      <!-- <img  style="display: flex; justify-content: center;" id="doggie" src="https://onedrive.live.com/embed?resid=E530B3F2B44ACA4B%21107019&authkey=%21AAWWKDbBtKS39_A" width="280"
+      height="300" style="border-radius: 50%;"> -->
+      <img style="display: flex; justify-content: center;" id="doggie" [src]="dogURL" width="280"
+           height="300" style="border-radius: 50%;">
+
+    </div>
+    <br>
+    <h4 style="text-align: center; color: white;">{{eventName}} {{isCountDown ? ': faltan ' : ' desde hace'}}</h4>
+    <br>
+    <h4 id="noAlcoholDays" style="text-align: center; color: white;">{{viewDay}} días</h4>
+    <br>
+    <h4 id="noAlcoholHours" style="text-align: center; color: white;">{{viewHour}} horas</h4>
+    <br>
+    <h4 id="noAlcoholMinutes" style="text-align: center; color: white;">{{viewMinutes}} minutos</h4>
+    <br>
+    <h4 id="noAlcoholSeconds" style="text-align: center; color: white;">{{viewSeconds}} segundos</h4>
+    <hr>
+    <h4 id="completedYears" style="text-align: center; color: white;  "></h4>
+    <br>
+    <div class="text-center">
+      <button (click)="goToListPage()" class="btn btn-success text">
+        Ir a otros contadores
+      </button>
+    </div>
+  </div>
+
 
 </div>
