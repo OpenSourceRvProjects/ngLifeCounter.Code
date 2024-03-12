@@ -5,6 +5,7 @@ import { CounterListComponent } from './counter-list/counter-list.component';
 import { CounterRoutingModule } from './counter-routing.module';
 import { FormsModule } from '@angular/forms';
 import { MyCounterComponent } from './my-counter/my-counter.component';
+import { EnvironmentModule } from '../environment/environment.module';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { MyCounterComponent } from './my-counter/my-counter.component';
   imports: [
     CounterRoutingModule,
     FormsModule,
-    CommonModule
+    CommonModule,
+    EnvironmentModule
   ]
 })
 export class CounterModule { }

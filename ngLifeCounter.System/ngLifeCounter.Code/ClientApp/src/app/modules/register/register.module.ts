@@ -2,20 +2,20 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserPrivacyComponent } from './user-privacy/user-privacy.component';
 import { RegisterComponent } from './register/register.component';
-import { LoginComponent } from '../login/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { RegisterRoutingModule } from './register-routing.module';
+import { EnvironmentModule } from '../environment/environment.module';
 
 
 
 @NgModule({
   declarations: [
     RegisterComponent,
-    LoginComponent,
     UserPrivacyComponent
   ],
   imports: [
     RegisterRoutingModule,
+    EnvironmentModule,
     FormsModule,
     CommonModule
   ]

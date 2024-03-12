@@ -16,7 +16,7 @@ constructor(private localStorageService: LocalStorageService) {
 }
 
   ngOnInit(){
-    this.localStorageService.desactivateCounterView();
+    // this.localStorageService.desactivateCounterView();
   }
 
 }

@@ -3,14 +3,8 @@
 <div class="backgroundLookAndFeel" style="width: auto; height: 1000px">
     <br>
     <div class="container">
-        <div role="alert" class="alert alert-warning d-flex justify-content-center">
-          <span style="margin-top: 8px;">
-            Ambiente de PRUEBAS, <a href="/environmentInfo" target="_blank">¿Qué significa ésto?</a>
-          </span>
-        </div>
-      </div>
-    
-    <div class="container">
+    <app-environment-banner></app-environment-banner>
+
         <div *ngIf="processing" class="vh-100 d-flex justify-content-center align-items-center">
             <div class="col-md-4">
                 <div class="border border-3 border-primary"></div>

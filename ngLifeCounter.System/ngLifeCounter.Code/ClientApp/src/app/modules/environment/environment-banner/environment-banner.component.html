@@ -1,0 +1,15 @@
+<div *ngIf="showBannerQA" class="container">
+    <div role="alert" class="alert alert-warning d-flex justify-content-center">
+      <span style="margin-top: 8px;">
+        Ambiente de PRUEBAS, <a href="/environmentInfo">¿Qué significa ésto?</a> 
+      </span>
+    </div>
+  </div>
+
+  <div *ngIf="showBannerDEV" class="container">
+    <div role="alert" class="alert alert-danger d-flex justify-content-center">
+      <span style="margin-top: 8px;">
+        No deberías ver esto! es el ambiente de desarrollo, <a href="/environmentInfo">¿Qué significa ésto?</a> 
+      </span>
+    </div>
+  </div>
