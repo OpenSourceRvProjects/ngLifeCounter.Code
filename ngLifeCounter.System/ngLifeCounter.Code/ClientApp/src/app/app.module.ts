@@ -10,6 +10,7 @@ import { LoginModule } from './modules/login/login.module';
 import { HomeRoutingModule } from './modules/home/home-routing.module';
 import { CounterModule } from './modules/counter/counter.module';
 import { EnvironmentModule } from './modules/environment/environment.module';
+import { SharedModule } from './modules/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { EnvironmentModule } from './modules/environment/environment.module';
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     EnvironmentModule,
+    SharedModule,
     HttpClientModule,
     HomeRoutingModule,
     AppRoutingModule,

@@ -84,23 +84,7 @@ export class MyCounterComponent {
   
   }
 
-  copyMessage(){
-    debugger;
-    const selBox = document.createElement('textarea');
-    selBox.style.position = 'fixed';
-    selBox.style.left = '0';
-    selBox.style.top = '0';
-    selBox.style.opacity = '0';
-    selBox.value = this.baseUrl + "counter/myCounter?id=" + this.uuid;
-    document.body.appendChild(selBox);
-    selBox.focus();
-    selBox.select();
-    var urlString = selBox.value;
-    navigator.clipboard.writeText(urlString);
-    // document.execCommand('copy', false);
-    document.body.removeChild(selBox);
-    alert("Copiaste tu contador! puedes compartirlo públicamente")
-  }
+  
 
   goToListPage() {
     this.router.navigate(['/counter/list']);

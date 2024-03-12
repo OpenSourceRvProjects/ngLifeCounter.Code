@@ -6,18 +6,20 @@ import { CounterRoutingModule } from './counter-routing.module';
 import { FormsModule } from '@angular/forms';
 import { MyCounterComponent } from './my-counter/my-counter.component';
 import { EnvironmentModule } from '../environment/environment.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
     AddCounterComponent,
     CounterListComponent,
-    MyCounterComponent
+    MyCounterComponent,
   ],
   imports: [
     CounterRoutingModule,
     FormsModule,
     CommonModule,
-    EnvironmentModule
+    EnvironmentModule,
+    SharedModule
   ]
 })
 export class CounterModule { }

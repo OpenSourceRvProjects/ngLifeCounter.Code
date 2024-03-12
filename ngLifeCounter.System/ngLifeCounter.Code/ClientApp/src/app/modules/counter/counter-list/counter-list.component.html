@@ -15,7 +15,7 @@
             <td><a href="counter/myCounter?id={{e.id}}"> {{e.eventName}}</a></td>
             <td>{{e.dateString}}</td>
             <td style="text-align: center;"><input (change)="checkboxChange(e)" [(ngModel)]="e.isPublic" type="checkbox"></td>
-            <td><i *ngIf="e.isPublic" class="fa fa-copy"></i></td>
+            <td><app-copy-link *ngIf="e.isPublic" [counterID]="e.id"></app-copy-link></td>
           </tr>
         </tbody>
       </table>
