@@ -6,6 +6,7 @@
             <th scope="col">Nombre evento</th>
             <th scope="col">Fecha evento</th>
             <th style="text-align: center;" scope="col">Público</th>
+            <th></th>
          
           </tr>
         </thead>
@@ -13,7 +14,8 @@
           <tr *ngFor="let e of counterList; index as i">
             <td><a href="counter/myCounter?id={{e.id}}"> {{e.eventName}}</a></td>
             <td>{{e.dateString}}</td>
-            <td style="text-align: center;"><input disabled="true" [(ngModel)]="e.isPublic" type="checkbox"></td>
+            <td style="text-align: center;"><input (change)="checkboxChange(e)" [(ngModel)]="e.isPublic" type="checkbox"></td>
+            <td><i *ngIf="e.isPublic" class="fa fa-copy"></i></td>
           </tr>
         </tbody>
       </table>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, interval } from 'rxjs';
 import { EventService } from 'src/app/Services/Events/event.service';
@@ -14,10 +14,11 @@ export class MyCounterComponent {
   constructor(private localStorageService: LocalStorageService, 
     private router: Router, 
     private route: ActivatedRoute,
-    private eventCounterService: EventService){}
+    private eventCounterService: EventService, @Inject('BASE_URL') private baseUrl : any){}
   id: string = "";
   private sub: any;
 
+  uuid: string = "";
   viewYear : number = 0;
   viewMonth : number = 0;
   viewDay: number = 0;
@@ -52,6 +53,7 @@ export class MyCounterComponent {
       .subscribe({next: (data:any)=>{
         this._startDate = new Date(data.year, data.month - 1, data.day, data.hour, data.minutes, 0);
         this.eventName = data.name;
+        this.uuid = data.counterID;
         this.putCounterTimeData();
         this.subscription = interval(1000)
         .subscribe(x => { this.putCounterTimeData(); });
@@ -80,6 +82,24 @@ export class MyCounterComponent {
       this.viewDay = (this.viewDay * -1)  -1;
     }
   
+  }
+
+  copyMessage(){
+    debugger;
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = this.baseUrl + "counter/myCounter?id=" + this.uuid;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    var urlString = selBox.value;
+    navigator.clipboard.writeText(urlString);
+    // document.execCommand('copy', false);
+    document.body.removeChild(selBox);
+    alert("Copiaste tu contador! puedes compartirlo públicamente")
   }
 
   goToListPage() {

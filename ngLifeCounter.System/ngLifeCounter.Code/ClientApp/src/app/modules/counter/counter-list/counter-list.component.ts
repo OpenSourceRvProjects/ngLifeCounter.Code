@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ICounterPrivacySetModel } from 'src/app/Models/EventCounter/ICounterPrivacySetModel';
 import { IEventCounterItemModel } from 'src/app/Models/EventCounter/IEventCounterItemModel';
 import { EventService } from 'src/app/Services/Events/event.service';
 import { LocalStorageService } from 'src/app/Services/Storage/local-storage.service';
@@ -15,10 +16,23 @@ export class CounterListComponent {
   }
 
   counterList : IEventCounterItemModel[] = [];
+  counterSetting : ICounterPrivacySetModel = <ICounterPrivacySetModel>{}; 
 
   ngOnInit(){
     this.localStorageService.desactivateCounterView();
     this.getCountersList();
+  }
+
+  checkboxChange(eventItem: IEventCounterItemModel){
+    debugger;
+    this.counterSetting.isPublicCounter = eventItem.isPublic;
+
+    this.eventService.changeEventPrivacySetting(eventItem.id, this.counterSetting)
+    .subscribe({next: ()=> {
+      this.counterSetting = <ICounterPrivacySetModel>{}
+    }, error : (err) =>{
+
+    }})
   }
 
   getCountersList(){

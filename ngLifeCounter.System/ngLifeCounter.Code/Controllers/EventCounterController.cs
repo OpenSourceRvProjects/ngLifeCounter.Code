@@ -55,9 +55,14 @@ namespace ngLifeCounter.MVC.Controllers
 		}
 
 		// PUT api/<EventCounterController>/5
-		[HttpPut("{id}")]
-		public void Put(int id, [FromBody] string value)
+		[HttpPut]
+		[Route("changeCounterPrivacy")]
+		[LoggedUserDataFilter]
+
+		public async Task<IActionResult> Put(Guid id, [FromBody] CounterPrivacySetModel setting)
 		{
+			await _eventService.SetPrivacyCounter(id, setting);
+			return Ok();
 		}
 
 		// DELETE api/<EventCounterController>/5

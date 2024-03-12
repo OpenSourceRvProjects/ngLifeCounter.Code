@@ -11,7 +11,8 @@ const PROXY_CONFIG = [
       "/api/Account/login",
       "/api/EventCounter",
       "/api/EventCounter/getById",
-      "/api/Environment"
+      "/api/Environment",
+      "/api/EventCounter/changeCounterPrivacy",
    ],
     proxyTimeout: 100000,
     target: target,

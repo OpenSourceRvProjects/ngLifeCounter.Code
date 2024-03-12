@@ -136,5 +136,20 @@ namespace ngLifeCounter.Backend.Services
 
 			return counters;
 		}
+
+		public async Task SetPrivacyCounter(Guid counterID, CounterPrivacySetModel setting)
+		{
+			var currentUserID = Guid.Parse(_accessor.HttpContext.Session.GetString("userID"));
+
+			var counter = await _dbContext.EventCounters.FirstOrDefaultAsync(f => f.UserId == currentUserID && f.Id == counterID);
+
+			if(counter == null)
+			{
+				throw new Exception("Counter does not exist!");
+			}
+
+			counter.IsPublic = setting.IsPublicCounter;
+			await _dbContext.SaveChangesAsync();
+		}
 	}
 }

@@ -12,5 +12,6 @@ namespace ngLifeCounter.Backend.Infrastructure
 		Task AddEventCounter(NewEventCounterModel eventCounter);
 		Task <List<EventCounterItemModel>> GetCounterList();
 		Task<CounterDataModel> GetCounterData(Guid id);
+		Task SetPrivacyCounter(Guid counterID, CounterPrivacySetModel setting);
 	}
 }
