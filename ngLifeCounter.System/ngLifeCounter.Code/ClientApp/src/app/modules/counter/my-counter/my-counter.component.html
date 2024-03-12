@@ -35,9 +35,9 @@
     <br>
     <h4 id="noAlcoholSeconds" style="text-align: center; color: white;">{{viewSeconds}} segundos</h4>
     <br>
-    <h4 style="text-align: center; color: white;">
+    <h4 *ngIf="isPublicCounter" style="text-align: center; color: white;">
       <!-- <i (click)="copyMessage()" class="fa fa-copy fa-2x"></i> -->
-      <app-copy-link [counterID]="id" [isFromCounterView]="true"></app-copy-link>
+      <app-copy-link  [counterID]="id" [isFromCounterView]="true"></app-copy-link>
     </h4>
     <hr>
     <h4 id="completedYears" style="text-align: center; color: white;  "></h4>

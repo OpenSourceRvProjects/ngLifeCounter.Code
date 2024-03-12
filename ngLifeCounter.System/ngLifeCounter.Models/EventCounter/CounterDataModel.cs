@@ -15,5 +15,6 @@ namespace ngLifeCounter.Models.EventCounter
         public int Day { get; set; }
         public int Hour { get; set; }
         public int Minutes { get; set; }
-    }
+		public bool IsPublicCounter { get; set; }
+	}
 }

@@ -115,6 +115,7 @@ namespace ngLifeCounter.Backend.Services
 				Day = counterDB.StartDay,
 				Hour = (int)counterDB.Hour,
 				Minutes = (int)counterDB.Minutes,
+				IsPublicCounter = counterDB.IsPublic,
 			};
 		}
 

@@ -15,8 +15,9 @@ export class MyCounterComponent {
     private router: Router, 
     private route: ActivatedRoute,
     private eventCounterService: EventService, @Inject('BASE_URL') private baseUrl : any){}
-  id: string = "";
-  private sub: any;
+    id: string = "";
+    isPublicCounter : boolean = false;
+    private sub: any;
 
   uuid: string = "";
   viewYear : number = 0;
@@ -33,6 +34,7 @@ export class MyCounterComponent {
    hoursInADay = 24;
    minutesInAnHour = 60;
    SecondsInAMinute  = 60;
+   isShared : boolean = false;
 
    isCountDown : boolean = false;
 
@@ -43,7 +45,9 @@ export class MyCounterComponent {
     this.localStorageService.avtiveCounterView();
     this.getDoggie();
     this.sub = this.route.queryParams.subscribe(params=>{
+      debugger;
       this.id = params['id'];
+      this.isShared = params['shared']
       this.getEvent();
     });
   }
@@ -54,6 +58,7 @@ export class MyCounterComponent {
         this._startDate = new Date(data.year, data.month - 1, data.day, data.hour, data.minutes, 0);
         this.eventName = data.name;
         this.uuid = data.counterID;
+        this.isPublicCounter = data.isPublicCounter;
         this.putCounterTimeData();
         this.subscription = interval(1000)
         .subscribe(x => { this.putCounterTimeData(); });
