@@ -11,6 +11,7 @@ import { HomeRoutingModule } from './modules/home/home-routing.module';
 import { CounterModule } from './modules/counter/counter.module';
 import { EnvironmentModule } from './modules/environment/environment.module';
 import { SharedModule } from './modules/shared/shared.module';
+import { IonicModule } from '@ionic/angular';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { SharedModule } from './modules/shared/shared.module';
     CounterModule,
     LoginModule,
     RegisterModule,
+    IonicModule.forRoot({}),
 
   ],
   exports: [],
