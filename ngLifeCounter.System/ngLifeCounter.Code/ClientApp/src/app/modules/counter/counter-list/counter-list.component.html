@@ -7,6 +7,7 @@
             <th scope="col">Fecha evento</th>
             <th style="text-align: center;" scope="col">Público</th>
             <th></th>
+            <th></th>
          
           </tr>
         </thead>
@@ -16,8 +17,79 @@
             <td>{{e.dateString}}</td>
             <td style="text-align: center;"><input (change)="checkboxChange(e)" [(ngModel)]="e.isPublic" type="checkbox"></td>
             <td><app-copy-link *ngIf="e.isPublic" [counterID]="e.id"></app-copy-link></td>
+            <td><i class="fa fa-pencil" (click)="open(content, e)"></i></td>
+           
           </tr>
         </tbody>
       </table>
+
+      <ng-template #content let-modal>
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-basic-title">Editar {{selectedCounterEdit.eventName}}</h4>
+              <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+            </div>
+            <div class="modal-body">
+              <div class="form-container" style="margin-top: 0px;">
+                <h2 class="text-center mb-4">Agregar evento</h2>
+
+                <form>
+                    <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                            <label for="firstName" class="form-label">Nombre evento</label>
+                            <input type="text" [(ngModel)]="selectedCounterEdit.eventName" class="form-control" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="lastName" class="form-label">Año evento:</label>
+                            <input type="number" class="form-control" id="lastName" name="lastName" required>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                       
+                        <div class="col-md-6 mb-3">
+                            <label for="month" class="form-label">Mes evento:</label>
+                            <select class="form-control"  name="selector1">
+                                
+                            </select>
+
+                        </div>
+                        <div class="col-md-6">
+                            <label for="day" class="form-label">Día evento</label>
+                            <input type="number" min="1" max="31"  class="form-control" id="day" name="day" required>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                            <label for="day" class="form-label">Hora</label>
+                            <select class="form-control"  name="selector2">
+                              
+                            </select>
+                        
+                        </div>
+                        <div class="col-md-6">
+                            <label for="day" class="form-label">Minutos</label>
+                            <input type="number"  class="form-control" id="userName" name="userName" required>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                    </div>
+                    
+                    <div class="col-12">
+                    </div>
+
+                    <br>
+                  
+                </form>
+            </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-danger" (click)="modal.close('Save click')">Cancelar</button>
+              <button type="button" class="btn btn-outline-success" (click)="editSelectedCounter()">Guardar</button>
+            </div>
+      </ng-template>
+      
+      <pre>{{ closeResult }}</pre>
 </div>
 
