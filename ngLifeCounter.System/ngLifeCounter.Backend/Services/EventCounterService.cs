@@ -5,10 +5,12 @@ using ngLifeCounter.Data.DataAccess;
 using ngLifeCounter.Models.EventCounter;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EventCounter = ngLifeCounter.Data.DataAccess.EventCounter;
 
 namespace ngLifeCounter.Backend.Services
 {
@@ -151,6 +153,35 @@ namespace ngLifeCounter.Backend.Services
 
 			counter.IsPublic = setting.IsPublicCounter;
 			await _dbContext.SaveChangesAsync();
+		}
+
+		public async Task UpdateEventCounter(Guid counterID, CounterDataModel counter)
+		{
+			var currentUserID = Guid.Parse(_accessor.HttpContext.Session.GetString("userID"));
+			var counterInDB = await _dbContext.EventCounters.FirstOrDefaultAsync(f => f.UserId == currentUserID && f.Id == counterID);
+
+			if (counterInDB == null)
+			{
+				throw new Exception("Counter does not exist!");
+			}
+
+			counterInDB.EventName = counter.Name;
+			counterInDB.StartMonth = counter.Month;
+			counterInDB.Hour = counter.Hour;
+			counterInDB.StartDay = counter.Day;
+			counterInDB.StartYear = counter.Year;
+			counterInDB.Minutes = counter.Minutes;
+			try
+			{
+				var dateTimeEvent = new DateTime(counterInDB.StartDay, counterInDB.StartMonth, counterInDB.StartDay, counterInDB.Hour.Value, counterInDB.Minutes.Value, 0);
+			}
+			catch (Exception ex)
+			{
+				throw new Exception("Date is not valid");
+			}
+
+			_dbContext.EventCounters.Update(counterInDB);
+			_dbContext.SaveChanges();
 		}
 	}
 }

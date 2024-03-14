@@ -46,10 +46,10 @@
                    
                       <div class="col-md-6 mb-3">
                           <label for="month" class="form-label">Mes evento:</label>
-                          <select class="form-control" [(ngModel)]="selectedDetailedCounter.month" name="selector1">
-                              <!-- <option *ngFor="let m of monthsList" [ngValue]="m">
+                          <select class="form-control" [(ngModel)]="selectedMonthToDetailCounter" name="selector1">
+                              <option *ngFor="let m of monthsForEditMode" [ngValue]="m">
                                 {{m.text}}
-                              </option> -->
+                              </option>
                            </select>
                       </div>
                       <div class="col-md-6">
@@ -89,6 +89,5 @@
             </div>
       </ng-template>
       
-      <pre>{{ closeResult }}</pre>
 </div>
 

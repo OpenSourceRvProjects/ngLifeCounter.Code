@@ -4,6 +4,7 @@ import { LocalStorageService } from '../Storage/local-storage.service';
 import { INewEventCounterModel } from 'src/app/Models/EventCounter/INewEventCounterModel';
 import { ICounterPrivacySetModel } from 'src/app/Models/EventCounter/ICounterPrivacySetModel';
 import { TextValueItem } from 'src/app/Models/TextValueItem';
+import { ICounterDataModel } from 'src/app/Models/EventCounter/ICounterDataModel';
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +50,13 @@ export class EventService {
     var body = setting;
     return this.http.put(this.baseUrl +"api/EventCounter/changeCounterPrivacy?id=" + eventID, body, {headers})
   }
+
+  editEventCounter(eventID: string, eventCounter: ICounterDataModel ){
+    var headers = this.initHeaders();
+    var body = eventCounter;
+    return this.http.put(this.baseUrl +"api/EventCounter/editCounterEvent?id=" + eventID, body, {headers})
+  }
+
 
 
   getMonths(){

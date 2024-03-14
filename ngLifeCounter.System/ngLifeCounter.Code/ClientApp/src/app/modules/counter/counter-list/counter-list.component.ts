@@ -37,8 +37,19 @@ export class CounterListComponent {
 
   editSelectedCounter(){
     debugger;
-    var hourToEdit = this.selectedHourToDetailedCounter;
-    this.modalService.dismissAll();
+    this.selectedDetailedCounter.hour = this.selectedHourToDetailedCounter.number;
+    this.selectedDetailedCounter.month = this.selectedMonthToDetailCounter.number;
+
+    this.eventService.editEventCounter(this.selectedDetailedCounter.counterID, this.selectedDetailedCounter)
+    .subscribe({next: (data)=>{
+      debugger;
+      this.modalService.dismissAll();
+      this.getCountersList();
+
+    }, error: (err)=>{
+      alert("No se pudo actualizar la información, verifica que la hora y fecha sea correcta");
+    }},)
+
   }
   
 	open(content : any, counterEvent : IEventCounterItemModel) {
@@ -48,7 +59,7 @@ export class CounterListComponent {
     .subscribe({next : (data : any)=> {
       this.selectedDetailedCounter = data;
       this.selectedHourToDetailedCounter = this.hoursForEditMode.find(f=> f.number == this.selectedDetailedCounter.hour)!;
-
+      this.selectedMonthToDetailCounter = this.monthsForEditMode.find(f=> f.number == this.selectedDetailedCounter.month)!;
     }, error: (error)=>{
       alert("Evento no encontrado")
     }})

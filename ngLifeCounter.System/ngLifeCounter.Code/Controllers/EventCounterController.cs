@@ -65,6 +65,16 @@ namespace ngLifeCounter.MVC.Controllers
 			return Ok();
 		}
 
+		[HttpPut]
+		[Route("editCounterEvent")]
+		[LoggedUserDataFilter]
+
+		public async Task<IActionResult> PutEvent(Guid id, [FromBody] CounterDataModel eventObject)
+		{
+			await _eventService.UpdateEventCounter(id, eventObject);
+			return Ok();
+		}
+
 		// DELETE api/<EventCounterController>/5
 		[HttpDelete("{id}")]
 		public void Delete(int id)
