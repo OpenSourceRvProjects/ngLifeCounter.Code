@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ICounterDataModel } from 'src/app/Models/EventCounter/ICounterDataModel';
 import { ICounterPrivacySetModel } from 'src/app/Models/EventCounter/ICounterPrivacySetModel';
 import { IEventCounterItemModel } from 'src/app/Models/EventCounter/IEventCounterItemModel';
+import { TextValueItem } from 'src/app/Models/TextValueItem';
 import { EventService } from 'src/app/Services/Events/event.service';
 import { LocalStorageService } from 'src/app/Services/Storage/local-storage.service';
 
@@ -19,20 +21,38 @@ export class CounterListComponent {
   counterList : IEventCounterItemModel[] = [];
   counterSetting : ICounterPrivacySetModel = <ICounterPrivacySetModel>{}; 
   closeResult = '';
-  selectedCounterEdit : IEventCounterItemModel = <IEventCounterItemModel>{};
-
+  selectedCounterToEdit : IEventCounterItemModel = <IEventCounterItemModel>{};
+  selectedDetailedCounter : ICounterDataModel = <ICounterDataModel>{};
+  selectedHourToDetailedCounter : TextValueItem = <TextValueItem>{};
+  selectedMonthToDetailCounter : TextValueItem = <TextValueItem>{};
+  
+  hoursForEditMode : TextValueItem[] = [];
+  monthsForEditMode : TextValueItem[] = [];
   ngOnInit(){
     this.localStorageService.desactivateCounterView();
     this.getCountersList();
+    this.hoursForEditMode = this.eventService.getHours();
+    this.monthsForEditMode =  this.eventService.getMonths();
   }
 
   editSelectedCounter(){
+    debugger;
+    var hourToEdit = this.selectedHourToDetailedCounter;
     this.modalService.dismissAll();
   }
   
 	open(content : any, counterEvent : IEventCounterItemModel) {
+    this.selectedCounterToEdit = counterEvent;
 
-    this.selectedCounterEdit = counterEvent;
+    this.eventService.getEventByID(this.selectedCounterToEdit.id)
+    .subscribe({next : (data : any)=> {
+      this.selectedDetailedCounter = data;
+      this.selectedHourToDetailedCounter = this.hoursForEditMode.find(f=> f.number == this.selectedDetailedCounter.hour)!;
+
+    }, error: (error)=>{
+      alert("Evento no encontrado")
+    }})
+
 		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' }).result.then(
 			(result) => {
 				this.closeResult = `Closed with: ${result}`;
