@@ -25,6 +25,7 @@ export class CounterListComponent {
   selectedDetailedCounter : ICounterDataModel = <ICounterDataModel>{};
   selectedHourToDetailedCounter : TextValueItem = <TextValueItem>{};
   selectedMonthToDetailCounter : TextValueItem = <TextValueItem>{};
+  processing =  false;
   
   hoursForEditMode : TextValueItem[] = [];
   monthsForEditMode : TextValueItem[] = [];
@@ -36,7 +37,7 @@ export class CounterListComponent {
   }
 
   editSelectedCounter(){
-    debugger;
+    this.processing = true;
     this.selectedDetailedCounter.hour = this.selectedHourToDetailedCounter.number;
     this.selectedDetailedCounter.month = this.selectedMonthToDetailCounter.number;
 
@@ -44,9 +45,11 @@ export class CounterListComponent {
     .subscribe({next: (data)=>{
       debugger;
       this.modalService.dismissAll();
+      this.processing = false;
       this.getCountersList();
 
     }, error: (err)=>{
+      this.processing = false;
       alert("No se pudo actualizar la información, verifica que la hora y fecha sea correcta");
     }},)
 

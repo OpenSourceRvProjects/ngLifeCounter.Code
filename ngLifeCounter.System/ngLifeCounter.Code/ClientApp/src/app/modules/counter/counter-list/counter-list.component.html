@@ -24,6 +24,29 @@
       </table>
 
       <ng-template #content let-modal>
+        <br>
+        <div *ngIf="processing" class=" d-flex justify-content-center align-items-center">
+          <div class="col-md-6">
+              <div class="border border-3 border-success"></div>
+              <div class="card  bg-white shadow p-5">
+                  <div class="mb-4 text-center">
+                      <div  class="d-flex justify-content-center">
+          
+                          <div style="width: 6rem; height: 6rem;" class="spinner-border text-success" role="status">
+                          <span class="visually-hidden">Loading...</span>
+                      </div>
+                  </div>
+                  <div class="text-center">
+                      <h1>Modificando tu evento...</h1>
+                      <p>Ésto tomara un momento</p>
+                      <!-- <button class="btn btn-outline-success">Login</button> -->
+                  </div>
+              </div>
+          </div>
+      </div>
+      </div>
+      <br>
+        <div *ngIf="!processing" >
             <div class="modal-header">
               <h4 class="modal-title" id="modal-basic-title">Editar {{selectedCounterToEdit.eventName}}</h4>
               <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
@@ -87,6 +110,7 @@
               <button type="button" class="btn btn-outline-danger" (click)="modal.close('Save click')">Cancelar</button>
               <button type="button" class="btn btn-outline-success" (click)="editSelectedCounter()">Guardar</button>
             </div>
+        </div>
       </ng-template>
       
 </div>
