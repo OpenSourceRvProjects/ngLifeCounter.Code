@@ -181,7 +181,7 @@ namespace ngLifeCounter.Backend.Services
 					PreviousDay = counterInDB.StartDay,	
 					PreviousHour = counterInDB.Hour.Value,
 					PreviousMinutes = counterInDB.Minutes.Value,
-					CreationDate = counterInDB.CreationDate,
+					CreationDate = DateTime.Now,
 					UserId = currentUserID,
 					PersonalProfileId = counterInDB.PersonalProfileId,
 				};
