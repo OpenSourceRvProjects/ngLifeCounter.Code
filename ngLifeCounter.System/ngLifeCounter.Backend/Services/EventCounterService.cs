@@ -72,7 +72,7 @@ namespace ngLifeCounter.Backend.Services
 
 		public async Task<CounterDataModel> GetCounterData(Guid id)
 		{
-			var counterDB = await _dbContext.EventCounters.FirstOrDefaultAsync(f=> f.Id == id);
+			var counterDB = await _dbContext.EventCounters.FirstOrDefaultAsync(f => f.Id == id);
 			CounterDataModel counterData = null;
 
 			if (counterDB.IsPublic)
@@ -128,13 +128,13 @@ namespace ngLifeCounter.Backend.Services
 				.Select(s => new EventCounterItemModel
 				{
 					Id = s.Id,
-					EventName= s.EventName,
-					IsPublic= s.IsPublic,
-					DateString = s.StartDay.ToString("00") + "/" 
+					EventName = s.EventName,
+					IsPublic = s.IsPublic,
+					DateString = s.StartDay.ToString("00") + "/"
 					+ s.StartMonth.ToString("00") + "/"
 					+ s.StartYear,
 					CreationDate = s.CreationDate
-				}).OrderByDescending(o=> o.CreationDate)
+				}).OrderByDescending(o => o.CreationDate)
 				.ToListAsync();
 
 			return counters;
@@ -146,7 +146,7 @@ namespace ngLifeCounter.Backend.Services
 
 			var counter = await _dbContext.EventCounters.FirstOrDefaultAsync(f => f.UserId == currentUserID && f.Id == counterID);
 
-			if(counter == null)
+			if (counter == null)
 			{
 				throw new Exception("Counter does not exist!");
 			}
@@ -155,7 +155,7 @@ namespace ngLifeCounter.Backend.Services
 			await _dbContext.SaveChangesAsync();
 		}
 
-		public async Task UpdateEventCounter(Guid counterID, CounterDataModel counter)
+		public async Task UpdateEventCounter(Guid counterID, CounterDataModel counter, bool isRelapse = false)
 		{
 			var currentUserID = Guid.Parse(_accessor.HttpContext.Session.GetString("userID"));
 			var counterInDB = await _dbContext.EventCounters.FirstOrDefaultAsync(f => f.UserId == currentUserID && f.Id == counterID);
@@ -165,12 +165,37 @@ namespace ngLifeCounter.Backend.Services
 				throw new Exception("Counter does not exist!");
 			}
 
+			if (isRelapse)
+			{
+				var relapse = new Relapse()
+				{
+					Id = counterID,
+					EventCounterId = counterID,
+					RelapseMonth = counter.Month,
+					RelapseDay = counter.Day,
+					RelapseHour = counter.Hour,
+					RelapseMinute = counter.Minutes,
+					RelapseYear = counter.Year,
+					PreviousYear = counterInDB.StartYear,
+					PreviousMonth = counterInDB.StartMonth,
+					PreviousDay = counterInDB.StartDay,	
+					PreviousHour = counterInDB.Hour.Value,
+					PreviousMinutes = counterInDB.Minutes.Value,
+					CreationDate = counterInDB.CreationDate,
+					UserId = currentUserID,
+					PersonalProfileId = counterInDB.PersonalProfileId,
+				};
+				_dbContext.Add(relapse);
+			}
+
 			counterInDB.EventName = counter.Name;
 			counterInDB.StartMonth = counter.Month;
 			counterInDB.Hour = counter.Hour;
 			counterInDB.StartDay = counter.Day;
 			counterInDB.StartYear = counter.Year;
 			counterInDB.Minutes = counter.Minutes;
+
+		
 			try
 			{
 				var dateTimeEvent = new DateTime(counterInDB.StartDay, counterInDB.StartMonth, counterInDB.StartDay, counterInDB.Hour.Value, counterInDB.Minutes.Value, 0);

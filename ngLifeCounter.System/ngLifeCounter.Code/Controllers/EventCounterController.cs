@@ -69,9 +69,9 @@ namespace ngLifeCounter.MVC.Controllers
 		[Route("editCounterEvent")]
 		[LoggedUserDataFilter]
 
-		public async Task<IActionResult> PutEvent(Guid id, [FromBody] CounterDataModel eventObject)
+		public async Task<IActionResult> PutEvent(Guid id, [FromBody] CounterDataModel eventObject, bool isRelapse = false)
 		{
-			await _eventService.UpdateEventCounter(id, eventObject);
+			await _eventService.UpdateEventCounter(id, eventObject, isRelapse);
 			return Ok();
 		}
 

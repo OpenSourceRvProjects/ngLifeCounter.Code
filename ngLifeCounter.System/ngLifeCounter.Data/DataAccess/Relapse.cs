@@ -23,6 +23,18 @@ public partial class Relapse
 
     public Guid EventCounterId { get; set; }
 
+    public long PreviousYear { get; set; }
+
+    public long PreviousMonth { get; set; }
+
+    public long PreviousDay { get; set; }
+
+    public long PreviousHour { get; set; }
+
+    public long PreviousMinutes { get; set; }
+
+    public DateTime CreationDate { get; set; }
+
     public virtual EventCounter EventCounter { get; set; } = null!;
 
     public virtual PersonalProfile PersonalProfile { get; set; } = null!;

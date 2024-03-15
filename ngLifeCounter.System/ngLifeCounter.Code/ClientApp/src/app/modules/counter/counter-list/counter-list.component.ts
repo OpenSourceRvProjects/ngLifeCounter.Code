@@ -29,6 +29,7 @@ export class CounterListComponent {
   
   hoursForEditMode : TextValueItem[] = [];
   monthsForEditMode : TextValueItem[] = [];
+  isRelapse : boolean =  false;
   ngOnInit(){
     this.localStorageService.desactivateCounterView();
     this.getCountersList();
@@ -41,11 +42,12 @@ export class CounterListComponent {
     this.selectedDetailedCounter.hour = this.selectedHourToDetailedCounter.number;
     this.selectedDetailedCounter.month = this.selectedMonthToDetailCounter.number;
 
-    this.eventService.editEventCounter(this.selectedDetailedCounter.counterID, this.selectedDetailedCounter)
+    this.eventService.editEventCounter(this.selectedDetailedCounter.counterID, this.isRelapse, this.selectedDetailedCounter)
     .subscribe({next: (data)=>{
       debugger;
       this.modalService.dismissAll();
       this.processing = false;
+      this.isRelapse =  false;
       this.getCountersList();
 
     }, error: (err)=>{

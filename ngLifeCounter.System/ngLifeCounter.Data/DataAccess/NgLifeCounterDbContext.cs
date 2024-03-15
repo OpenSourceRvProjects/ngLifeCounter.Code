@@ -26,7 +26,6 @@ public partial class NgLifeCounterDbContext : DbContext
     public virtual DbSet<SignUpRequest> SignUpRequests { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
-
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{
 		//Scaffold - DbContext "Server=.\SQLEXPRESS;Database=NgLifeCounterDB;Trusted_Connection=True;Encrypt=False" Microsoft.EntityFrameworkCore.SqlServer - OutputDir DataAccess - F
@@ -88,6 +87,7 @@ public partial class NgLifeCounterDbContext : DbContext
         modelBuilder.Entity<Relapse>(entity =>
         {
             entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.CreationDate).HasColumnType("datetime");
             entity.Property(e => e.EventCounterId).HasColumnName("EventCounterID");
             entity.Property(e => e.PersonalProfileId).HasColumnName("PersonalProfileID");
             entity.Property(e => e.UserId).HasColumnName("UserID");

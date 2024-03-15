@@ -51,10 +51,10 @@ export class EventService {
     return this.http.put(this.baseUrl +"api/EventCounter/changeCounterPrivacy?id=" + eventID, body, {headers})
   }
 
-  editEventCounter(eventID: string, eventCounter: ICounterDataModel ){
+  editEventCounter(eventID: string, isRelapse : boolean, eventCounter: ICounterDataModel ){
     var headers = this.initHeaders();
     var body = eventCounter;
-    return this.http.put(this.baseUrl +"api/EventCounter/editCounterEvent?id=" + eventID, body, {headers})
+    return this.http.put(this.baseUrl +"api/EventCounter/editCounterEvent?id=" + eventID + "&isRelapse=" + isRelapse, body, {headers})
   }
 
 
