@@ -169,7 +169,7 @@ namespace ngLifeCounter.Backend.Services
 			{
 				var relapse = new Relapse()
 				{
-					Id = counterID,
+					Id = Guid.NewGuid(),
 					EventCounterId = counterID,
 					RelapseMonth = counter.Month,
 					RelapseDay = counter.Day,
@@ -205,8 +205,15 @@ namespace ngLifeCounter.Backend.Services
 				throw new Exception("Date is not valid");
 			}
 
-			_dbContext.EventCounters.Update(counterInDB);
-			_dbContext.SaveChanges();
+			try
+			{
+				_dbContext.EventCounters.Update(counterInDB);
+				_dbContext.SaveChanges();
+			}
+			catch (Exception ex) 
+			{ 
+				
+			}
 		}
 	}
 }
