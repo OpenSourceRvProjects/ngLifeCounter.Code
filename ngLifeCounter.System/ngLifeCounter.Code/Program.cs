@@ -6,7 +6,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using ngLifeCounter.Backend.Infrastructure;
+using ngLifeCounter.Backend.Services;
 using ngLifeCounter.Data.DataAccess;
+using ngLifeCounter.EmailSender;
+using ngLifeCounter.Models.Email;
 using ngLifeCounter.MVC;
 using System.Text;
 
@@ -24,6 +28,13 @@ builder.Services.AddSession();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddEndpointsApiExplorer();
+
+var emailConfig = builder.Configuration
+		.GetSection("EmailConfiguration")
+		.Get<EmailConfigurationModel>();
+builder.Services.AddScoped<IEmailSender, EmailSender>();
+
+builder.Services.AddSingleton(emailConfig);
 
 builder.Services.InjectServices();
 builder.Services.AddHttpContextAccessor();
