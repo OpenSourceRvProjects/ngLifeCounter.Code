@@ -11,6 +11,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using System.Text.Json;
+using ngLifeCounter.EmailSender;
+using ngLifeCounter.Models.Email;
 
 namespace ngLifeCounter.Backend.Services
 {
@@ -21,15 +23,18 @@ namespace ngLifeCounter.Backend.Services
 		private IDecryptCore _decryptCore;
 		private ITokenCore _tokenCore;
 		private IHttpContextAccessor _accessor;
+		private IEmailSender _emailSender;
 
 		public AccountUserService(NgLifeCounterDbContext dbContext, IEncryptCore encryptCore,
-			ITokenCore tokenCore, IDecryptCore decryptCore, IHttpContextAccessor accessor)
+			ITokenCore tokenCore, IDecryptCore decryptCore, IHttpContextAccessor accessor,
+			IEmailSender emailSender)
 		{
 			_dbContext = dbContext;
 			_encryptCore = encryptCore;
 			_decryptCore = decryptCore;
 			_tokenCore = tokenCore;
 			_accessor = accessor;
+			_emailSender = emailSender;
 		}
 
 		public async Task<LoginTokenDataModel> LoginAndRetrieveToken(string username, string password)
@@ -161,6 +166,33 @@ namespace ngLifeCounter.Backend.Services
 			result.UserToken = token;
 
 			return result;
+		}
+
+		public async Task SendPasswordResetEmail(string email)
+		{
+			var userAccount = await _dbContext.Users.Where(x => x.Email == email).ToListAsync();
+			if (userAccount.Count > 0)
+			{
+
+				var content = "<h1>Recupera tu contraseña</h1><br>";
+
+				foreach (var user in userAccount)
+				{
+					content += $"<table style='border-collapse: collapse;width: 100%;'>" +
+						$"<tr>" +
+						$"<th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Usuario</th> " +
+						$"<th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Link</th>" +
+						$"</tr>" +
+						$"<tr>" +
+						$"<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>" + user.UserName + "</td>" +
+						$"<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><a href='#'>Link de recuperación</a></td>" +
+						$"</tr>" +
+						$"</table>";
+				}
+
+				var message = new MessageModel(new string[] { userAccount.First().Email}, "Recupera tu contraseña", content);
+				_emailSender.SendEmail(message);
+			}
 		}
 
 		private string GenerateToken(User newUser, PersonalProfile newProfileUser)
