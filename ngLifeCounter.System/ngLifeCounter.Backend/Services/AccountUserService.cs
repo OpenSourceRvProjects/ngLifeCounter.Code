@@ -173,11 +173,23 @@ namespace ngLifeCounter.Backend.Services
 			var userAccount = await _dbContext.Users.Where(x => x.Email == email).ToListAsync();
 			if (userAccount.Count > 0)
 			{
-
 				var content = "<h1>Recupera tu contraseña</h1><br>";
 
 				foreach (var user in userAccount)
 				{
+
+					var passwordChangeRequest = new ResetLoginPassword()
+					{
+						Id = Guid.NewGuid(),
+						CreationDate = DateTime.Now,
+						ExpirationDate = DateTime.Now.AddHours(24),
+						UserId = user.Id
+					};
+
+					_dbContext.Add(passwordChangeRequest);
+					await _dbContext.SaveChangesAsync();
+
+
 					content += $"<table style='border-collapse: collapse;width: 100%;'>" +
 						$"<tr>" +
 						$"<th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Usuario</th> " +
