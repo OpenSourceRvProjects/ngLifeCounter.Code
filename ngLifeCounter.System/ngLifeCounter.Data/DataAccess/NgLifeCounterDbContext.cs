@@ -23,6 +23,8 @@ public partial class NgLifeCounterDbContext : DbContext
 
     public virtual DbSet<Relapse> Relapses { get; set; }
 
+    public virtual DbSet<ResetLoginPassword> ResetLoginPasswords { get; set; }
+
     public virtual DbSet<SignUpRequest> SignUpRequests { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
@@ -30,7 +32,6 @@ public partial class NgLifeCounterDbContext : DbContext
 	{
 		//Scaffold - DbContext "Server=.\SQLEXPRESS;Database=NgLifeCounterDB;Trusted_Connection=True;Encrypt=False" Microsoft.EntityFrameworkCore.SqlServer - OutputDir DataAccess - F
 	}
-
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<CorrectLogin>(entity =>
@@ -106,6 +107,22 @@ public partial class NgLifeCounterDbContext : DbContext
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_UserRelapses");
+        });
+
+        modelBuilder.Entity<ResetLoginPassword>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__ResetLog__3214EC0732943103");
+
+            entity.ToTable("ResetLoginPassword");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.CreationDate).HasColumnType("datetime");
+            entity.Property(e => e.ExpirationDate).HasColumnType("datetime");
+
+            entity.HasOne(d => d.User).WithMany(p => p.ResetLoginPasswords)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__ResetLogi__UserI__02FC7413");
         });
 
         modelBuilder.Entity<SignUpRequest>(entity =>

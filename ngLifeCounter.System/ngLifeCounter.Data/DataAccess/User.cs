@@ -27,5 +27,7 @@ public partial class User
 
     public virtual ICollection<Relapse> Relapses { get; set; } = new List<Relapse>();
 
+    public virtual ICollection<ResetLoginPassword> ResetLoginPasswords { get; set; } = new List<ResetLoginPassword>();
+
     public virtual ICollection<SignUpRequest> SignUpRequests { get; set; } = new List<SignUpRequest>();
 }
