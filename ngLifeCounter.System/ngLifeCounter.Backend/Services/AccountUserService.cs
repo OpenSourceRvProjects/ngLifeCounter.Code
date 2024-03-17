@@ -197,7 +197,7 @@ namespace ngLifeCounter.Backend.Services
 						$"</tr>" +
 						$"<tr>" +
 						$"<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>" + user.UserName + "</td>" +
-						$"<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><a href='#'>Link de recuperación</a></td>" +
+						$"<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><a href='#'>Link de recuperación: " + passwordChangeRequest.Id.ToString() + "</a></td>" +
 						$"</tr>" +
 						$"</table>";
 				}
@@ -205,6 +205,29 @@ namespace ngLifeCounter.Backend.Services
 				var message = new MessageModel(new string[] { userAccount.First().Email}, "Recupera tu contraseña", content);
 				_emailSender.SendEmail(message);
 			}
+		}
+
+		public async Task<bool> ChangePasswordWithRequestLink(Guid requestID,  string newPassword)
+		{
+			var request = _dbContext.ResetLoginPasswords.FirstOrDefault(f=> f.Id == requestID);
+
+			if(request != null && request.ExpirationDate > DateTime.Now)
+			{
+				var encryptResult = await _encryptCore.RunEncrypt(newPassword);
+				var user = _dbContext.Users.FirstOrDefault(f => f.Id == request.UserId);
+
+				user.PasswordHash = encryptResult.EncodeddPassword;
+				user.Salt = encryptResult.Salt;
+
+				request.ExpirationDate = DateTime.Now.AddDays(-1);
+
+				await _dbContext.SaveChangesAsync();
+				return true;
+
+			}
+
+			return false;
+
 		}
 
 		private string GenerateToken(User newUser, PersonalProfile newProfileUser)

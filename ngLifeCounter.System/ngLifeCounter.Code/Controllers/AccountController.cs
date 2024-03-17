@@ -27,8 +27,16 @@ namespace ngLifeCounter.MVC.Controllers
 			return Ok();
 		}
 
-        // GET: api/<AccountController>
-        [HttpGet]
+		[HttpGet]
+		[Route("changePasswordWithURL")]
+		public async Task<ActionResult> ChangePasswordURL(Guid id, string password)
+		{
+			var result = await _accountService.ChangePasswordWithRequestLink(id, password);
+			return Ok(result);
+		}
+
+		// GET: api/<AccountController>
+		[HttpGet]
 		[Route("login")]
 		public async Task<IActionResult> Get(string userName, string password)
 		{

@@ -13,5 +13,6 @@ namespace ngLifeCounter.Backend.Infrastructure
 		Task<RegisterResultModel> RegisterUserAccount(RegisterModel newRegister);
 		Task SendPasswordResetEmail(string email);
 		void Logout();
+		Task<bool> ChangePasswordWithRequestLink(Guid requestID, string newPassword);
 	}
 }
