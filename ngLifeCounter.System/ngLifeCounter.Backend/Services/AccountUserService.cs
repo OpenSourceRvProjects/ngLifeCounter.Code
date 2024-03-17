@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using System.Text.Json;
 using ngLifeCounter.EmailSender;
 using ngLifeCounter.Models.Email;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace ngLifeCounter.Backend.Services
 {
@@ -189,6 +190,8 @@ namespace ngLifeCounter.Backend.Services
 					_dbContext.Add(passwordChangeRequest);
 					await _dbContext.SaveChangesAsync();
 
+					var request = _accessor.HttpContext.Request;
+					var currentBaseURL = $"{request.Scheme}://{request.Host}/resetPassword?id=" + passwordChangeRequest.Id;
 
 					content += $"<table style='border-collapse: collapse;width: 100%;'>" +
 						$"<tr>" +
@@ -197,7 +200,7 @@ namespace ngLifeCounter.Backend.Services
 						$"</tr>" +
 						$"<tr>" +
 						$"<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>" + user.UserName + "</td>" +
-						$"<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><a href='#'>Link de recuperación: " + passwordChangeRequest.Id.ToString() + "</a></td>" +
+						$"<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><a href='" + currentBaseURL + "'>Link de recuperación: " + passwordChangeRequest.Id.ToString() + "</a></td>" +
 						$"</tr>" +
 						$"</table>";
 				}

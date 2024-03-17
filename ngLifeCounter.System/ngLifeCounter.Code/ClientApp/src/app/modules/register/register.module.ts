@@ -5,13 +5,15 @@ import { RegisterComponent } from './register/register.component';
 import { FormsModule } from '@angular/forms';
 import { RegisterRoutingModule } from './register-routing.module';
 import { EnvironmentModule } from '../environment/environment.module';
+import { ForgotPasswordComponent } from './password/forgot-password/forgot-password.component';
 
 
 
 @NgModule({
   declarations: [
     RegisterComponent,
-    UserPrivacyComponent
+    UserPrivacyComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     RegisterRoutingModule,

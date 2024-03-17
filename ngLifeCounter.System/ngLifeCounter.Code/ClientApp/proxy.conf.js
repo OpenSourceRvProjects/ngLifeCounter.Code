@@ -9,6 +9,8 @@ const PROXY_CONFIG = [
       "/weatherforecast",
       "/api/Account/signUp",
       "/api/Account/login",
+      "/api/Account/resetPassword",
+      "/api/Account/changePasswordWithURL",
       "/api/EventCounter",
       "/api/EventCounter/getById",
       "/api/Environment",

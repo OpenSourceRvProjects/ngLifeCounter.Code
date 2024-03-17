@@ -19,4 +19,13 @@ export class AccountService {
     return this.http.get(this.baseUrl + `api/Account/login?userName=${userName}&password=${password}`);
   }
 
+  sendRecoveryEmail (email: string ){
+    return this.http.get(this.baseUrl + `api/Account/resetPassword?email=${email}`);
+  }
+
+  changePassword(id: string, newPassword : string){
+    return this.http.get(this.baseUrl + `api/Account/changePasswordWithURL?id=${id}&password=${newPassword}`);
+
+  }
+
 }
