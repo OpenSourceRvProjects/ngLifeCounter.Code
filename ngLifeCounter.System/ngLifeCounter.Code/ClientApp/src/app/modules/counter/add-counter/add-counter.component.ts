@@ -85,7 +85,7 @@ export class AddCounterComponent {
     this.eventCounterService.addEvent(this.newCounterEvent)
     .subscribe({next: ()=>{
       this.processing = false;
-      this.router.navigate(["/"]);
+      this.router.navigate(["/counter/list"]);
     }, error: (err) => {
       this.processing = false;
       alert("Error!!!");

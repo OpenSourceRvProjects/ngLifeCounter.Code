@@ -14,5 +14,6 @@ namespace ngLifeCounter.Backend.Infrastructure
 		Task SendPasswordResetEmail(string email);
 		void Logout();
 		Task<bool> ChangePasswordWithRequestLink(Guid requestID, string newPassword);
+		Task<bool> ValidateRecoveryRequestID(Guid requestID);
 	}
 }

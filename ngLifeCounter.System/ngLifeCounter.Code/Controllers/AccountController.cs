@@ -20,6 +20,15 @@ namespace ngLifeCounter.MVC.Controllers
         }
 
 		[HttpGet]
+		[Route("validateRecoveryRequestID")]
+		public async Task<ActionResult> ResetPassword(Guid requestID)
+		{
+			var isValidID= await _accountService.ValidateRecoveryRequestID(requestID);
+			return Ok(isValidID);
+		}
+
+
+		[HttpGet]
 		[Route("resetPassword")]
 		public async Task<ActionResult> ResetPassword(string email)
 		{

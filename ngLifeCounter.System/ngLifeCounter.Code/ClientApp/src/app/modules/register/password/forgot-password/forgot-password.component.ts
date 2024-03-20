@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountService } from 'src/app/Services/Accounts/account.service';
+import { LocalStorageService } from 'src/app/Services/Storage/local-storage.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -9,7 +10,8 @@ import { AccountService } from 'src/app/Services/Accounts/account.service';
 })
 export class ForgotPasswordComponent {
 
-  constructor(private route : ActivatedRoute, private accountService : AccountService){}
+  constructor(private route : ActivatedRoute, private accountService : AccountService, 
+    private localStorageService : LocalStorageService, private router : Router){}
 
   email : string ="";
   private sub: any;
@@ -24,12 +26,28 @@ export class ForgotPasswordComponent {
   passwordConfirmation: string = "";
   password: string = "";
 
+  isPasDueLink : boolean = false;
+
   ngOnInit(){
+
+    if (this.localStorageService.getUserData()){
+        alert("Para recuperar tu contraseña, tienes que salir de tu cuenta");
+        this.router.navigate(['/']);
+    }
+
     this.sub = this.route.queryParams.subscribe(params=>{
       debugger;
       this.id = params['id'];
-      if (this.id !== undefined)
+      if (this.id !== undefined){
         this.hasID = true;
+        this.accountService.validateChangePasswordURL(this.id)
+        .subscribe({next: (data: any)=> {
+          if (data != true)
+            this.isPasDueLink = true;
+        }, error: (err)=>{
+          this.isPasDueLink = true;
+        }})
+      }
     });
   }
   

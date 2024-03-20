@@ -28,4 +28,8 @@ export class AccountService {
 
   }
 
+  validateChangePasswordURL(id: string)
+  {
+    return this.http.get(this.baseUrl + `api/Account/validateRecoveryRequestID?requestID=${id}`);
+  }
 }

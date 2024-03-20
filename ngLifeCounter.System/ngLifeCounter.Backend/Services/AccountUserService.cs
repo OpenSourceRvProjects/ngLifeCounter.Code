@@ -59,7 +59,7 @@ namespace ngLifeCounter.Backend.Services
 				response.Name = personalProfile.Name;
 				response.LastName = personalProfile.LastName1 ?? string.Empty;
 
-				
+
 
 				try
 				{
@@ -92,7 +92,8 @@ namespace ngLifeCounter.Backend.Services
 
 		public async Task<RegisterResultModel> RegisterUserAccount(RegisterModel newRegister)
 		{
-			var anonimizedRequest = new RegisterModel() { 
+			var anonimizedRequest = new RegisterModel()
+			{
 				Email = newRegister.Email,
 				LastName1 = newRegister.LastName1,
 				LastName2 = newRegister.LastName2,
@@ -205,16 +206,16 @@ namespace ngLifeCounter.Backend.Services
 						$"</table>";
 				}
 
-				var message = new MessageModel(new string[] { userAccount.First().Email}, "Recupera tu contraseña", content);
+				var message = new MessageModel(new string[] { userAccount.First().Email }, "Recupera tu contraseña", content);
 				_emailSender.SendEmail(message);
 			}
 		}
 
-		public async Task<bool> ChangePasswordWithRequestLink(Guid requestID,  string newPassword)
+		public async Task<bool> ChangePasswordWithRequestLink(Guid requestID, string newPassword)
 		{
-			var request = _dbContext.ResetLoginPasswords.FirstOrDefault(f=> f.Id == requestID);
+			var request = _dbContext.ResetLoginPasswords.FirstOrDefault(f => f.Id == requestID);
 
-			if(request != null && request.ExpirationDate > DateTime.Now)
+			if (request != null && request.ExpirationDate > DateTime.Now)
 			{
 				var encryptResult = await _encryptCore.RunEncrypt(newPassword);
 				var user = _dbContext.Users.FirstOrDefault(f => f.Id == request.UserId);
@@ -245,6 +246,24 @@ namespace ngLifeCounter.Backend.Services
 				};
 			var token = _tokenCore.RunTokenGeneration(tokenInfo, newUser.Id);
 			return token;
+		}
+
+		public async Task<bool> ValidateRecoveryRequestID(Guid requestID)
+		{
+			var result = false;
+			var request = await _dbContext.ResetLoginPasswords.FirstOrDefaultAsync(f => f.Id == requestID);
+			if (request == null)
+			{
+				return result;
+			}
+
+			if (request.ExpirationDate < DateTime.Now)
+			{
+				return result;
+			}
+
+			result = true;
+			return result;
 		}
 	}
 }

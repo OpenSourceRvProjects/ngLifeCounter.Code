@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ICounterDataModel } from 'src/app/Models/EventCounter/ICounterDataModel';
 import { ICounterPrivacySetModel } from 'src/app/Models/EventCounter/ICounterPrivacySetModel';
@@ -15,10 +16,12 @@ import { LocalStorageService } from 'src/app/Services/Storage/local-storage.serv
 export class CounterListComponent {
 
 
-  constructor(private modalService: NgbModal, private eventService: EventService, private localStorageService: LocalStorageService) {
+  constructor(private modalService: NgbModal, private eventService: EventService, 
+    private localStorageService: LocalStorageService, public router : Router) {
   }
 
   counterList : IEventCounterItemModel[] = [];
+  filteredCounterList : IEventCounterItemModel[] = [];
   counterSetting : ICounterPrivacySetModel = <ICounterPrivacySetModel>{}; 
   closeResult = '';
   selectedCounterToEdit : IEventCounterItemModel = <IEventCounterItemModel>{};
@@ -26,7 +29,8 @@ export class CounterListComponent {
   selectedHourToDetailedCounter : TextValueItem = <TextValueItem>{};
   selectedMonthToDetailCounter : TextValueItem = <TextValueItem>{};
   processing =  false;
-  
+  searchText: string = "";
+
   hoursForEditMode : TextValueItem[] = [];
   monthsForEditMode : TextValueItem[] = [];
   isRelapse : boolean =  false;
@@ -101,11 +105,20 @@ export class CounterListComponent {
     }})
   }
 
+  searchKey(data: string){
+    this.searchText = data;
+
+    if (this.searchText == '')
+      this.filteredCounterList = this.counterList;
+    else
+      this.filteredCounterList = this.counterList.filter(f=> f.eventName.includes(this.searchText))
+  }
+
   getCountersList(){
     this.eventService.getEvents()
     .subscribe({next: (data : any)=> {
       this.counterList =  data;
-      
+      this.filteredCounterList = data
     }, 
     error : (err)=> {
 

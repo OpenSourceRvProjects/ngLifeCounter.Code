@@ -11,6 +11,7 @@ const PROXY_CONFIG = [
       "/api/Account/login",
       "/api/Account/resetPassword",
       "/api/Account/changePasswordWithURL",
+      "/api/Account/validateRecoveryRequestID",
       "/api/EventCounter",
       "/api/EventCounter/getById",
       "/api/Environment",

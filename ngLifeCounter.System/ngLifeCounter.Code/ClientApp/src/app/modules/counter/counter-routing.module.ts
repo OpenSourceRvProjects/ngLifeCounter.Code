@@ -8,7 +8,7 @@ import { MyCounterComponent } from "./my-counter/my-counter.component";
 
 const routes: Routes = [
   { path: 'counter/add', component: AddCounterComponent, canActivate: [UserGuard], data: {name : "Agregar evento", showInNavBar : true}},
-  { path: 'counter/list', component: CounterListComponent, canActivate: [UserGuard], data: {name : "Tus contadores", showInNavBar : true}},
+  { path: 'counter/list', component: CounterListComponent, canActivate: [UserGuard], data: {name : "Tus eventos/contadores", showInNavBar : true}},
   { path: 'counter/myCounter', component: MyCounterComponent},
 
 ];
