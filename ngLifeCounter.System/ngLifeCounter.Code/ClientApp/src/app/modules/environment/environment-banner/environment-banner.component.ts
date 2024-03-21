@@ -19,7 +19,7 @@ export class EnvironmentBannerComponent {
       debugger;
       if (data.environmentName == 'QA')
         this.showBannerQA = true;
-      if (data.environmentName == 'DEV')
+      if (data.environmentName == 'DEV' || data.environmentName == 'DEVMONSTER')
         this.showBannerDEV = true;
     }, error: (err) =>{
 

@@ -51,7 +51,6 @@
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"
       }
     },
-
     //dotnet run --launch-Profile "local-swagger"
     "dev-swagger": {
       "commandName": "IISExpress",
@@ -69,7 +68,6 @@
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"
       }
     },
-
     //dotnet run --launch-Profile "local-swagger"
     "qa-swagger": {
       "commandName": "IISExpress",
@@ -78,6 +76,24 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "QA"
       }
+    },
+    "dev-monster-env": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "DEVMONSTER",
+        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"
+      }
+    },
+    //dotnet run --launch-Profile "local-swagger"
+    "dev-monster-swagger": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "DEVMONSTER"
+      }
     }
+
   }
 }
