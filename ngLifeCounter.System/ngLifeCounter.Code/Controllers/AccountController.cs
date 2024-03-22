@@ -32,8 +32,15 @@ namespace ngLifeCounter.MVC.Controllers
 		[Route("resetPassword")]
 		public async Task<ActionResult> ResetPassword(string email)
 		{
-			await _accountService.SendPasswordResetEmail(email);
-			return Ok();
+			try
+			{
+				await _accountService.SendPasswordResetEmail(email);
+				return Ok();
+			}
+			catch(Exception ex)
+			{
+				return BadRequest(ex.Message);
+			}
 		}
 
 		[HttpGet]

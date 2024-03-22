@@ -17,7 +17,7 @@ export class EnvironmentBannerComponent {
     this.environmentService.getAppEnvironment().
     subscribe({next: (data: any) =>{
       debugger;
-      if (data.environmentName == 'QA')
+      if (data.environmentName == 'QA' || data.environmentName == 'QAMONSTER')
         this.showBannerQA = true;
       if (data.environmentName == 'DEV' || data.environmentName == 'DEVMONSTER')
         this.showBannerDEV = true;

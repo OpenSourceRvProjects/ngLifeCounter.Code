@@ -46,10 +46,10 @@ namespace ngLifeCounter.EmailSender
 					client.Authenticate(_emailConfig.UserName, _emailConfig.Password);
 					client.Send(mailMessage);
 				}
-				catch
+				catch (Exception ex)
 				{
 					//log an error message or throw an exception or both.
-					throw;
+					throw ex;
 				}
 				finally
 				{
