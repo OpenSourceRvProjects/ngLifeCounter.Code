@@ -1,0 +1,12 @@
+C:\Users\rolan\Desktop\Code\2024\OpenSource\ngLifeCounter\ngLifeCounter.Code\ngLifeCounter.System\ngLifeCounter.Constants\bin\Debug\net8.0\ngLifeCounter.Constants.deps.json
+C:\Users\rolan\Desktop\Code\2024\OpenSource\ngLifeCounter\ngLifeCounter.Code\ngLifeCounter.System\ngLifeCounter.Constants\bin\Debug\net8.0\ngLifeCounter.Constants.dll
+C:\Users\rolan\Desktop\Code\2024\OpenSource\ngLifeCounter\ngLifeCounter.Code\ngLifeCounter.System\ngLifeCounter.Constants\bin\Debug\net8.0\ngLifeCounter.Constants.pdb
+C:\Users\rolan\Desktop\Code\2024\OpenSource\ngLifeCounter\ngLifeCounter.Code\ngLifeCounter.System\ngLifeCounter.Constants\obj\Debug\net8.0\ngLifeCounter.Constants.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\rolan\Desktop\Code\2024\OpenSource\ngLifeCounter\ngLifeCounter.Code\ngLifeCounter.System\ngLifeCounter.Constants\obj\Debug\net8.0\ngLifeCounter.Constants.AssemblyInfoInputs.cache
+C:\Users\rolan\Desktop\Code\2024\OpenSource\ngLifeCounter\ngLifeCounter.Code\ngLifeCounter.System\ngLifeCounter.Constants\obj\Debug\net8.0\ngLifeCounter.Constants.AssemblyInfo.cs
+C:\Users\rolan\Desktop\Code\2024\OpenSource\ngLifeCounter\ngLifeCounter.Code\ngLifeCounter.System\ngLifeCounter.Constants\obj\Debug\net8.0\ngLifeCounter.Constants.csproj.CoreCompileInputs.cache
+C:\Users\rolan\Desktop\Code\2024\OpenSource\ngLifeCounter\ngLifeCounter.Code\ngLifeCounter.System\ngLifeCounter.Constants\obj\Debug\net8.0\ngLifeCounter.Constants.sourcelink.json
+C:\Users\rolan\Desktop\Code\2024\OpenSource\ngLifeCounter\ngLifeCounter.Code\ngLifeCounter.System\ngLifeCounter.Constants\obj\Debug\net8.0\ngLifeCounter.Constants.dll
+C:\Users\rolan\Desktop\Code\2024\OpenSource\ngLifeCounter\ngLifeCounter.Code\ngLifeCounter.System\ngLifeCounter.Constants\obj\Debug\net8.0\refint\ngLifeCounter.Constants.dll
+C:\Users\rolan\Desktop\Code\2024\OpenSource\ngLifeCounter\ngLifeCounter.Code\ngLifeCounter.System\ngLifeCounter.Constants\obj\Debug\net8.0\ngLifeCounter.Constants.pdb
+C:\Users\rolan\Desktop\Code\2024\OpenSource\ngLifeCounter\ngLifeCounter.Code\ngLifeCounter.System\ngLifeCounter.Constants\obj\Debug\net8.0\ref\ngLifeCounter.Constants.dll
