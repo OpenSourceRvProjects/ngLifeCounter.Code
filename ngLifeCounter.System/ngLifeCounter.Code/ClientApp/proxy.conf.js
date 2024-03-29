@@ -14,6 +14,7 @@ const PROXY_CONFIG = [
       "/api/Account/validateRecoveryRequestID",
       "/api/EventCounter",
       "/api/EventCounter/getById",
+      "/api/EventCounter/getCountersResume",
       "/api/Environment",
       "/api/EventCounter/changeCounterPrivacy",
       "/api/EventCounter/editCounterEvent"

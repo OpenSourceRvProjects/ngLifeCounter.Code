@@ -14,5 +14,7 @@ namespace ngLifeCounter.Backend.Infrastructure
 		Task<CounterDataModel> GetCounterData(Guid id);
 		Task SetPrivacyCounter(Guid counterID, CounterPrivacySetModel setting);
 		Task UpdateEventCounter(Guid counterID, CounterDataModel counter, bool isRelapse = false);
+
+		Task<CounterResultsModel> GetCounterResults();
 	}
 }

@@ -31,6 +31,15 @@ namespace ngLifeCounter.MVC.Controllers
 			return Ok(eventList);
 		}
 
+		[HttpGet]
+		[LoggedUserDataFilter]
+		[Route("getCountersResume")]
+		public async Task<ActionResult> GetResume()
+		{
+			var counterResults = await _eventService.GetCounterResults();
+			return Ok(counterResults);
+		}
+
 		// GET api/<EventCounterController>/5
 		[HttpGet]
 		[AllowAnonymous]

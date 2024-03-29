@@ -12,7 +12,7 @@ namespace ngLifeCounter.Tests.Stress
 		[TestInitialize]
 		public void SetContexts()
 		{
-			var connectionStrings  = "Server=db2558.public.databaseasp.net; Database=db2558; User Id=db2558; Password=F+x8-y4HM9%s; Encrypt=False; MultipleActiveResultSets=True;";
+			var connectionStrings  = "workstation id=dev-NgLifeCounterDB.mssql.somee.com;packet size=4096;user id=dev-nglifecount_SQLLogin_1;pwd=nxicab5sa6;data source=dev-NgLifeCounterDB.mssql.somee.com;persist security info=False;initial catalog=dev-NgLifeCounterDB;Encrypt=False";
 			_dbContext = CreateDBContext(connectionStrings);
 		}
 
@@ -30,7 +30,7 @@ namespace ngLifeCounter.Tests.Stress
 		
 			var user = _dbContext.Users.Include(i=> i.PersonalProfiles).FirstOrDefault();
 			Random r = new Random();
-			for (var i = 0; i < 200; i++)
+			for (var i = 0; i < 5000; i++)
 			{
 				var eventCounter = new EventCounter()
 				{
@@ -50,7 +50,7 @@ namespace ngLifeCounter.Tests.Stress
 				};
 				_dbContext.Add(eventCounter);
 
-				for (var j = 0; j < 10;  j++)
+				for (var j = 0; j < 5;  j++)
 				{
 					var relapse = new Relapse()
 					{

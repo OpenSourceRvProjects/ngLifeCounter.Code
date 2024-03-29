@@ -215,5 +215,22 @@ namespace ngLifeCounter.Backend.Services
 				
 			}
 		}
+
+		public async Task<CounterResultsModel> GetCounterResults()
+		{
+			var currentUserID = Guid.Parse(_accessor.HttpContext.Session.GetString("userID"));
+			var result = new CounterResultsModel();
+
+			result.RelapsesCount = await _dbContext.Relapses.Where(w => w.UserId == currentUserID).CountAsync();
+			result.EventsCount = await _dbContext.EventCounters.Where(w => w.UserId == currentUserID).CountAsync();
+
+			var user = await _dbContext.Users.Include(i => i.PersonalProfiles).FirstOrDefaultAsync(f => f.Id == currentUserID);
+			var personalProfile = user.PersonalProfiles.FirstOrDefault();
+
+			result.TotalUserRelapsesCount = personalProfile.RelapseLimit;
+			result.TotalUserEventsCount = personalProfile.CounterLimit;
+			return result;
+
+		}
 	}
 }

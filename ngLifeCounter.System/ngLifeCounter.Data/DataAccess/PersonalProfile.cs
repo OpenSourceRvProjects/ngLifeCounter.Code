@@ -23,6 +23,10 @@ public partial class PersonalProfile
 
     public DateTime CreationDate { get; set; }
 
+    public int CounterLimit { get; set; }
+
+    public int RelapseLimit { get; set; }
+
     public virtual ICollection<EventCounter> EventCounters { get; set; } = new List<EventCounter>();
 
     public virtual ICollection<Relapse> Relapses { get; set; } = new List<Relapse>();

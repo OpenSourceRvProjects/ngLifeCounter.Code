@@ -7,17 +7,16 @@ namespace ngLifeCounter.Data.DataAccess;
 public partial class NgLifeCounterDbContext : DbContext
 {
 
-    private readonly string _connectionString;
-    public NgLifeCounterDbContext(string connectionString)
+	private readonly string _connectionString;
+	public NgLifeCounterDbContext(string connectionString)
+	{
+		_connectionString = connectionString;
+	}
+	public NgLifeCounterDbContext()
     {
-        _connectionString = connectionString;
     }
 
-	public NgLifeCounterDbContext()
-	{
-	}
-
-	public NgLifeCounterDbContext(DbContextOptions<NgLifeCounterDbContext> options)
+    public NgLifeCounterDbContext(DbContextOptions<NgLifeCounterDbContext> options)
         : base(options)
     {
     }
@@ -88,7 +87,9 @@ public partial class NgLifeCounterDbContext : DbContext
             entity.ToTable("PersonalProfile");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.CounterLimit).HasDefaultValue(100);
             entity.Property(e => e.CreationDate).HasColumnType("datetime");
+            entity.Property(e => e.RelapseLimit).HasDefaultValue(150);
 
             entity.HasOne(d => d.User).WithMany(p => p.PersonalProfiles)
                 .HasForeignKey(d => d.UserId)
