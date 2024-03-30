@@ -33,6 +33,11 @@ export class EventService {
     return this.http.get(this.baseUrl +"api/EventCounter", {headers})
   }
 
+  getEventsResume(){
+    var headers = this.initHeaders();
+    return this.http.get(this.baseUrl +"api/EventCounter/getCountersResume", {headers})
+  }
+
   getEventByID(eventID: string){
 
     if (this.loclStorage.getUserData()) {
