@@ -11,6 +11,7 @@ import { HomeRoutingModule } from './modules/home/home-routing.module';
 import { CounterModule } from './modules/counter/counter.module';
 import { EnvironmentModule } from './modules/environment/environment.module';
 import { SharedModule } from './modules/shared/shared.module';
+import { ProfileModule } from './modules/profile/profile.module';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { SharedModule } from './modules/shared/shared.module';
     HomeRoutingModule,
     AppRoutingModule,
     CounterModule,
+    ProfileModule,
     LoginModule,
     RegisterModule,
 

@@ -12,6 +12,7 @@ namespace ngLifeCounter.MVC
 		{
 			services.AddTransient<IAccountUserService, AccountUserService>();
 			services.AddTransient<IEventCounterService, EventCounterService>();
+			services.AddTransient<IProfileService, ProfileService>();
 			services.AddTransient<IEncryptCore, EncryptCore>();
 			services.AddTransient<IDecryptCore, DecryptCore>();
 			services.AddTransient<ITokenCore, TokenCore>();

@@ -1,0 +1,68 @@
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-10" style="padding-top: 10px;">
+            <button style="margin-left: 10px;" type="button" (click)="router.navigate(['/profile/imageCollection'])" class="btn btn-outline-primary float-end" aria-label="Close">
+                <i class="fa fa-file"></i> Ingresar imagenes
+            </button>
+            <br>
+        </div>
+        <div class="col-sm-2" style="padding-top: 10px;">
+            <button type="button" (click)="router.navigate(['/profile/changePassword'])" class="btn btn-outline-success float-end" aria-label="Close">
+            <i class="fa fa-key"></i> Cambiar contraseña
+            </button>
+            <br>
+        </div>
+    </div>
+  </div>
+
+<br>
+<br>    
+<div  class="container">
+    <br>
+    <div  class="row d-flex justify-content-center align-items-center">
+        
+        <div class="col-md-12">
+            <div class="form-container" style="margin-top: 0px;">
+                <h2 class="text-center mb-4">Tu perfil</h2>
+
+                <form>
+                    <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                            <label for="firstName" class="form-label">Nombre de usuario</label>
+                            <input type="text" class="form-control" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="lastName" class="form-label">Tu nombre:</label>
+                            <input type="text"  class="form-control" id="lastName" name="lastName" required>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                            <label for="firstName" class="form-label">Apellido paterno</label>
+                            <input type="text" class="form-control" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="lastName" class="form-label">Apellido materno</label>
+                            <input type="number"  class="form-control" id="lastName" name="lastName" required>
+                        </div>
+                    </div>
+                    
+                   
+
+                    <div class="text-center">
+                    </div>
+                    
+                    <div class="col-12">
+                                <!-- <button type="submit" class="btn btn-register w-100" (click)="addEvent()">Agregar evento</button> -->
+                    </div>
+
+                    <br>
+                   
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
