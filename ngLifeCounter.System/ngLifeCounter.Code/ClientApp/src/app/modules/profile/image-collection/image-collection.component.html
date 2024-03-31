@@ -28,12 +28,16 @@
         <table class="table caption-top">
             <thead class="table-success">
               <tr>
+                <th></th>
                 <th scope="col">Imagen a guardar</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let e of imageCollection.images; index as i">
+                <td>
+                  {{i+1}}
+                </td>
                 <td>
                     <img style="display: flex; justify-content: center;" id="doggie" [src]="e" width="280"
                     height="300" style="border-radius: 50%;">
