@@ -12,6 +12,7 @@ import { CounterModule } from './modules/counter/counter.module';
 import { EnvironmentModule } from './modules/environment/environment.module';
 import { SharedModule } from './modules/shared/shared.module';
 import { ProfileModule } from './modules/profile/profile.module';
+import { AdminModule } from './modules/admin/admin.module';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { ProfileModule } from './modules/profile/profile.module';
     ProfileModule,
     LoginModule,
     RegisterModule,
+    AdminModule,
 
   ],
   exports: [],
