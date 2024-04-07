@@ -58,7 +58,7 @@ namespace ngLifeCounter.Backend.Services
 				response.UserName = user.UserName;
 				response.Name = personalProfile.Name;
 				response.LastName = personalProfile.LastName1 ?? string.Empty;
-
+				response.IsSysAdmin = user.IsSystemAdmin;
 
 
 				try
