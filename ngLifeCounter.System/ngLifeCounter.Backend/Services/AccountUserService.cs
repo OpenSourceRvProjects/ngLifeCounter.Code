@@ -90,6 +90,28 @@ namespace ngLifeCounter.Backend.Services
 
 		}
 
+		public async Task<List<UsersModel>> GetAllUsersAsync()
+		{
+			var currentUserID = Guid.Parse(_accessor.HttpContext.Session.GetString("userID"));
+			var user = await _dbContext.Users.FirstOrDefaultAsync(f=> f.Id == currentUserID);
+
+			if (user.IsSystemAdmin)
+			{
+				return await _dbContext.Users.Select(s => new UsersModel{
+					UserID = s.Id,
+					NickName = s.UserName,
+					LoginCount = s.CorrectLogins.Count,
+					CounterEventsCount = s.EventCounters.Count,
+					RelapsesCount = s.Relapses.Count,
+					Name = s.PersonalProfiles.FirstOrDefault().Name,
+					LastName = s.PersonalProfiles.FirstOrDefault().LastName1,
+				}).ToListAsync();
+
+			}
+
+			return new List<UsersModel>();
+		}
+
 		public async Task<RegisterResultModel> RegisterUserAccount(RegisterModel newRegister)
 		{
 			var anonimizedRequest = new RegisterModel()

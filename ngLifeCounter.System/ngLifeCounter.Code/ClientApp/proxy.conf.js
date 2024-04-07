@@ -19,7 +19,8 @@ const PROXY_CONFIG = [
       "/api/EventCounter/changeCounterPrivacy",
       "/api/EventCounter/editCounterEvent",
       "/api/Profile/getImages",
-      "/api/Profile/addImages"
+      "/api/Profile/addImages",
+      "/api/Admin/getAllUsers"
 
    ],
     proxyTimeout: 100000,
