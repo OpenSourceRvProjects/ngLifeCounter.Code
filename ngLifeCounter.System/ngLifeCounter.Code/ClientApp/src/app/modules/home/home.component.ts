@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { EventService } from 'src/app/Services/Events/event.service';
 import { LocalStorageService } from 'src/app/Services/Storage/local-storage.service';
 
+interface IResume {
+  eventsCount : number;
+  relapsesCount : number;
+}
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -14,7 +18,7 @@ export class HomeComponent {
   constructor(private localStorage: LocalStorageService, private eventService : EventService ) {
   }
 
-  countersResume: any
+  countersResume: IResume = <IResume> { eventsCount : 0, relapsesCount: 0}
 
   ngOnInit(){
     this.localStorage.desactivateCounterView();

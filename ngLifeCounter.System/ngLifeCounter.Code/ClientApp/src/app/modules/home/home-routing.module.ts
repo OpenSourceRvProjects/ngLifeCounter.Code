@@ -2,11 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home.component';
 import { UserGuard } from 'src/app/Security/user.guard';
+import { CommonGuard } from '../../Security/common.guard';
 // import { LoginComponent } from './Views/login/login.component';
 
 const routes: Routes = [
 
-    { path: '', component: HomeComponent, canActivate: [UserGuard], data: {name : "Home", showInNavBar : true}},
+  { path: '', component: HomeComponent, canActivate: [CommonGuard], data: {name : "Home", showInNavBar : true, canShowInAdmin : true}},
 ]
 
 @NgModule({

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from 'src/app/Services/Accounts/account.service';
 import { LocalStorageService } from 'src/app/Services/Storage/local-storage.service';
+import { NavMenuComponent } from 'src/app/nav-menu/nav-menu.component';
 
 @Component({
   selector: 'app-login',
@@ -34,7 +35,8 @@ export class LoginComponent implements OnInit {
       if (data.token != null ){
         this.localStorage.saveUserData(data);
         this.processing = false;
-        this.router.navigate(['/']);
+        window.location.href = "/"
+        // this.router.navigate(['/']);
       }
       else
         {

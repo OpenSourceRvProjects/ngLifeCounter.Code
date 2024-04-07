@@ -7,7 +7,8 @@ export class LocalStorageService {
 
   constructor() { }
 
-  saveUserData(user: any){
+  saveUserData(user: any) {
+    debugger;
     localStorage.setItem("ngLifeCounter.ObjectInfo", JSON.stringify(user));
   }
 

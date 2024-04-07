@@ -19,6 +19,8 @@ public partial class User
 
     public DateTime CreationDate { get; set; }
 
+    public bool IsSystemAdmin { get; set; }
+
     public virtual ICollection<CorrectLogin> CorrectLogins { get; set; } = new List<CorrectLogin>();
 
     public virtual ICollection<EventCounter> EventCounters { get; set; } = new List<EventCounter>();

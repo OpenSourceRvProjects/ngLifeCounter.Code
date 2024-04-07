@@ -6,24 +6,21 @@ import { LocalStorageService } from '../Services/Storage/local-storage.service';
 @Injectable({
   providedIn: 'root'
 })
-export class UserGuard implements CanActivate {
+export class CommonGuard implements CanActivate {
 
-  constructor(private storageService: LocalStorageService, private router: Router){
+  constructor(private storageService: LocalStorageService, private router: Router) {
 
   }
-
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.storageService.getUserData() && !this.storageService.getUserData().isSysAdmin) {
-        return true;
-      }
-      else{
-        this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
-        return false;
+    if (this.storageService.getUserData()) {
+      return true;
+    }
+    else {
+      this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+      return false;
 
-      }
-      // return true;
+    }
   }
-  
 }

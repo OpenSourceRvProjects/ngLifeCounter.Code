@@ -16,17 +16,26 @@ export class NavMenuComponent {
   }
   links: Array<{ text: string, path: string  }> = [];
   
-  ngOnInit(){
+  ngOnInit() {
     // This is not necesary anymore, routing.module files add routes in imports: [RouterModule.forRoot(routes)],
     // this.router.config.push(...LoginRoutingModule.getRoutes());
     // this.router.config.push(...RegisterRoutingModule.getRoutes());
-
+    if (this.localStorageService.getUserData().isSysAdmin == false) { 
     this.router.config
-    .filter(f=> f.data?.showInNavBar)
-    .forEach(
-      fe=> this.links.push(
-        {text: fe.data?.name.toString(), path: fe.path ? fe.path : ''},
-        ) );
+      .filter(f => f.data?.showInNavBar)
+      .forEach(
+        fe => this.links.push(
+          { text: fe.data?.name.toString(), path: fe.path ? fe.path : '' },
+        ));
+    }
+    else {
+      this.router.config
+      .filter(f => f.data?.canShowInAdmin)
+      .forEach(
+        fe => this.links.push(
+          { text: fe.data?.name.toString(), path: fe.path ? fe.path : '' },
+        ));
+    }
   }
 
   collapse() {
