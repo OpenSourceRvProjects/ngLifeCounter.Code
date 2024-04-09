@@ -1,7 +1,9 @@
 import { Component, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, interval } from 'rxjs';
+import { IImageListModel } from 'src/app/Models/Profile/IImageListModel';
 import { EventService } from 'src/app/Services/Events/event.service';
+import { ProfileService } from 'src/app/Services/Profile/profile.service';
 import { LocalStorageService } from 'src/app/Services/Storage/local-storage.service';
 
 @Component({
@@ -14,6 +16,7 @@ export class MyCounterComponent {
   constructor(private localStorageService: LocalStorageService, 
     private router: Router, 
     private route: ActivatedRoute,
+    private profileService : ProfileService,
     private eventCounterService: EventService, @Inject('BASE_URL') private baseUrl : any){}
     id: string = "";
     isPublicCounter : boolean = false;
@@ -27,6 +30,8 @@ export class MyCounterComponent {
   viewHour : number = 0;
   viewSeconds: number = 0;
 
+
+  imageCollection : IImageListModel = <IImageListModel>{};
   eventName : string = "";
   dogURL : string = "";
 
@@ -96,10 +101,28 @@ export class MyCounterComponent {
   }
 
   getDoggie(){
+
+    this.profileService.getProfileImages()
+    .subscribe({next: (data : any)=> {
+      this.imageCollection = data
+      if (this.imageCollection.images.length == 0){
+          this.fetchFromExternalAPI();
+        }
+        else{
+        var decisionMark = Math.floor(Math.random()*this.imageCollection.images.length)
+        if (decisionMark % 2 == 0)
+            this.dogURL = this.imageCollection.images[Math.floor(Math.random()*this.imageCollection.images.length)];
+          else
+            this.fetchFromExternalAPI();
+        }
+    }})
+  }
+
+  fetchFromExternalAPI (){
     fetch('https://dog.ceo/api/breeds/image/random')
-        .then(response => response.json())
-        .then(data =>{
-            this.dogURL = data.message;
-        });
+    .then(response => response.json())
+    .then(data =>{
+        this.dogURL = data.message;
+    });
   }
 }
