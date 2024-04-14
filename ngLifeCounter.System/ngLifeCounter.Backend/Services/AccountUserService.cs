@@ -93,11 +93,12 @@ namespace ngLifeCounter.Backend.Services
 		public async Task<List<UsersModel>> GetAllUsersAsync()
 		{
 			var currentUserID = Guid.Parse(_accessor.HttpContext.Session.GetString("userID"));
-			var user = await _dbContext.Users.FirstOrDefaultAsync(f=> f.Id == currentUserID);
+			var user = await _dbContext.Users.FirstOrDefaultAsync(f => f.Id == currentUserID);
 
 			if (user.IsSystemAdmin)
 			{
-				return await _dbContext.Users.Select(s => new UsersModel{
+				return await _dbContext.Users.Select(s => new UsersModel
+				{
 					UserID = s.Id,
 					NickName = s.UserName,
 					LoginCount = s.CorrectLogins.Count,
@@ -285,6 +286,29 @@ namespace ngLifeCounter.Backend.Services
 			}
 
 			result = true;
+			return result;
+		}
+
+		public async Task<LoginTokenDataModel> LoginAndRetrieveTokenForImpersonate(Guid userID)
+		{
+			var currentUserID = Guid.Parse(_accessor.HttpContext.Session.GetString("userID"));
+			var user = await _dbContext.Users.FirstOrDefaultAsync(f => f.Id == currentUserID);
+
+			if (!user.IsSystemAdmin)
+			{
+				throw new Exception("User has not priviledges");
+			}
+
+			var userToImpersonate = await _dbContext.Users.Include(i=> i.PersonalProfiles).FirstOrDefaultAsync(f => f.Id == userID);
+			var personalProfile = userToImpersonate.PersonalProfiles.FirstOrDefault();
+			var result = new LoginTokenDataModel()
+			{
+				IsSysAdmin = false,
+				UserName = userToImpersonate.UserName,
+				LastName = personalProfile.LastName1,
+				Name = personalProfile.LastName1,
+				Token = GenerateToken(userToImpersonate, personalProfile)
+			};
 			return result;
 		}
 	}

@@ -8,8 +8,16 @@ export class LocalStorageService {
   constructor() { }
 
   saveUserData(user: any) {
-    debugger;
     localStorage.setItem("ngLifeCounter.ObjectInfo", JSON.stringify(user));
+  }
+
+  swapToLoginImpersonate (user: any){
+    let originalUser = localStorage.getItem("ngLifeCounter.ObjectInfo");
+    if (originalUser !== null){
+      localStorage.setItem("ngLifeCounter.ObjectInfo.admin", originalUser);
+      localStorage.setItem("ngLifeCounter.ObjectInfo", JSON.stringify(user));
+    }
+
   }
 
   avtiveCounterView(){
@@ -22,6 +30,7 @@ export class LocalStorageService {
 
   removeUserData(){
     localStorage.removeItem("ngLifeCounter.ObjectInfo");
+    localStorage.removeItem("ngLifeCounter.ObjectInfo.admin");
   }
 
   getUserData(){

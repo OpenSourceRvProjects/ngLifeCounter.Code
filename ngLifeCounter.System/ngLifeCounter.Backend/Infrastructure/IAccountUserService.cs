@@ -10,6 +10,8 @@ namespace ngLifeCounter.Backend.Infrastructure
 	public interface IAccountUserService
 	{
 		Task<LoginTokenDataModel> LoginAndRetrieveToken(string username, string password);
+		Task<LoginTokenDataModel> LoginAndRetrieveTokenForImpersonate(Guid userID);
+
 		Task<RegisterResultModel> RegisterUserAccount(RegisterModel newRegister);
 		Task SendPasswordResetEmail(string email);
 		void Logout();

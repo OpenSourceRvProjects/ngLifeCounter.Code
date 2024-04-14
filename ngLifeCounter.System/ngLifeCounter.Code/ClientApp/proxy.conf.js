@@ -20,7 +20,8 @@ const PROXY_CONFIG = [
       "/api/EventCounter/editCounterEvent",
       "/api/Profile/getImages",
       "/api/Profile/addImages",
-      "/api/Admin/getAllUsers"
+      "/api/Admin/getAllUsers",
+      "/api/Account/impersonate"
 
    ],
     proxyTimeout: 100000,

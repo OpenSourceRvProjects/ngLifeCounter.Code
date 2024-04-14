@@ -48,4 +48,9 @@ export class AccountService {
   {
     return this.http.get(this.baseUrl + `api/Account/validateRecoveryRequestID?requestID=${id}`);
   }
+
+  loginImpersonate (userID: string ){
+    var headers = this.initHeaders();
+    return this.http.get(this.baseUrl + `api/Account/impersonate?userID=${userID}`, {headers});
+  }
 }

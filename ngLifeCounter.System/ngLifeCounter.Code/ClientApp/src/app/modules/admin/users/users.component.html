@@ -7,6 +7,7 @@
             <th scope="col"># Contadores</th>
             <th scope="col"># Recaidas</th>
             <th></th>
+            <th></th>
          
           </tr>
         </thead>
@@ -15,6 +16,7 @@
             <td>{{u.nickName}}</td>
             <td>{{u.counterEventsCount}}</td>
             <td>{{u.relapsesCount}}</td>
+            <td><button class="btn btn-outline-success" (click)="impersonate(u.userID)">Impersonar</button></td>
             <td></td>
            
           </tr>

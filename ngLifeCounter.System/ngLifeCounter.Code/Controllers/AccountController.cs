@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.RateLimiting;
 using ngLifeCounter.Backend.Infrastructure;
 using ngLifeCounter.Models.Account;
+using ngLifeCounter.MVC.Filters;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -57,6 +58,15 @@ namespace ngLifeCounter.MVC.Controllers
 		public async Task<IActionResult> Get(string userName, string password)
 		{
 			var token = await _accountService.LoginAndRetrieveToken(userName, password);
+			return Ok(token);
+		}
+
+		[HttpGet]
+		[Route("impersonate")]
+		[LoggedUserDataFilter]
+		public async Task<IActionResult> Impersonate(Guid userID)
+		{
+			var token = await _accountService.LoginAndRetrieveTokenForImpersonate(userID);
 			return Ok(token);
 		}
 
