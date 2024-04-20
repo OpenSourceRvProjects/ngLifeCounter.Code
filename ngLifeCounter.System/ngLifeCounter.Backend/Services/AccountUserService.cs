@@ -142,13 +142,13 @@ namespace ngLifeCounter.Backend.Services
 				throw new Exception("User already exist");
 			}
 
-			var userEmail = await _dbContext.Users.FirstOrDefaultAsync(f => f.Email == newRegister.Email);
-			if (userEmail != null)
-			{
-				_dbContext.Add(newRequest);
-				_dbContext.SaveChanges();
-				throw new Exception("Email already used");
-			}
+			//var userEmail = await _dbContext.Users.FirstOrDefaultAsync(f => f.Email == newRegister.Email);
+			//if (userEmail != null)
+			//{
+			//	_dbContext.Add(newRequest);
+			//	_dbContext.SaveChanges();
+			//	throw new Exception("Email already used");
+			//}
 
 
 			var encryptResult = await _encryptCore.RunEncrypt(newRegister.Password);
