@@ -89,6 +89,22 @@
         "ASPNETCORE_ENVIRONMENT": "QAMONSTER"
       }
     },
+    "prod-env": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "PROD",
+        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"
+      }
+    },
+    "prod-swagger": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "PROD"
+      }
+    },
     "test-env": {
       "commandName": "IISExpress",
       "launchBrowser": true,

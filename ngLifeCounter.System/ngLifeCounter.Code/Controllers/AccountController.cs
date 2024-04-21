@@ -54,10 +54,18 @@ namespace ngLifeCounter.MVC.Controllers
 
 		// GET: api/<AccountController>
 		[HttpGet]
-		[Route("login")]
+		[Route("loginURL")]
 		public async Task<IActionResult> Get(string userName, string password)
 		{
 			var token = await _accountService.LoginAndRetrieveToken(userName, password);
+			return Ok(token);
+		}
+
+		[HttpPost]
+		[Route("login")]
+		public async Task<IActionResult> GetToken([FromBody] LoginModel loginModel)
+		{
+			var token = await _accountService.LoginAndRetrieveToken(loginModel.UserName, loginModel.Password);
 			return Ok(token);
 		}
 
