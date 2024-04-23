@@ -33,7 +33,7 @@ export class CopyLinkComponent {
     selBox.style.left = '0';
     selBox.style.top = '0';
     selBox.style.opacity = '0';
-    selBox.value = this.baseUrl + "counter/myCounter?id=" + this.counterID;
+    selBox.value = this.baseUrl + "counter/myCounter?id=" + this.counterID + "&shared=true";
     document.body.appendChild(selBox);
     selBox.focus();
     selBox.select();

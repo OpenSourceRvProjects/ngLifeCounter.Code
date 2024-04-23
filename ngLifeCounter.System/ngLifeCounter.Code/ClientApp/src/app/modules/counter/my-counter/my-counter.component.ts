@@ -52,7 +52,7 @@ export class MyCounterComponent {
     this.sub = this.route.queryParams.subscribe(params=>{
       debugger;
       this.id = params['id'];
-      this.isShared = params['shared']
+      this.isShared = Boolean(params['shared'])
       this.getEvent();
     });
   }
@@ -102,6 +102,11 @@ export class MyCounterComponent {
 
   getDoggie(){
 
+    if (this.isShared){
+      this.fetchFromExternalAPI();
+      return;
+    }
+
     this.profileService.getProfileImages()
     .subscribe({next: (data : any)=> {
       this.imageCollection = data
@@ -115,6 +120,9 @@ export class MyCounterComponent {
           else
             this.fetchFromExternalAPI();
         }
+    }, error: (err)=>{
+      if (err.status === 401)
+        this.fetchFromExternalAPI();
     }})
   }
 
