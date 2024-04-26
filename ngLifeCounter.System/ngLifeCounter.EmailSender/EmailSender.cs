@@ -26,7 +26,7 @@ namespace ngLifeCounter.EmailSender
 		private MimeMessage CreateEmailMessage(MessageModel message)
 		{
 			var emailMessage = new MimeMessage();
-			emailMessage.From.Add(new MailboxAddress("NgLifeCounter", _emailConfig.From));
+			emailMessage.From.Add(new MailboxAddress("Ng-LifeCounter App", _emailConfig.From));
 			emailMessage.To.AddRange(message.To);
 			emailMessage.Subject = message.Subject;
 			emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = string.Format(message.Content) };
