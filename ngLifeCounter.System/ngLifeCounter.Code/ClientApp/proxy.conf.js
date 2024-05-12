@@ -21,7 +21,8 @@ const PROXY_CONFIG = [
       "/api/Profile/getImages",
       "/api/Profile/addImages",
       "/api/Admin/getAllUsers",
-      "/api/Account/impersonate"
+      "/api/Account/impersonate",
+      "/api/Profile/getProfileData",
 
    ],
     proxyTimeout: 100000,

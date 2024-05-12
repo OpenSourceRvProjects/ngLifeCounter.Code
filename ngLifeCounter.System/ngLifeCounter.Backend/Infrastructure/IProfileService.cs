@@ -1,4 +1,5 @@
 ﻿using ngLifeCounter.Models.Images;
+using ngLifeCounter.Models.Profile;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace ngLifeCounter.Backend.Infrastructure
 	{
 		Task SaveProfileImages(ImageListModel images);
 		Task<ImageListModel> GetProfileImages();
+		Task<ProfileDataModel> GetProfileData();
 	}
 }

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ngLifeCounter.Backend.Infrastructure;
 using ngLifeCounter.Data.DataAccess;
 using ngLifeCounter.Models.Images;
+using ngLifeCounter.Models.Profile;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,20 @@ namespace ngLifeCounter.Backend.Services
 			_accessor = accessor;
 			_dbContext = dbContext;
 
+		}
+
+		public async Task<ProfileDataModel> GetProfileData()
+		{
+			var profile = await GetUserProfile();
+			return new ProfileDataModel()
+			{
+				Email = profile.User.Email,
+				LastName1 = profile.LastName1,
+				LastName2 = profile.LastName2,
+				Name = profile.Name,
+				Phone = profile.Pohone,
+				AllowAccess = profile.User.AllowSysAdminAccess
+			};
 		}
 
 		public async Task<ImageListModel> GetProfileImages()

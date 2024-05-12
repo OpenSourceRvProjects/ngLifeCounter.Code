@@ -30,6 +30,14 @@ namespace ngLifeCounter.MVC.Controllers
 			return Ok(images);
 		}
 
+		[HttpGet]
+		[Route("getProfileData")]
+		public async Task<IActionResult> GetProfileData()
+		{
+			var images = await _profileService.GetProfileData();
+			return Ok(images);
+		}
+
 
 		// POST api/<ProfileController>
 		[HttpPost]
