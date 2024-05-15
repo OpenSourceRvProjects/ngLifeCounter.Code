@@ -78,13 +78,6 @@ namespace ngLifeCounter.MVC.Controllers
 			return Ok(token);
 		}
 
-		// GET api/<AccountController>/5
-		[HttpGet("{id}")]
-		public string Get(int id)
-		{
-			return "value";
-		}
-
 		// POST api/<AccountController>
 		[HttpPost]
 		[Route("signUp")]
@@ -101,16 +94,6 @@ namespace ngLifeCounter.MVC.Controllers
 			}
 		}
 
-		// PUT api/<AccountController>/5
-		[HttpPut("{id}")]
-		public void Put(int id, [FromBody] string value)
-		{
-		}
 
-		// DELETE api/<AccountController>/5
-		[HttpDelete("{id}")]
-		public void Delete(int id)
-		{
-		}
 	}
 }

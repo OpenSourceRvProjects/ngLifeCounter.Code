@@ -27,30 +27,6 @@ namespace ngLifeCounter.MVC.Controllers
 			var users = await _accountService.GetAllUsersAsync();
 			return Ok(users);
 		}
-
-		// GET api/<AdminController>/5
-		[HttpGet("{id}")]
-		public string Get(int id)
-		{
-			return "value";
-		}
-
-		// POST api/<AdminController>
-		[HttpPost]
-		public void Post([FromBody] string value)
-		{
-		}
-
-		// PUT api/<AdminController>/5
-		[HttpPut("{id}")]
-		public void Put(int id, [FromBody] string value)
-		{
-		}
-
-		// DELETE api/<AdminController>/5
-		[HttpDelete("{id}")]
-		public void Delete(int id)
-		{
-		}
+		
 	}
 }

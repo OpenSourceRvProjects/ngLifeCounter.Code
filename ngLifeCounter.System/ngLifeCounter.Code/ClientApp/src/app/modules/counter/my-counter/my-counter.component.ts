@@ -114,7 +114,7 @@ export class MyCounterComponent {
           this.fetchFromExternalAPI();
         }
         else{
-        var decisionMark = Math.floor(Math.random()*this.imageCollection.images.length)
+        var decisionMark = Math.floor(Math.random()*2)
         if (decisionMark % 2 == 0)
             this.dogURL = this.imageCollection.images[Math.floor(Math.random()*this.imageCollection.images.length)];
           else

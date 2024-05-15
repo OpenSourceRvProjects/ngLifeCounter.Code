@@ -84,10 +84,5 @@ namespace ngLifeCounter.MVC.Controllers
 			return Ok();
 		}
 
-		// DELETE api/<EventCounterController>/5
-		[HttpDelete("{id}")]
-		public void Delete(int id)
-		{
-		}
 	}
 }
