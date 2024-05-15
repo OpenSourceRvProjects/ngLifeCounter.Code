@@ -5,7 +5,8 @@ import { ICounterPrivacySetModel } from 'src/app/Models/EventCounter/ICounterPri
 import { IEventCounterItemModel } from 'src/app/Models/EventCounter/IEventCounterItemModel';
 import { EventService } from 'src/app/Services/Events/event.service';
 import { LocalStorageService } from 'src/app/Services/Storage/local-storage.service';
-import { ModalEditComponent } from '../edit-counter/ModalEditCounter';
+import { ModalEditComponent } from '../edit-counter/modalEditCounter';
+import { ModalRelapsesComponent } from '../relapses/modalRelapses';
 
 @Component({
   selector: 'app-counter-list',
@@ -30,6 +31,11 @@ export class CounterListComponent {
 
   openEditPopUp(counterEvent : IEventCounterItemModel){
     const modalRef = this.modalService.open(ModalEditComponent, {ariaLabelledBy: 'modal-basic-title', size: 'lg' });
+    modalRef.componentInstance.counterEvent = counterEvent;
+  }
+
+  openRelapsesPopUp(counterEvent : IEventCounterItemModel){
+    const modalRef = this.modalService.open(ModalRelapsesComponent, {ariaLabelledBy: 'modal-basic-title', size: 'lg' });
     modalRef.componentInstance.counterEvent = counterEvent;
   }
 

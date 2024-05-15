@@ -43,7 +43,7 @@ builder.Services.AddMemoryCache();
 
 var config = builder.Configuration.GetSection("IpRateLimiting");
 builder.Services.Configure<IpRateLimitOptions>(builder.Configuration.GetSection("IpRateLimiting"));
-builder.Services.AddHttpContextAccessor();
+//builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
 builder.Services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
 builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
