@@ -7,6 +7,7 @@ import { IEventCounterItemModel } from 'src/app/Models/EventCounter/IEventCounte
 import { TextValueItem } from 'src/app/Models/TextValueItem';
 import { EventService } from 'src/app/Services/Events/event.service';
 import { LocalStorageService } from 'src/app/Services/Storage/local-storage.service';
+import { ModalEditComponent } from '../edit-counter/ModalEditCounter';
 
 @Component({
   selector: 'app-counter-list',
@@ -61,37 +62,42 @@ export class CounterListComponent {
 
   }
   
-	open(content : any, counterEvent : IEventCounterItemModel) {
-    this.selectedCounterToEdit = counterEvent;
+  openEditPopUp(counterEvent : IEventCounterItemModel){
+    const modalRef = this.modalService.open(ModalEditComponent, {ariaLabelledBy: 'modal-basic-title', size: 'lg' });
+    modalRef.componentInstance.counterEvent = counterEvent;
+  }
 
-    this.eventService.getEventByID(this.selectedCounterToEdit.id)
-    .subscribe({next : (data : any)=> {
-      this.selectedDetailedCounter = data;
-      this.selectedHourToDetailedCounter = this.hoursForEditMode.find(f=> f.number == this.selectedDetailedCounter.hour)!;
-      this.selectedMonthToDetailCounter = this.monthsForEditMode.find(f=> f.number == this.selectedDetailedCounter.month)!;
-    }, error: (error)=>{
-      alert("Evento no encontrado")
-    }})
+	// open(content : any, counterEvent : IEventCounterItemModel) {
+  //   this.selectedCounterToEdit = counterEvent;
 
-		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' }).result.then(
-			(result) => {
-				this.closeResult = `Closed with: ${result}`;
-			},
-			(reason) => {
-				this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-			},
-		);
-	}
+  //   this.eventService.getEventByID(this.selectedCounterToEdit.id)
+  //   .subscribe({next : (data : any)=> {
+  //     this.selectedDetailedCounter = data;
+  //     this.selectedHourToDetailedCounter = this.hoursForEditMode.find(f=> f.number == this.selectedDetailedCounter.hour)!;
+  //     this.selectedMonthToDetailCounter = this.monthsForEditMode.find(f=> f.number == this.selectedDetailedCounter.month)!;
+  //   }, error: (error)=>{
+  //     alert("Evento no encontrado")
+  //   }})
 
-  private getDismissReason(reason: any): string {
-		if (reason === ModalDismissReasons.ESC) {
-			return 'by pressing ESC';
-		} else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-			return 'by clicking on a backdrop';
-		} else {
-			return `with: ${reason}`;
-		}
-	}
+	// 	this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' }).result.then(
+	// 		(result) => {
+	// 			this.closeResult = `Closed with: ${result}`;
+	// 		},
+	// 		(reason) => {
+	// 			this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+	// 		},
+	// 	);
+	// }
+
+  // private getDismissReason(reason: any): string {
+	// 	if (reason === ModalDismissReasons.ESC) {
+	// 		return 'by pressing ESC';
+	// 	} else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+	// 		return 'by clicking on a backdrop';
+	// 	} else {
+	// 		return `with: ${reason}`;
+	// 	}
+	// }
 
   checkboxChange(eventItem: IEventCounterItemModel){
     debugger;

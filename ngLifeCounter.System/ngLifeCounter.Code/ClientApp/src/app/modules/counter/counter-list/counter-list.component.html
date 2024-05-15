@@ -37,14 +37,14 @@
             <td>{{e.dateString}}</td>
             <td style="text-align: center;"><input (change)="checkboxChange(e)" [(ngModel)]="e.isPublic" type="checkbox"></td>
             <td><app-copy-link *ngIf="e.isPublic" [counterID]="e.id"></app-copy-link></td>
-            <td><i class="fa fa-pencil" (click)="open(content, e)"></i></td>
+            <td><i class="fa fa-pencil" (click)="openEditPopUp(e)"></i></td>
            
           </tr>
         </tbody>
       </table>
 
       <ng-template #content let-modal>
-        <br>
+        <!-- <br>
         <div *ngIf="processing" class=" d-flex justify-content-center align-items-center">
           <div class="col-md-6">
               <div class="border border-3 border-success"></div>
@@ -59,7 +59,6 @@
                   <div class="text-center">
                       <h1>Modificando tu evento...</h1>
                       <p>Ésto tomara un momento</p>
-                      <!-- <button class="btn btn-outline-success">Login</button> -->
                   </div>
               </div>
           </div>
@@ -138,7 +137,7 @@
               <button type="button" class="btn btn-outline-danger" (click)="modal.close('Save click')">Cancelar</button>
               <button type="button" class="btn btn-outline-success" (click)="editSelectedCounter()">Guardar</button>
             </div>
-        </div>
+        </div> -->
       </ng-template>
       
 </div>
