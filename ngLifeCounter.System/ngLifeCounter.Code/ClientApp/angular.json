@@ -72,11 +72,11 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "ngLifeCounter:build:production"
+              "buildTarget": "ngLifeCounter:build:production"
             },
             "development": {
-              "browserTarget": "ngLifeCounter:build:development",
-              "proxyConfig": "proxy.conf.js"
+              "proxyConfig": "proxy.conf.js",
+              "buildTarget": "ngLifeCounter:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -84,7 +84,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ngLifeCounter:build"
+            "buildTarget": "ngLifeCounter:build"
           }
         },
         "test": {
