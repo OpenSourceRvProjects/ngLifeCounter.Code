@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { LocalStorageService } from '../Services/Storage/local-storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CommonGuard  {
+export class CommonGuard implements CanActivate {
 
   constructor(private storageService: LocalStorageService, private router: Router) {
 

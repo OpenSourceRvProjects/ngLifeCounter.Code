@@ -117,8 +117,7 @@
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
-              "vendorChunk": true,
-              "buildOptimizer": true
+              "vendorChunk": true
             },
             "production": {
               "optimization": true,
@@ -126,12 +125,12 @@
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true
+              "vendorChunk": false
             }
           }
         }
       }
     }
-  }
+  },
+  "defaultProject": "ngLifeCounter"
 }
