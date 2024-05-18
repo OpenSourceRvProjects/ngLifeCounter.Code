@@ -11,16 +11,6 @@ export class AccountService {
 
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private localStorage: LocalStorageService) { }
 
-
-  private initHeaders() {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.localStorage.getUserData().token,
-    })
-    return headers;
-  }
-
-
   registerAccount(registerUser: IRegisterModel) {
     var body = registerUser;
     return this.http.post(this.baseUrl + "api/Account/signUp", body);
@@ -44,8 +34,7 @@ export class AccountService {
   }
 
   getAllUsers() {
-    var headers = this.initHeaders();
-    return this.http.get(this.baseUrl + `api/Admin/getAllUsers`, { headers });
+    return this.http.get(this.baseUrl + `api/Admin/getAllUsers`);
 
   }
 
@@ -54,7 +43,6 @@ export class AccountService {
   }
 
   loginImpersonate(userID: string) {
-    var headers = this.initHeaders();
-    return this.http.get(this.baseUrl + `api/Account/impersonate?userID=${userID}`, { headers });
+    return this.http.get(this.baseUrl + `api/Account/impersonate?userID=${userID}`);
   }
 }

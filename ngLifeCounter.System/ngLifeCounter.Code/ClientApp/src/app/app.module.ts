@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -13,6 +13,7 @@ import { EnvironmentModule } from './modules/environment/environment.module';
 import { SharedModule } from './modules/shared/shared.module';
 import { ProfileModule } from './modules/profile/profile.module';
 import { AdminModule } from './modules/admin/admin.module';
+import { AuthInterceptorService } from './Services/AuthInterceptorService';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,12 @@ import { AdminModule } from './modules/admin/admin.module';
 
   ],
   exports: [],
-  providers: [],
+  providers: [
+    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptorService,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -13,36 +13,25 @@ export class EventService {
 
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private loclStorage: LocalStorageService) { }
 
-  private initHeaders() {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization' : 'Bearer ' + this.loclStorage.getUserData().token,
-    })
-    return headers;
-  }
-
+  
 
   addEvent(newEvent : INewEventCounterModel){
     debugger;
-    var headers = this.initHeaders();
-    return this.http.post(this.baseUrl + "api/EventCounter", newEvent, {headers})
+    return this.http.post(this.baseUrl + "api/EventCounter", newEvent)
   }
 
   getEvents(){
-    var headers = this.initHeaders();
-    return this.http.get(this.baseUrl +"api/EventCounter", {headers})
+    return this.http.get(this.baseUrl +"api/EventCounter")
   }
 
   getEventsResume(){
-    var headers = this.initHeaders();
-    return this.http.get(this.baseUrl +"api/EventCounter/getCountersResume", {headers})
+    return this.http.get(this.baseUrl +"api/EventCounter/getCountersResume")
   }
 
   getEventByID(eventID: string){
 
     if (this.loclStorage.getUserData()) {
-      var headers = this.initHeaders();
-      return this.http.get(this.baseUrl + "api/EventCounter/getById?counterID=" + eventID, {headers})
+      return this.http.get(this.baseUrl + "api/EventCounter/getById?counterID=" + eventID)
     }
     else{
       return this.http.get(this.baseUrl + "api/EventCounter/getById?counterID=" + eventID)
@@ -51,21 +40,17 @@ export class EventService {
   }
 
   changeEventPrivacySetting(eventID: string, setting: ICounterPrivacySetModel ){
-    var headers = this.initHeaders();
     var body = setting;
-    return this.http.put(this.baseUrl +"api/EventCounter/changeCounterPrivacy?id=" + eventID, body, {headers})
+    return this.http.put(this.baseUrl +"api/EventCounter/changeCounterPrivacy?id=" + eventID, body)
   }
 
   editEventCounter(eventID: string, isRelapse : boolean, eventCounter: ICounterDataModel ){
-    var headers = this.initHeaders();
     var body = eventCounter;
-    return this.http.put(this.baseUrl +"api/EventCounter/editCounterEvent?id=" + eventID + "&isRelapse=" + isRelapse, body, {headers})
+    return this.http.put(this.baseUrl +"api/EventCounter/editCounterEvent?id=" + eventID + "&isRelapse=" + isRelapse, body)
   }
 
   deleteEventCounter(eventID: string ){
-
-    var headers = this.initHeaders();
-    return this.http.delete(this.baseUrl +"api/EventCounter/deleteCounterByID?counterID=" + eventID, {headers})
+    return this.http.delete(this.baseUrl +"api/EventCounter/deleteCounterByID?counterID=" + eventID)
   }
 
 
