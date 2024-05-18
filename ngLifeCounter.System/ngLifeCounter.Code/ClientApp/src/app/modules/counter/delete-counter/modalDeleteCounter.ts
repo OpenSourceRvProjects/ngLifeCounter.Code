@@ -26,6 +26,20 @@ export class ModalDeleteCounterComponent implements OnInit {
 
   }
 
+  deleteEventCounter(){
+    this.processing = true;
+    this.eventService.deleteEventCounter(this.counterEventToDelete.id)
+    .subscribe({next: ()=> {
+        window.location.href = "/counter/list"
+    }, error: (err)=>{
+        debugger;
+        if (err.status == 404)
+            alert("Evento no encontrado");
+        this.processing = false;
+
+    }})
+  }
+
     makeid(length : number) {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNPQRSTUVWXYZ123456789';

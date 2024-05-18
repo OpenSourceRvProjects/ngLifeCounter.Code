@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ngLifeCounter.Backend.Infrastructure;
 using ngLifeCounter.Data.DataAccess;
 using ngLifeCounter.Models.EventCounter;
+using ngLifeCounter.Models.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
@@ -178,7 +179,7 @@ namespace ngLifeCounter.Backend.Services
 					RelapseYear = counter.Year,
 					PreviousYear = counterInDB.StartYear,
 					PreviousMonth = counterInDB.StartMonth,
-					PreviousDay = counterInDB.StartDay,	
+					PreviousDay = counterInDB.StartDay,
 					PreviousHour = counterInDB.Hour.Value,
 					PreviousMinutes = counterInDB.Minutes.Value,
 					CreationDate = DateTime.Now,
@@ -195,7 +196,7 @@ namespace ngLifeCounter.Backend.Services
 			counterInDB.StartYear = counter.Year;
 			counterInDB.Minutes = counter.Minutes;
 
-		
+
 			try
 			{
 				var dateTimeEvent = new DateTime(counterInDB.StartDay, counterInDB.StartMonth, counterInDB.StartDay, counterInDB.Hour.Value, counterInDB.Minutes.Value, 0);
@@ -210,9 +211,9 @@ namespace ngLifeCounter.Backend.Services
 				_dbContext.EventCounters.Update(counterInDB);
 				_dbContext.SaveChanges();
 			}
-			catch (Exception ex) 
-			{ 
-				
+			catch (Exception ex)
+			{
+
 			}
 		}
 
@@ -230,6 +231,23 @@ namespace ngLifeCounter.Backend.Services
 			result.TotalUserRelapsesCount = personalProfile.RelapseLimit;
 			result.TotalUserEventsCount = personalProfile.CounterLimit;
 			return result;
+
+		}
+
+		public async Task DeleteEventCounterByID(Guid eventCounterID)
+		{
+			var currentUserID = Guid.Parse(_accessor.HttpContext.Session.GetString("userID"));
+			var eventCounter = await _dbContext.EventCounters.Include(i => i.Relapses).Where(w => w.Id == eventCounterID && w.UserId == currentUserID).FirstOrDefaultAsync();
+
+			if (eventCounter == null)
+			{
+				throw new NotFoundException("Event not found");
+			}
+
+			_dbContext.RemoveRange(eventCounter.Relapses);
+			_dbContext.Remove(eventCounter);
+
+			_dbContext.SaveChanges();
 
 		}
 	}

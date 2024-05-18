@@ -16,5 +16,6 @@ namespace ngLifeCounter.Backend.Infrastructure
 		Task UpdateEventCounter(Guid counterID, CounterDataModel counter, bool isRelapse = false);
 
 		Task<CounterResultsModel> GetCounterResults();
+		Task DeleteEventCounterByID(Guid eventCounterID);
 	}
 }

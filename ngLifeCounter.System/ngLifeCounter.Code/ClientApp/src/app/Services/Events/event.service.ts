@@ -62,6 +62,13 @@ export class EventService {
     return this.http.put(this.baseUrl +"api/EventCounter/editCounterEvent?id=" + eventID + "&isRelapse=" + isRelapse, body, {headers})
   }
 
+  deleteEventCounter(eventID: string ){
+
+    var headers = this.initHeaders();
+    return this.http.delete(this.baseUrl +"api/EventCounter/deleteCounterByID?counterID=" + eventID, {headers})
+  }
+
+
 
 
   getMonths(){

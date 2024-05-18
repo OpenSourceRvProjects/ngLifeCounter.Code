@@ -1,3 +1,22 @@
+<br>
+<div *ngIf="processing" class=" d-flex justify-content-center align-items-center">
+    <div class="col-md-6">
+        <div class="border border-3 border-success"></div>
+            <div class="mb-4 text-center">
+                <br>
+                <div  class="d-flex justify-content-center">
+                    <div style="width: 6rem; height: 6rem;" class="spinner-border text-success" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+            <div class="text-center">
+                <h1>Eliminando...</h1>
+                <p>Ésto tomara un momento</p>
+            </div>
+        </div>
+    </div>
+  </div>
+
 <div *ngIf="!processing" >
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Eliminar {{counterEventToDelete.eventName}}</h4>
@@ -37,6 +56,6 @@
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-outline-warning" (click)="activeModal.close('Save click')">Cancelar</button>
-      <button type="button" *ngIf="userTokenUi === uiTokenDelete" class="btn btn-danger">ELIMINAR</button>
+      <button type="button" *ngIf="userTokenUi === uiTokenDelete" (click)="deleteEventCounter()" class="btn btn-danger">ELIMINAR</button>
     </div>
 </div>

@@ -84,5 +84,15 @@ namespace ngLifeCounter.MVC.Controllers
 			return Ok();
 		}
 
+		[HttpDelete]
+		[Route("deleteCounterByID")]
+		[ExceptionManager]
+		[LoggedUserDataFilter]
+		public async Task<IActionResult> DeleteCounterByID(Guid counterID)
+		{
+			await _eventService.DeleteEventCounterByID(counterID);
+			return Ok();
+		}
+
 	}
 }
