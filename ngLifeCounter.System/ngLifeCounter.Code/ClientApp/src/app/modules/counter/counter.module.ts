@@ -10,6 +10,7 @@ import { SharedModule } from '../shared/shared.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalEditComponent } from './edit-counter/modalEditCounter';
 import { ModalRelapsesComponent } from './relapses/modalRelapses';
+import { ModalDeleteCounterComponent } from './delete-counter/modalDeleteCounter';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { ModalRelapsesComponent } from './relapses/modalRelapses';
     CounterListComponent,
     MyCounterComponent,
     ModalEditComponent,
-    ModalRelapsesComponent
+    ModalRelapsesComponent,
+    ModalDeleteCounterComponent,
   ],
   imports: [
     CounterRoutingModule,

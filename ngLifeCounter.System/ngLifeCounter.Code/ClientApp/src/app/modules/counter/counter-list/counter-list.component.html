@@ -24,6 +24,7 @@
             <th></th>
             <th></th>
             <th></th>
+            <th></th>
             <!-- <th>Eventos/Recaidas</th> -->
           </tr>
         </thead>
@@ -35,6 +36,7 @@
             <td><app-copy-link *ngIf="e.isPublic" [counterID]="e.id"></app-copy-link></td>
             <td><i class="fa fa-pencil" (click)="openEditPopUp(e)"></i></td>
             <td><i ngbTooltip="Recaidas/Eventos" class="fa fa-bar-chart" (click)="openRelapsesPopUp(e)"></i></td>
+            <td><i class="fa fa-ban" style="color: red;" (click)="openDeletePopUp(e)"></i></td>
           </tr>
         </tbody>
       </table>

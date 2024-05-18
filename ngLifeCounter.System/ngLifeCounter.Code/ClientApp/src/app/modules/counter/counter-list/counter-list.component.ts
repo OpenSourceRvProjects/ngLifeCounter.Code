@@ -7,6 +7,7 @@ import { EventService } from 'src/app/Services/Events/event.service';
 import { LocalStorageService } from 'src/app/Services/Storage/local-storage.service';
 import { ModalEditComponent } from '../edit-counter/modalEditCounter';
 import { ModalRelapsesComponent } from '../relapses/modalRelapses';
+import { ModalDeleteCounterComponent } from '../delete-counter/modalDeleteCounter';
 
 @Component({
   selector: 'app-counter-list',
@@ -37,6 +38,11 @@ export class CounterListComponent {
   openRelapsesPopUp(counterEvent : IEventCounterItemModel){
     const modalRef = this.modalService.open(ModalRelapsesComponent, {ariaLabelledBy: 'modal-basic-title', size: 'lg' });
     modalRef.componentInstance.counterEvent = counterEvent;
+  }
+
+  openDeletePopUp(counterEvent : IEventCounterItemModel){
+    const modalRef = this.modalService.open(ModalDeleteCounterComponent, {ariaLabelledBy: 'modal-basic-title', size: 'lg' });
+    modalRef.componentInstance.counterEventToDelete = counterEvent;
   }
 
   checkboxChange(eventItem: IEventCounterItemModel){
