@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-password-change',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./password-change.component.css']
 })
 export class PasswordChangeComponent {
+
+  processing: boolean = false;
+
+
+  constructor(public activeModal: NgbActiveModal) { }
+  
 
 }

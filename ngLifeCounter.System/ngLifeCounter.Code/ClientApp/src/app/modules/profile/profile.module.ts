@@ -5,6 +5,7 @@ import { PasswordChangeComponent } from './password-change/password-change.compo
 import { ImageCollectionComponent } from './image-collection/image-collection.component';
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { CommonModule } from "@angular/common";
     CommonModule,
     FormsModule,
     ProfileRoutingModule,
+    NgbModule
   ]
 })
 export class ProfileModule { }

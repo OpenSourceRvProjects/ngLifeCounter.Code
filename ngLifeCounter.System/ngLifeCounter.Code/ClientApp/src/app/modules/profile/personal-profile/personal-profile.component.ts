@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { PasswordChangeComponent } from '../password-change/password-change.component';
 
 @Component({
   selector: 'app-personal-profile',
@@ -8,7 +10,13 @@ import { Router } from '@angular/router';
 })
 export class PersonalProfileComponent {
 
-  constructor(public router: Router) {
+
+  constructor(private modalService: NgbModal, public router: Router) {
     
+  }
+
+
+  openChangePassword(){
+    const modalRef = this.modalService.open(PasswordChangeComponent, {ariaLabelledBy: 'modal-basic-title', size: 'lg' });
   }
 }
