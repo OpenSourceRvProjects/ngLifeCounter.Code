@@ -24,7 +24,8 @@ const PROXY_CONFIG = [
       "/api/Account/impersonate",
       "/api/Profile/getProfileData",
       "/api/Relapses/getEventCounterRelapses",
-      "/api/EventCounter/deleteCounterByID"
+      "/api/EventCounter/deleteCounterByID",
+      "/api/Account/changePassword"
 
    ],
     proxyTimeout: 100000,

@@ -60,8 +60,5 @@ namespace ngLifeCounter.Security.Core
 				return "" ;
 			}
 		}
-
-
-
 	}
 }

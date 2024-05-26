@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using ngLifeCounter.Backend.Infrastructure;
 using ngLifeCounter.Models.Account;
@@ -67,6 +68,18 @@ namespace ngLifeCounter.MVC.Controllers
 		{
 			var token = await _accountService.LoginAndRetrieveToken(loginModel.UserName, loginModel.Password);
 			return Ok(token);
+		}
+
+
+		[HttpPost]
+		[Route("changePassword")]
+		[LoggedUserDataFilter]
+		[ExceptionManager]
+		[Authorize]
+		public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordModel changePasswordModel)
+		{
+			await _accountService.ChangePassword(changePasswordModel.OldPassword, changePasswordModel.NewPassword);
+			return Ok();
 		}
 
 		[HttpGet]

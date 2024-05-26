@@ -14,6 +14,7 @@ using System.Text.Json;
 using ngLifeCounter.EmailSender;
 using ngLifeCounter.Models.Email;
 using Microsoft.AspNetCore.Http.Extensions;
+using ngLifeCounter.Models.Exceptions;
 
 namespace ngLifeCounter.Backend.Services
 {
@@ -240,11 +241,7 @@ namespace ngLifeCounter.Backend.Services
 
 			if (request != null && request.ExpirationDate > DateTime.Now)
 			{
-				var encryptResult = await _encryptCore.RunEncrypt(newPassword);
-				var user = _dbContext.Users.FirstOrDefault(f => f.Id == request.UserId);
-
-				user.PasswordHash = encryptResult.EncodeddPassword;
-				user.Salt = encryptResult.Salt;
+				await UpdateUserPasswordByID(newPassword, request.UserId);
 
 				request.ExpirationDate = DateTime.Now.AddDays(-1);
 
@@ -254,6 +251,31 @@ namespace ngLifeCounter.Backend.Services
 			}
 
 			return false;
+
+		}
+
+		private async Task UpdateUserPasswordByID(string newPassword, Guid userID)
+		{
+			var encryptResult = await _encryptCore.RunEncrypt(newPassword);
+			var user = _dbContext.Users.FirstOrDefault(f => f.Id == userID);
+
+			user.PasswordHash = encryptResult.EncodeddPassword;
+			user.Salt = encryptResult.Salt;
+			await _dbContext.SaveChangesAsync();
+
+		}
+
+		public async Task ChangePassword(string currentPassword, string newPassword)
+		{
+			var currentUserID = Guid.Parse(_accessor.HttpContext.Session.GetString("userID"));
+			var user = await _dbContext.Users.FirstOrDefaultAsync(f=> f.Id == currentUserID);
+
+			var isValidOldPassword = await _decryptCore.ValidatePassword(user.PasswordHash, user.Salt, currentPassword);
+
+			if (!isValidOldPassword)
+				throw new IncorrectPasswordException("Incorrect password");
+
+			await UpdateUserPasswordByID(newPassword, user.Id);
 
 		}
 

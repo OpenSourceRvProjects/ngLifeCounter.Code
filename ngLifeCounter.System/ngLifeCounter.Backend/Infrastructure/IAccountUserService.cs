@@ -18,6 +18,7 @@ namespace ngLifeCounter.Backend.Infrastructure
 		Task<bool> ChangePasswordWithRequestLink(Guid requestID, string newPassword);
 		Task<bool> ValidateRecoveryRequestID(Guid requestID);
 		Task<List<UsersModel>> GetAllUsersAsync();
+		Task ChangePassword(string currentPassword, string newPassword);
 
 	}
 }

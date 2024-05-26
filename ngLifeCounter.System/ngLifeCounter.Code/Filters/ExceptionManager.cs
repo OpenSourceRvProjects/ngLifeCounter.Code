@@ -17,6 +17,12 @@ namespace ngLifeCounter.MVC.Filters
 				context.HttpContext.Response.StatusCode = (int)HttpStatusCode.NotFound;
 			}
 
+			if (context.Exception is IncorrectPasswordException)
+			{
+				context.Result = new JsonResult(new { Message = context.Exception.Message });
+				context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
+			}
+
 			base.OnException(context);
 		}
 	}
