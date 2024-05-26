@@ -20,21 +20,61 @@ namespace ngLifeCounter.Backend.Services
 		{
 			var currentUserID = Guid.Parse(_accessor.HttpContext.Session.GetString("userID"));
 
-			var relapseData =  new RelapsesDataModel();
+			var relapseData = new RelapsesDataModel();
 
-			var relapsesList = await _dbContext.Relapses.Where(w=> w.UserId == currentUserID && w.EventCounterId ==  counterEventID)
-				.Select(s=>  new RelapseDetailModel()
-				{
-					Id = s.Id,
-					EventCounterID = s.EventCounterId,
-					EventName = s.EventCounter.EventName,
-					DateString = s.RelapseYear +  "/" + s.RelapseMonth + "/" + s.RelapseDay,
-				})
-				.ToListAsync();
+			var relapses = _dbContext.Relapses.Include(i=> i.EventCounter).Where(w => w.UserId == currentUserID && w.EventCounterId == counterEventID);
+			//.Select(s => new RelapseDetailModel()
+			//{
+			//	Id = s.Id,
+			//	EventCounterID = s.EventCounterId,
+			//	EventName = s.EventCounter.EventName,
+			//	DateString = s.RelapseYear + "/" + s.RelapseMonth + "/" + s.RelapseDay,
+			//	RelapseDate = new DateTime((int)s.RelapseYear, s.RelapseMonth, s.RelapseDay),
+			//	DaysSinceLastRelapse = (new DateTime((int)s.RelapseYear, (int)s.RelapseMonth, (int)s.RelapseDay, (int)s.RelapseHour, (int)s.RelapseHour, 0)
+			//	- new DateTime((int)s.PreviousYear, (int)s.PreviousMonth, (int)s.PreviousDay, (int)s.PreviousHour, (int)s.PreviousMinutes, 0)).Days,
+
+
+			//});
+
+			var relapsesDetailList = new List<RelapseDetailModel>();
+
+			foreach (var r in relapses)
+			{
+				var item = new RelapseDetailModel();
+				item.Id  = r.Id;
+				item.EventCounterID = r.EventCounterId;
+				item.EventName = r.EventCounter.EventName;
+				item.DateString = r.RelapseYear + "/" + r.RelapseMonth + "/" + r.RelapseDay;
+				item.RelapseDate = new DateTime((int)r.RelapseYear, r.RelapseMonth, r.RelapseDay);
+				item.CreationDate = r.CreationDate;
+
+				var timeSinceLastRelapse = (new DateTime((int)r.RelapseYear, (int)r.RelapseMonth, (int)r.RelapseDay, (int)r.RelapseHour, (int)r.RelapseMinute, 0)
+				- new DateTime((int)r.PreviousYear, (int)r.PreviousMonth, (int)r.PreviousDay, (int)r.PreviousHour, (int)r.PreviousMinutes, 0));
+
+				if (timeSinceLastRelapse.TotalDays >= 365)
+					item.TimeSinceLastRelapseString = (new DateTime(timeSinceLastRelapse.Ticks).Year -1) + " año(s)";
+
+				if (timeSinceLastRelapse.TotalDays < 365)
+					item.TimeSinceLastRelapseString = ((int) timeSinceLastRelapse.TotalDays) + " días";
+
+				if (timeSinceLastRelapse.TotalHours < 24)
+					item.TimeSinceLastRelapseString = ((int) timeSinceLastRelapse.TotalHours) + " horas";
+
+				if (timeSinceLastRelapse.TotalHours < 1)
+					item.TimeSinceLastRelapseString = timeSinceLastRelapse.TotalMinutes + " minutos";
+
+
+				relapsesDetailList.Add(item);
+
+			}
+
+
+			var relapsesList = relapsesDetailList.OrderByDescending(od => od.RelapseDate).ThenByDescending(obd=> obd.CreationDate).ToList();
+
 
 			relapseData.Items = relapsesList;
-			
-			var eventCounter = _dbContext.EventCounters.First(f=> f.Id == counterEventID);
+
+			var eventCounter = await  _dbContext.EventCounters.FirstAsync(f => f.Id == counterEventID);
 
 			var date = new DateTime((int)eventCounter.StartYear, eventCounter.StartMonth, eventCounter.StartDay);
 			var now = DateTime.UtcNow;
@@ -49,8 +89,8 @@ namespace ngLifeCounter.Backend.Services
 				relapseData.TimeUnit = "días";
 				relapseData.TimeQuantitySinceLastIssue = diffDays;
 			}
-            else
-            {
+			else
+			{
 				var timeSpan = nzDateTime - date;
 				int age = new DateTime(timeSpan.Ticks).Year - 1;
 				relapseData.TimeQuantitySinceLastIssue = age;
@@ -58,7 +98,7 @@ namespace ngLifeCounter.Backend.Services
 
 			}
 
-			return relapseData; 
+			return relapseData;
 		}
 	}
 }

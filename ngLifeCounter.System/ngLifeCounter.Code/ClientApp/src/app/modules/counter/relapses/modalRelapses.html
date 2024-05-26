@@ -12,6 +12,7 @@
                   <tr>
                     <th scope="col">Nombre evento</th>
                     <th scope="col">Fecha recaida</th>
+                    <th scope="col">Tiempo desde última recaida</th>
                     <th></th>
                     <!-- <th>Eventos/Recaidas</th> -->
                   </tr>
@@ -20,6 +21,7 @@
                   <tr *ngFor="let e of relapsesData.items; index as i">
                     <td> {{e.eventName}}</td>
                     <td>{{e.dateString}}</td>
+                    <td>{{e.timeSinceLastRelapseString}}</td>
                   </tr>
                 </tbody>
             </table>

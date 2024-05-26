@@ -3,6 +3,8 @@ export interface RelapseDetailModel {
     id: string;
     eventCounterID: string;
     dateString: string;
+    daysSinceLastRelapse : number;
+    timeSinceLastRelapseString : string;
 }
 
 export interface RelapsesDataModel {

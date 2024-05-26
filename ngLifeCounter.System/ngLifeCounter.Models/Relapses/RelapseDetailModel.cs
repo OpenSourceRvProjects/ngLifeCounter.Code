@@ -12,7 +12,11 @@ namespace ngLifeCounter.Models.Relapses
         public Guid Id { get; set; }
         public Guid EventCounterID { get; set; }
         public string DateString { get; set; }
-    }
+        public int DaysSinceLastRelapse { get; set; }
+		public DateTime RelapseDate { get; set; }
+        public string TimeSinceLastRelapseString { get; set; }
+		public DateTime CreationDate { get; set; }
+	}
 
     public class RelapsesDataModel
     {
