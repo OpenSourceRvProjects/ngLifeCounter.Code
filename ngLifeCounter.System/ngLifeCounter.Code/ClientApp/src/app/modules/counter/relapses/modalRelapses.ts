@@ -7,7 +7,7 @@ import { RelapsesService } from 'src/app/Services/Relapses/relapses.service';
 @Component({
   selector: 'relapses-modal',
   templateUrl: './modalRelapses.html',
-  styleUrls: ['./goldCoin.css', './plateCoin.css']
+
 })
 export class ModalRelapsesComponent implements OnInit {
 
