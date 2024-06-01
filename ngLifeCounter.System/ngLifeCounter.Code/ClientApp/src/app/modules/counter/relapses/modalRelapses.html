@@ -33,7 +33,12 @@
             </div>
         </div>
         
-        <div>
+        <reward-coin *ngIf="relapsesData.timeQuantitySinceLastIssue >= 0"
+          [timeUnit]="relapsesData.timeUnit" 
+          [timeQty]="relapsesData.timeQuantitySinceLastIssue" 
+          [eventName]= "counterEvent.eventName">
+        </reward-coin>
+        <!-- <div>
             <hr>
             <div style="text-align: center;">
                 <h4>{{counterEvent.eventName}}</h4>
@@ -65,7 +70,7 @@
                 </div>
                 <div class='shadow'></div>
               </div>
-        </div>
+        </div> -->
        
     </div>
 
