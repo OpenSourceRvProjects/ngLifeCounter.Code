@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { IRegisterModel } from 'src/app/Models/Account/IRegisterModel';
 import { LocalStorageService } from '../Storage/local-storage.service';
 import { ILoginModel } from 'src/app/Models/Account/ILoginModel';
+import { IChangePasswordModel } from 'src/app/Models/Profile/IChangePasswordModel';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,10 @@ export class AccountService {
 
   login(loginModel: ILoginModel) {
     return this.http.post(this.baseUrl + `api/Account/login`, loginModel);
+  }
+
+  changeMyPassword(loginModel: IChangePasswordModel) {
+    return this.http.post(this.baseUrl + `api/Account/changePassword`, loginModel);
   }
 
   sendRecoveryEmail(email: string) {
