@@ -5,6 +5,7 @@ import { AppModule } from 'src/app/app.module';
 import { EnvironmentModule } from '../environment/environment.module';
 import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -18,7 +19,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     FormsModule,
     LoginRoutingModule,
-    EnvironmentModule
+    EnvironmentModule,
+    SharedModule,
     
     ],
     exports: [],

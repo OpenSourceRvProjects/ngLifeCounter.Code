@@ -6,6 +6,7 @@ import { ImageCollectionComponent } from './image-collection/image-collection.co
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { SharedModule } from "../shared/shared.module";
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
     CommonModule,
     FormsModule,
     ProfileRoutingModule,
-    NgbModule
+    NgbModule,
+    SharedModule,
   ]
 })
 export class ProfileModule { }

@@ -94,7 +94,9 @@ export class MyCounterComponent {
   
   }
 
-  
+  reload(){
+    window.location.reload();
+  }
 
   goToListPage() {
     this.router.navigate(['/counter/list']);

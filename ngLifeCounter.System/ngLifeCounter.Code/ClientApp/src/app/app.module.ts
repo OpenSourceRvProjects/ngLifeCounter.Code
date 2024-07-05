@@ -14,6 +14,7 @@ import { SharedModule } from './modules/shared/shared.module';
 import { ProfileModule } from './modules/profile/profile.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { AuthInterceptorService } from './Services/AuthInterceptorService';
+import { HomeModule } from './modules/home/home.module';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { AuthInterceptorService } from './Services/AuthInterceptorService';
     HttpClientModule,
     HomeRoutingModule,
     AppRoutingModule,
+    HomeModule,
     CounterModule,
     ProfileModule,
     LoginModule,
