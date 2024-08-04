@@ -35,6 +35,10 @@ public partial class Relapse
 
     public DateTime CreationDate { get; set; }
 
+    public string? RelapseMessage { get; set; }
+
+    public int? RelapseReason { get; set; }
+
     public virtual EventCounter EventCounter { get; set; } = null!;
 
     public virtual PersonalProfile PersonalProfile { get; set; } = null!;
