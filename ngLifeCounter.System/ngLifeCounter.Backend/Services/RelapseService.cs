@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using ngLifeCounter.Backend.Infrastructure;
+using ngLifeCounter.Constants;
 using ngLifeCounter.Data.DataAccess;
+using ngLifeCounter.Models;
 using ngLifeCounter.Models.Relapses;
 
 namespace ngLifeCounter.Backend.Services
@@ -99,6 +101,11 @@ namespace ngLifeCounter.Backend.Services
 			}
 
 			return relapseData;
+		}
+
+		public List<TextValueModel> GetRelapseReasons()
+		{
+			return RelapseTypesConstant.GetRelapseReasons();
 		}
 	}
 }

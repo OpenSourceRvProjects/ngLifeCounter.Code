@@ -24,6 +24,7 @@ const PROXY_CONFIG = [
       "/api/Account/impersonate",
       "/api/Profile/getProfileData",
       "/api/Relapses/getEventCounterRelapses",
+      "/api/Relapses/getRelapseReasons",
       "/api/EventCounter/deleteCounterByID",
       "/api/Account/changePassword"
 

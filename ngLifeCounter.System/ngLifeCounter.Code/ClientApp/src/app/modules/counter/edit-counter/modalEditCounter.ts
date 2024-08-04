@@ -2,8 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ICounterDataModel } from 'src/app/Models/EventCounter/ICounterDataModel';
 import { IEventCounterItemModel } from 'src/app/Models/EventCounter/IEventCounterItemModel';
-import { TextValueItem } from 'src/app/Models/TextValueItem';
+import { TextValueItem, TextValueModel } from 'src/app/Models/TextValueItem';
 import { EventService } from 'src/app/Services/Events/event.service';
+import { RelapsesService } from '../../../Services/Relapses/relapses.service';
 @Component({
   selector: 'edit-modal',
   templateUrl: './modalEditCounter.html',
@@ -18,11 +19,17 @@ export class ModalEditComponent implements OnInit {
   selectedHourToDetailedCounter : TextValueItem = <TextValueItem>{};
   selectedMonthToDetailCounter : TextValueItem = <TextValueItem>{};
   hoursForEditMode : TextValueItem[] = [];
-  monthsForEditMode : TextValueItem[] = [];
-  isRelapse : boolean =  false;
-  constructor(public activeModal: NgbActiveModal, private eventService: EventService) { }
+  monthsForEditMode: TextValueItem[] = [];
+
+  relapseReasonsList: TextValueModel[] = [];
+  selectedRelapseReason: TextValueModel = <TextValueModel>{};
+  relapseComment: string = "";
+
+  isRelapse: boolean = false;
+  constructor(public activeModal: NgbActiveModal, private eventService: EventService, private relapseService: RelapsesService) { }
 
   ngOnInit() {
+    this.getRelapseReasons();
     this.hoursForEditMode = this.eventService.getHours();
     this.monthsForEditMode =  this.eventService.getMonths();
     this.selectedCounterToEdit = this.counterEvent;
@@ -39,12 +46,23 @@ export class ModalEditComponent implements OnInit {
 
   }
 
+  getRelapseReasons() {
+    this.relapseService.getRelapseReasons()
+      .subscribe({
+        next: (data: any) => {
+          this.relapseReasonsList = data;
+          this.selectedRelapseReason = this.relapseReasonsList[0];
+        }
+      })
+  }
+
   editSelectedCounter(){
     this.processing = true;
     this.selectedDetailedCounter.hour = this.selectedHourToDetailedCounter.number;
     this.selectedDetailedCounter.month = this.selectedMonthToDetailCounter.number;
 
-    this.eventService.editEventCounter(this.selectedDetailedCounter.counterID, this.isRelapse, this.selectedDetailedCounter)
+    this.eventService.editEventCounter(this.selectedDetailedCounter.counterID, this.isRelapse, this.selectedDetailedCounter,
+      this.selectedRelapseReason, this.relapseComment)
     .subscribe({next: (data)=>{
       debugger;
       this.activeModal.close();

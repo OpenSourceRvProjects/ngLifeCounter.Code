@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LocalStorageService } from '../Storage/local-storage.service';
 import { INewEventCounterModel } from 'src/app/Models/EventCounter/INewEventCounterModel';
 import { ICounterPrivacySetModel } from 'src/app/Models/EventCounter/ICounterPrivacySetModel';
-import { TextValueItem } from 'src/app/Models/TextValueItem';
+import { TextValueItem, TextValueModel } from 'src/app/Models/TextValueItem';
 import { ICounterDataModel } from 'src/app/Models/EventCounter/ICounterDataModel';
 
 @Injectable({
@@ -44,9 +44,11 @@ export class EventService {
     return this.http.put(this.baseUrl +"api/EventCounter/changeCounterPrivacy?id=" + eventID, body)
   }
 
-  editEventCounter(eventID: string, isRelapse : boolean, eventCounter: ICounterDataModel ){
+  editEventCounter(eventID: string, isRelapse: boolean, eventCounter: ICounterDataModel, selectedRelapseReason: TextValueModel, relapseMessage: string) {
     var body = eventCounter;
-    return this.http.put(this.baseUrl +"api/EventCounter/editCounterEvent?id=" + eventID + "&isRelapse=" + isRelapse, body)
+    debugger;
+    return this.http.put(this.baseUrl + "api/EventCounter/editCounterEvent?id=" + eventID + "&isRelapse=" + isRelapse
+      + "&relapseMessage=" + relapseMessage + "&relapseReason=" + selectedRelapseReason.value, body)
   }
 
   deleteEventCounter(eventID: string ){

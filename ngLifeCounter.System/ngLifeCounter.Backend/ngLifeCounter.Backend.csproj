@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ngLifeCounter.Constants\ngLifeCounter.Constants.csproj" />
     <ProjectReference Include="..\ngLifeCounter.Data\ngLifeCounter.Data.csproj" />
     <ProjectReference Include="..\ngLifeCounter.EmailSender\ngLifeCounter.EmailSender.csproj" />
     <ProjectReference Include="..\ngLifeCounter.Models\ngLifeCounter.Models.csproj" />

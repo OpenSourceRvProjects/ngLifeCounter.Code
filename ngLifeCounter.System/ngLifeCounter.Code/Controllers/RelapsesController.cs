@@ -28,5 +28,13 @@ namespace ngLifeCounter.MVC.Controllers
 			return Ok(relapses);
 		}
 
+		[HttpGet]
+		[Route("getRelapseReasons")]
+		public  IActionResult GetRelapseReasons()
+		{
+			var relapseReasons =  _relapseService.GetRelapseReasons();
+			return Ok(relapseReasons);
+		}
+
 	}
 }

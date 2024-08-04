@@ -13,4 +13,9 @@ export class RelapsesService {
     return this.http.get("api/Relapses/getEventCounterRelapses?eventCounterId=" + eventCounterID)
   }
 
+  getRelapseReasons() {
+    return this.http.get("api/Relapses/getRelapseReasons")
+
+  }
+
 }

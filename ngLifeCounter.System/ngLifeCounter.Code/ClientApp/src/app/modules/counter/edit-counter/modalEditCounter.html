@@ -28,61 +28,79 @@
       <div class="form-container" style="margin-top: 0px;">
         <form>
           <div class="row mb-3">
-              <div class="col-md-6 mb-3">
-                  <label for="firstName" class="form-label">Nombre evento</label>
-                  <input type="text" [(ngModel)]="selectedDetailedCounter.name" class="form-control" id="firstName" name="firstName" required>
-              </div>
-              <div class="col-md-6">
-                  <label for="lastName" class="form-label">Año evento:</label>
-                  <input type="number" [(ngModel)]="selectedDetailedCounter.year" class="form-control" id="lastName" name="lastName" required>
-              </div>
+            <div class="col-md-6 mb-3">
+              <label for="firstName" class="form-label">Nombre evento</label>
+              <input type="text" [(ngModel)]="selectedDetailedCounter.name" class="form-control" id="firstName" name="firstName" required>
+            </div>
+            <div class="col-md-6">
+              <label for="lastName" class="form-label">Año evento:</label>
+              <input type="number" [(ngModel)]="selectedDetailedCounter.year" class="form-control" id="lastName" name="lastName" required>
+            </div>
           </div>
 
           <div class="row mb-3">
-           
-              <div class="col-md-6 mb-3">
-                  <label for="month" class="form-label">Mes evento:</label>
-                  <select class="form-control" [(ngModel)]="selectedMonthToDetailCounter" name="selector1">
-                      <option *ngFor="let m of monthsForEditMode" [ngValue]="m">
-                        {{m.text}}
-                      </option>
-                   </select>
-              </div>
-              <div class="col-md-6">
-                  <label for="day" class="form-label">Día evento</label>
-                  <input type="number" min="1" max="31" [(ngModel)]="selectedDetailedCounter.day" class="form-control" id="day" name="day" required>
-              </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="month" class="form-label">Mes evento:</label>
+              <select class="form-control" [(ngModel)]="selectedMonthToDetailCounter" name="selector1">
+                <option *ngFor="let m of monthsForEditMode" [ngValue]="m">
+                  {{m.text}}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="day" class="form-label">Día evento</label>
+              <input type="number" min="1" max="31" [(ngModel)]="selectedDetailedCounter.day" class="form-control" id="day" name="day" required>
+            </div>
           </div>
 
           <div class="row mb-3">
-              <div class="col-md-6 mb-3">
-                  <label for="day" class="form-label">Hora</label>
-                  <select class="form-control" [(ngModel)]="selectedHourToDetailedCounter" name="selector2">
-                      <option *ngFor="let h of hoursForEditMode" [ngValue]="h">
-                        {{h.text}}
-                      </option>
-                   </select>
-              
-              </div>
-              <div class="col-md-6">
-                  <label for="day" class="form-label">Minutos</label>
-                  <input type="number" [(ngModel)]="selectedDetailedCounter.minutes" class="form-control" id="userName" name="minutes" required>
-              </div>
+            <div class="col-md-6 mb-3">
+              <label for="day" class="form-label">Hora</label>
+              <select class="form-control" [(ngModel)]="selectedHourToDetailedCounter" name="selector2">
+                <option *ngFor="let h of hoursForEditMode" [ngValue]="h">
+                  {{h.text}}
+                </option>
+              </select>
+
+            </div>
+            <div class="col-md-6">
+              <label for="day" class="form-label">Minutos</label>
+              <input type="number" [(ngModel)]="selectedDetailedCounter.minutes" class="form-control" id="userName" name="minutes" required>
+            </div>
           </div>
 
           <div class="row mb-3">
             <div class="col-md-6 mb-3">
               <label style="padding-right: 10px;" for="relapse" class="form-label">¿Es recaida?</label>
-              <input type="checkbox" name="relapse"  [(ngModel)]="isRelapse">
-          
+              <input type="checkbox" name="relapse" [(ngModel)]="isRelapse">
+
             </div>
-        </div>
+          </div>
+
+          <div *ngIf="isRelapse" class="row mb-3">
+            <div class="col-md-6 mb-3">
+              <label style="padding-right: 10px;" for="relapseReason" class="form-label">Motivo de recaida</label>
+              <select class="form-control" [(ngModel)]="selectedRelapseReason" name="selector3">
+                <option *ngFor="let r of relapseReasonsList" [ngValue]="r">
+                  {{r.text}}
+                </option>
+              </select>
+
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label style="padding-right: 10px;" for="relapseMessage" class="form-label">¿Algún comentario?</label>
+              <textarea class="form-control" name="relapseComment" [(ngModel)]="relapseComment"></textarea>
+
+            </div>
+          </div>
 
           <div class="text-center">
           </div>
           <br>
-         
-      </form>
+
+        </form>
 
        
     </div>

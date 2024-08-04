@@ -156,7 +156,7 @@ namespace ngLifeCounter.Backend.Services
 			await _dbContext.SaveChangesAsync();
 		}
 
-		public async Task UpdateEventCounter(Guid counterID, CounterDataModel counter, bool isRelapse = false)
+		public async Task UpdateEventCounter(Guid counterID, CounterDataModel counter, bool isRelapse = false, string relapseMessage = null, int? relapseReason = null)
 		{
 			var currentUserID = Guid.Parse(_accessor.HttpContext.Session.GetString("userID"));
 			var counterInDB = await _dbContext.EventCounters.FirstOrDefaultAsync(f => f.UserId == currentUserID && f.Id == counterID);
@@ -185,6 +185,8 @@ namespace ngLifeCounter.Backend.Services
 					CreationDate = DateTime.Now,
 					UserId = currentUserID,
 					PersonalProfileId = counterInDB.PersonalProfileId,
+					RelapseMessage = relapseMessage,
+					RelapseReason = relapseReason == 0 || relapseReason == null ? null : relapseReason.Value,
 				};
 				_dbContext.Add(relapse);
 			}
