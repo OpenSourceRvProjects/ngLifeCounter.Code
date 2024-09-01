@@ -23,6 +23,11 @@
                     <td>{{e.dateString}}</td>
                     <td>{{e.timeSinceLastRelapseString}}</td>
                   </tr>
+                  <tr>
+                    <td></td>
+                    <td>Promedio</td>
+                    <td>{{relapsesData.relapsesTimeAverage.toFixed(2)}} días</td>
+                  </tr>
                 </tbody>
             </table>
             <div *ngIf="relapsesData.items.length == 0" style="text-align: center;">

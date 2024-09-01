@@ -65,10 +65,11 @@ namespace ngLifeCounter.Backend.Services
 				if (timeSinceLastRelapse.TotalHours < 1)
 					item.TimeSinceLastRelapseString = timeSinceLastRelapse.TotalMinutes + " minutos";
 
-
+				item.DaysSinceLastRelapse = (int)(timeSinceLastRelapse.TotalDays);
 				relapsesDetailList.Add(item);
 
 			}
+
 
 
 			var relapsesList = relapsesDetailList.OrderByDescending(od => od.RelapseDate).ThenByDescending(obd=> obd.CreationDate).ToList();
