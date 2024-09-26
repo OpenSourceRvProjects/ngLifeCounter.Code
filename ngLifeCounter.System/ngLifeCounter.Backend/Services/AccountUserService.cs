@@ -268,7 +268,7 @@ namespace ngLifeCounter.Backend.Services
 		public async Task ChangePassword(string currentPassword, string newPassword)
 		{
 			var currentUserID = Guid.Parse(_accessor.HttpContext.Session.GetString("userID"));
-			var user = await _dbContext.Users.FirstOrDefaultAsync(f=> f.Id == currentUserID);
+			var user = await _dbContext.Users.FirstOrDefaultAsync(f => f.Id == currentUserID);
 
 			var isValidOldPassword = await _decryptCore.ValidatePassword(user.PasswordHash, user.Salt, currentPassword);
 
@@ -321,7 +321,7 @@ namespace ngLifeCounter.Backend.Services
 				throw new Exception("User has not priviledges");
 			}
 
-			var userToImpersonate = await _dbContext.Users.Include(i=> i.PersonalProfiles).FirstOrDefaultAsync(f => f.Id == userID);
+			var userToImpersonate = await _dbContext.Users.Include(i => i.PersonalProfiles).FirstOrDefaultAsync(f => f.Id == userID);
 			var personalProfile = userToImpersonate.PersonalProfiles.FirstOrDefault();
 			var result = new LoginTokenDataModel()
 			{
@@ -331,6 +331,17 @@ namespace ngLifeCounter.Backend.Services
 				Name = personalProfile.LastName1,
 				Token = GenerateToken(userToImpersonate, personalProfile)
 			};
+			return result;
+		}
+
+		public async Task<StatusPageResponseModel> GetSystemStatus()
+		{
+			var result = new StatusPageResponseModel
+			{
+				ConnectionDB = await _dbContext.Users.CountAsync() >= 0,
+				ServerDate = DateTime.Now,
+			};
+
 			return result;
 		}
 	}

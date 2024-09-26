@@ -20,5 +20,7 @@ namespace ngLifeCounter.Backend.Infrastructure
 		Task<List<UsersModel>> GetAllUsersAsync();
 		Task ChangePassword(string currentPassword, string newPassword);
 
+		Task<StatusPageResponseModel> GetSystemStatus();
+
 	}
 }

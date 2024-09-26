@@ -16,16 +16,20 @@ namespace ngLifeCounter.MVC.Controllers
 		private IHttpContextAccessor _accessor;
 		private IAccountUserService _accountService;
 
-        public AccountController(IAccountUserService accountService)
-        {
-				_accountService = accountService;
-        }
+		private readonly IWebHostEnvironment _hostingEnv;
+
+		public AccountController(IAccountUserService accountService, IWebHostEnvironment hostingEnvironment)
+		{
+			_accountService = accountService;
+			_hostingEnv = hostingEnvironment;
+
+		}
 
 		[HttpGet]
 		[Route("validateRecoveryRequestID")]
 		public async Task<ActionResult> ResetPassword(Guid requestID)
 		{
-			var isValidID= await _accountService.ValidateRecoveryRequestID(requestID);
+			var isValidID = await _accountService.ValidateRecoveryRequestID(requestID);
 			return Ok(isValidID);
 		}
 
@@ -39,7 +43,7 @@ namespace ngLifeCounter.MVC.Controllers
 				await _accountService.SendPasswordResetEmail(email);
 				return Ok();
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				return BadRequest(ex.Message);
 			}
@@ -60,6 +64,36 @@ namespace ngLifeCounter.MVC.Controllers
 		{
 			var token = await _accountService.LoginAndRetrieveToken(userName, password);
 			return Ok(token);
+		}
+
+		[HttpGet]
+		[Route("getSystemStatus")]
+		public async Task<IActionResult> GetSystemStatus()
+		{
+			try
+			{
+				var response = await _accountService.GetSystemStatus();
+				response.Environment = _hostingEnv.EnvironmentName;
+				return Ok(response);
+			}
+			catch (Exception ex) {
+				return StatusCode(500, "Error getting health");
+			}
+		}
+
+
+		[HttpGet]
+		[Route("getSystemStatusFailedAssert")]
+		public async Task<IActionResult> GetSystemStatusFailedAssert()
+		{
+			try
+			{
+				throw new Exception("Error");
+			}
+			catch (Exception ex)
+			{
+				return StatusCode(500, "Error getting health: " + ex.Message);
+			}
 		}
 
 		[HttpPost]
