@@ -58,7 +58,17 @@ export class AccountService {
         debugger;
         if (data.showMaintenancePage) {
           this.router.navigate(['/maintenancePage'])
+        }
+      }
+    });
+  }
 
+  blockMaintenancePageIfNotApplicable() {
+    this.http.get(this.baseUrl + `api/Account/maintenancePage`).subscribe({
+      next: (data: any) => {
+        debugger;
+        if (!data.showMaintenancePage) {
+          this.router.navigate(['/'])
         }
       }
     });

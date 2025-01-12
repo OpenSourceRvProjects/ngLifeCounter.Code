@@ -148,9 +148,21 @@ namespace ngLifeCounter.MVC.Controllers
 		public IActionResult MaintenancePage()
 		{
 			var flag = _accountService.GetMaintenancePageFlag();
+			var textFlag = false;
+			try
+			{
+				var newTextFlag = System.IO.File.ReadAllLines("maitenancePageValue.txt");
+				textFlag = bool.Parse(newTextFlag[0]);
+
+			}
+			catch (Exception ex)
+			{
+				textFlag = false;
+			}
+
 			return Ok(new
 			{
-				showMaintenancePage = flag
+				showMaintenancePage = flag || textFlag
 			});
 		}
 

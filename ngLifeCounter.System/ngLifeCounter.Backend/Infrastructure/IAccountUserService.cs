@@ -21,6 +21,8 @@ namespace ngLifeCounter.Backend.Infrastructure
 		Task ChangePassword(string currentPassword, string newPassword);
 		Task<StatusPageResponseModel> GetSystemStatus();
 		public bool GetMaintenancePageFlag();
+		public Task SetMaintenacePage(bool showMaintacePage);
+
 
 	}
 }

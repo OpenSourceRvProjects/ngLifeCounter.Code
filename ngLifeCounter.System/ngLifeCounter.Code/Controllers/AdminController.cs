@@ -27,6 +27,21 @@ namespace ngLifeCounter.MVC.Controllers
 			var users = await _accountService.GetAllUsersAsync();
 			return Ok(users);
 		}
-		
+
+		[HttpGet]
+		[LoggedUserDataFilter]
+		[Route("setMaintenancePage")]
+		public async Task<IActionResult> setMaintenancePage(bool showMaintenancePage)
+		{
+			try
+			{
+				await _accountService.SetMaintenacePage(showMaintenancePage);
+				return Ok();
+			}
+			catch (Exception ex) {
+				return StatusCode(500, new { errorMsg = ex.Message});
+			}
+		}
+
 	}
 }

@@ -353,5 +353,22 @@ namespace ngLifeCounter.Backend.Services
 			var boolMaintenanceFlag = bool.Parse(_configuration["promtMaintenancePage"]);
 			return boolMaintenanceFlag;
 		}
+
+		public async Task SetMaintenacePage(bool showMaintacePage)
+		{
+			var currentUserID = Guid.Parse(_accessor.HttpContext.Session.GetString("userID"));
+			var user = await _dbContext.Users.FirstOrDefaultAsync(f => f.Id == currentUserID);
+
+			if (!user.IsSystemAdmin)
+			{
+				throw new Exception("Only sysadmin can perform this action");
+			}
+
+			if (File.Exists("maitenancePageValue.txt"))
+				File.Delete("maitenancePageValue.txt");
+
+			File.AppendAllText("maitenancePageValue.txt", showMaintacePage.ToString());
+
+		}
 	}
 }
