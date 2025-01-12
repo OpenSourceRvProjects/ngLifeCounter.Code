@@ -15,6 +15,7 @@ using ngLifeCounter.EmailSender;
 using ngLifeCounter.Models.Email;
 using Microsoft.AspNetCore.Http.Extensions;
 using ngLifeCounter.Models.Exceptions;
+using Microsoft.Extensions.Configuration;
 
 namespace ngLifeCounter.Backend.Services
 {
@@ -26,10 +27,11 @@ namespace ngLifeCounter.Backend.Services
 		private ITokenCore _tokenCore;
 		private IHttpContextAccessor _accessor;
 		private IEmailSender _emailSender;
+		private IConfiguration _configuration;
 
 		public AccountUserService(NgLifeCounterDbContext dbContext, IEncryptCore encryptCore,
 			ITokenCore tokenCore, IDecryptCore decryptCore, IHttpContextAccessor accessor,
-			IEmailSender emailSender)
+			IEmailSender emailSender, IConfiguration configuration)
 		{
 			_dbContext = dbContext;
 			_encryptCore = encryptCore;
@@ -37,6 +39,7 @@ namespace ngLifeCounter.Backend.Services
 			_tokenCore = tokenCore;
 			_accessor = accessor;
 			_emailSender = emailSender;
+			_configuration = configuration;
 		}
 
 		public async Task<LoginTokenDataModel> LoginAndRetrieveToken(string username, string password)
@@ -343,6 +346,12 @@ namespace ngLifeCounter.Backend.Services
 			};
 
 			return result;
+		}
+
+		public bool GetMaintenancePageFlag()
+		{
+			var boolMaintenanceFlag = bool.Parse(_configuration["promtMaintenancePage"]);
+			return boolMaintenanceFlag;
 		}
 	}
 }

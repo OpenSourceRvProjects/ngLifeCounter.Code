@@ -15,6 +15,7 @@ import { ProfileModule } from './modules/profile/profile.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { AuthInterceptorService } from './Services/AuthInterceptorService';
 import { HomeModule } from './modules/home/home.module';
+import { MaintenanceModule } from './modules/maintenance/maintenance.module';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { HomeModule } from './modules/home/home.module';
     LoginModule,
     RegisterModule,
     AdminModule,
+    MaintenanceModule
 
   ],
   exports: [],

@@ -28,7 +28,9 @@ export class ForgotPasswordComponent {
 
   isPasDueLink : boolean = false;
 
-  ngOnInit(){
+  ngOnInit() {
+
+    this.accountService.getMaintenancePage();
 
     if (this.localStorageService.getUserData()){
         alert("Para recuperar tu contraseña, tienes que salir de tu cuenta");

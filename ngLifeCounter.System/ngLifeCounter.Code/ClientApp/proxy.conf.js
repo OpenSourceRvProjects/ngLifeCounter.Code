@@ -26,7 +26,8 @@ const PROXY_CONFIG = [
       "/api/Relapses/getEventCounterRelapses",
       "/api/Relapses/getRelapseReasons",
       "/api/EventCounter/deleteCounterByID",
-      "/api/Account/changePassword"
+      "/api/Account/changePassword",
+      "/api/Account/maintenancePage"
 
    ],
     proxyTimeout: 100000,
