@@ -22,6 +22,7 @@ namespace ngLifeCounter.Backend.Infrastructure
 		Task<StatusPageResponseModel> GetSystemStatus();
 		public bool GetMaintenancePageFlag();
 		public Task SetMaintenacePage(bool showMaintacePage);
+		public Task SetMaintenancePageWithKey(MaintenanceKeyInputModel input);
 
 
 	}

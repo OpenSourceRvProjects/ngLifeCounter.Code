@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ngLifeCounter.Backend.Infrastructure;
+using ngLifeCounter.Models.Account;
 using ngLifeCounter.MVC.Filters;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -40,6 +41,23 @@ namespace ngLifeCounter.MVC.Controllers
 			}
 			catch (Exception ex) {
 				return StatusCode(500, new { errorMsg = ex.Message});
+			}
+		}
+
+
+		[HttpPost]
+		[Route("turnMaintenancePageWithKey")]
+		[AllowAnonymous]
+		public async Task<IActionResult> TurnMaintenancePageWithKey([FromBody] MaintenanceKeyInputModel input)
+		{
+			try
+			{
+				await _accountService.SetMaintenancePageWithKey(input);
+				return Ok();
+			}
+			catch (Exception ex)
+			{
+				return StatusCode(500, new { errorMsg = ex.Message });
 			}
 		}
 

@@ -364,11 +364,42 @@ namespace ngLifeCounter.Backend.Services
 				throw new Exception("Only sysadmin can perform this action");
 			}
 
+			await ModifyServerMaintenanceFile(showMaintacePage);
+
+		}
+
+		public async Task SetMaintenancePageWithKey(MaintenanceKeyInputModel input)
+		{
+			var base64InputKey = Base64Encode(input.ServerKey);
+			var currentServerKey = _configuration["maintenanceActivationKey"];
+
+			if (base64InputKey == currentServerKey)
+			{
+				await ModifyServerMaintenanceFile(input.ShowMaintacePage);
+			}
+			else
+				throw new Exception("Not valid server key was provided");
+		}
+
+		private async Task ModifyServerMaintenanceFile(bool showMaintacePage)
+		{
 			if (File.Exists("maitenancePageValue.txt"))
 				File.Delete("maitenancePageValue.txt");
 
-			File.AppendAllText("maitenancePageValue.txt", showMaintacePage.ToString());
+			await File.AppendAllTextAsync("maitenancePageValue.txt", showMaintacePage.ToString());
 
+		}
+
+		private static string Base64Encode(string plainText)
+		{
+			var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+			return System.Convert.ToBase64String(plainTextBytes);
+		}
+
+		private static string Base64Decode(string base64EncodedData)
+		{
+			var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
+			return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
 		}
 	}
 }
