@@ -15,6 +15,7 @@ using ngLifeCounter.EmailSender;
 using ngLifeCounter.Models.Email;
 using Microsoft.AspNetCore.Http.Extensions;
 using ngLifeCounter.Models.Exceptions;
+using Microsoft.Extensions.Configuration;
 
 namespace ngLifeCounter.Backend.Services
 {
@@ -26,10 +27,11 @@ namespace ngLifeCounter.Backend.Services
 		private ITokenCore _tokenCore;
 		private IHttpContextAccessor _accessor;
 		private IEmailSender _emailSender;
+		private IConfiguration _configuration;
 
 		public AccountUserService(NgLifeCounterDbContext dbContext, IEncryptCore encryptCore,
 			ITokenCore tokenCore, IDecryptCore decryptCore, IHttpContextAccessor accessor,
-			IEmailSender emailSender)
+			IEmailSender emailSender, IConfiguration configuration)
 		{
 			_dbContext = dbContext;
 			_encryptCore = encryptCore;
@@ -37,6 +39,7 @@ namespace ngLifeCounter.Backend.Services
 			_tokenCore = tokenCore;
 			_accessor = accessor;
 			_emailSender = emailSender;
+			_configuration = configuration;
 		}
 
 		public async Task<LoginTokenDataModel> LoginAndRetrieveToken(string username, string password)
@@ -343,6 +346,60 @@ namespace ngLifeCounter.Backend.Services
 			};
 
 			return result;
+		}
+
+		public bool GetMaintenancePageFlag()
+		{
+			var boolMaintenanceFlag = bool.Parse(_configuration["promtMaintenancePage"]);
+			return boolMaintenanceFlag;
+		}
+
+		public async Task SetMaintenacePage(bool showMaintacePage)
+		{
+			var currentUserID = Guid.Parse(_accessor.HttpContext.Session.GetString("userID"));
+			var user = await _dbContext.Users.FirstOrDefaultAsync(f => f.Id == currentUserID);
+
+			if (!user.IsSystemAdmin)
+			{
+				throw new Exception("Only sysadmin can perform this action");
+			}
+
+			await ModifyServerMaintenanceFile(showMaintacePage);
+
+		}
+
+		public async Task SetMaintenancePageWithKey(MaintenanceKeyInputModel input)
+		{
+			var base64InputKey = Base64Encode(input.ServerKey);
+			var currentServerKey = _configuration["maintenanceActivationKey"];
+
+			if (base64InputKey == currentServerKey)
+			{
+				await ModifyServerMaintenanceFile(input.ShowMaintacePage);
+			}
+			else
+				throw new Exception("Not valid server key was provided");
+		}
+
+		private async Task ModifyServerMaintenanceFile(bool showMaintacePage)
+		{
+			if (File.Exists("maitenancePageValue.txt"))
+				File.Delete("maitenancePageValue.txt");
+
+			await File.AppendAllTextAsync("maitenancePageValue.txt", showMaintacePage.ToString());
+
+		}
+
+		private static string Base64Encode(string plainText)
+		{
+			var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+			return System.Convert.ToBase64String(plainTextBytes);
+		}
+
+		private static string Base64Decode(string base64EncodedData)
+		{
+			var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
+			return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
 		}
 	}
 }

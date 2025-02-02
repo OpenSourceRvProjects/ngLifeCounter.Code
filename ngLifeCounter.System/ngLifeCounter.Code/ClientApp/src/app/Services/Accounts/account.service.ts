@@ -4,13 +4,14 @@ import { IRegisterModel } from 'src/app/Models/Account/IRegisterModel';
 import { LocalStorageService } from '../Storage/local-storage.service';
 import { ILoginModel } from 'src/app/Models/Account/ILoginModel';
 import { IChangePasswordModel } from 'src/app/Models/Profile/IChangePasswordModel';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private localStorage: LocalStorageService) { }
+  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private localStorage: LocalStorageService, private router: Router) { }
 
   registerAccount(registerUser: IRegisterModel) {
     var body = registerUser;
@@ -49,5 +50,27 @@ export class AccountService {
 
   loginImpersonate(userID: string) {
     return this.http.get(this.baseUrl + `api/Account/impersonate?userID=${userID}`);
+  }
+
+  getMaintenancePage() {
+    this.http.get(this.baseUrl + `api/Account/maintenancePage`).subscribe({
+      next: (data: any) => {
+        debugger;
+        if (data.showMaintenancePage) {
+          this.router.navigate(['/maintenancePage'])
+        }
+      }
+    });
+  }
+
+  blockMaintenancePageIfNotApplicable() {
+    this.http.get(this.baseUrl + `api/Account/maintenancePage`).subscribe({
+      next: (data: any) => {
+        debugger;
+        if (!data.showMaintenancePage) {
+          this.router.navigate(['/'])
+        }
+      }
+    });
   }
 }

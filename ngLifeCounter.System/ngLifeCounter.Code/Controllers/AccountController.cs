@@ -76,7 +76,8 @@ namespace ngLifeCounter.MVC.Controllers
 				response.Environment = _hostingEnv.EnvironmentName;
 				return Ok(response);
 			}
-			catch (Exception ex) {
+			catch (Exception ex)
+			{
 				return StatusCode(500, "Error getting health");
 			}
 		}
@@ -141,6 +142,29 @@ namespace ngLifeCounter.MVC.Controllers
 			}
 		}
 
+		[HttpGet]
+		[Route("maintenancePage")]
+		[AllowAnonymous]
+		public IActionResult MaintenancePage()
+		{
+			var flag = _accountService.GetMaintenancePageFlag();
+			var textFlag = false;
+			try
+			{
+				var newTextFlag = System.IO.File.ReadAllLines("maitenancePageValue.txt");
+				textFlag = bool.Parse(newTextFlag[0]);
+
+			}
+			catch (Exception ex)
+			{
+				textFlag = false;
+			}
+
+			return Ok(new
+			{
+				showMaintenancePage = flag || textFlag
+			});
+		}
 
 	}
 }

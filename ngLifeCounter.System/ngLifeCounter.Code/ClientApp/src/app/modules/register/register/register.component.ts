@@ -18,7 +18,8 @@ export class RegisterComponent implements OnInit {
   constructor(private accountService: AccountService) {
   }
 
-  ngOnInit(){
+  ngOnInit() {
+    this.accountService.getMaintenancePage();
     this.passwordConfirmation = "";
     this.errorMessage = "";
     this.processing = false;

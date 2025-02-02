@@ -8,6 +8,7 @@ import { LocalStorageService } from 'src/app/Services/Storage/local-storage.serv
 import { ModalEditComponent } from '../edit-counter/modalEditCounter';
 import { ModalRelapsesComponent } from '../relapses/modalRelapses';
 import { ModalDeleteCounterComponent } from '../delete-counter/modalDeleteCounter';
+import { AccountService } from '../../../Services/Accounts/account.service';
 
 @Component({
   selector: 'app-counter-list',
@@ -16,7 +17,8 @@ import { ModalDeleteCounterComponent } from '../delete-counter/modalDeleteCounte
 })
 export class CounterListComponent {
   constructor(private modalService: NgbModal, private eventService: EventService, 
-    private localStorageService: LocalStorageService, public router : Router) {
+    private localStorageService: LocalStorageService, public router: Router,
+    private accountService: AccountService) {
   }
 
   counterList : IEventCounterItemModel[] = [];
@@ -25,7 +27,9 @@ export class CounterListComponent {
   processing =  false;
   searchText: string = "";
 
-  ngOnInit(){
+  ngOnInit() {
+    this.accountService.getMaintenancePage();
+
     this.localStorageService.desactivateCounterView();
     this.getCountersList();
   }
