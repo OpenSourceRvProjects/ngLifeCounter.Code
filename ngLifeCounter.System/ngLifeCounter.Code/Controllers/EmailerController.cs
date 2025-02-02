@@ -4,8 +4,6 @@ using ngLifeCounter.Backend.Services;
 using ngLifeCounter.EmailSender;
 using ngLifeCounter.Models.Email;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace ngLifeCounter.MVC.Controllers
 {
 	[Route("api/[controller]")]
