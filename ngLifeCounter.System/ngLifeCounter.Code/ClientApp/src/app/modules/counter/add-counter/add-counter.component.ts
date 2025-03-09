@@ -5,6 +5,7 @@ import { INewEventCounterModel } from 'src/app/Models/EventCounter/INewEventCoun
 import { TextValueItem } from 'src/app/Models/TextValueItem';
 import { EventService } from 'src/app/Services/Events/event.service';
 import { LocalStorageService } from 'src/app/Services/Storage/local-storage.service';
+import { AccountService } from '../../../Services/Accounts/account.service';
 
 
 @Component({
@@ -24,9 +25,12 @@ export class AddCounterComponent {
   selectedHour : TextValueItem = <TextValueItem>{};
   hourList : TextValueItem [] = [];
 
-  constructor(private eventCounterService: EventService, private router: Router, private localStorageService: LocalStorageService){}
+  constructor(private eventCounterService: EventService, private router: Router, private accountService: AccountService,
+    private localStorageService: LocalStorageService) { }
 
-  ngOnInit(){
+  ngOnInit() {
+    this.accountService.getMaintenancePage();
+
     this.localStorageService.desactivateCounterView();
     this.populateMonths();
     this.pupulateHours();

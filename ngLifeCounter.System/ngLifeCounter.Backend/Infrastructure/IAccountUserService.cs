@@ -19,8 +19,11 @@ namespace ngLifeCounter.Backend.Infrastructure
 		Task<bool> ValidateRecoveryRequestID(Guid requestID);
 		Task<List<UsersModel>> GetAllUsersAsync();
 		Task ChangePassword(string currentPassword, string newPassword);
-
 		Task<StatusPageResponseModel> GetSystemStatus();
+		public bool GetMaintenancePageFlag();
+		public Task SetMaintenacePage(bool showMaintacePage);
+		public Task SetMaintenancePageWithKey(MaintenanceKeyInputModel input);
+
 
 	}
 }

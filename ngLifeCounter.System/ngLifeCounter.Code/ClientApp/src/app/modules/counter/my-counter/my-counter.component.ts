@@ -5,6 +5,7 @@ import { IImageListModel } from 'src/app/Models/Profile/IImageListModel';
 import { EventService } from 'src/app/Services/Events/event.service';
 import { ProfileService } from 'src/app/Services/Profile/profile.service';
 import { LocalStorageService } from 'src/app/Services/Storage/local-storage.service';
+import { AccountService } from '../../../Services/Accounts/account.service';
 
 @Component({
   selector: 'app-my-counter',
@@ -16,7 +17,8 @@ export class MyCounterComponent {
   constructor(private localStorageService: LocalStorageService, 
     private router: Router, 
     private route: ActivatedRoute,
-    private profileService : ProfileService,
+    private profileService: ProfileService,
+    private accountService: AccountService,
     private eventCounterService: EventService, @Inject('BASE_URL') private baseUrl : any){}
     id: string = "";
     isPublicCounter : boolean = false;
@@ -46,7 +48,9 @@ export class MyCounterComponent {
   _startDate : Date = new Date();
   private subscription?: Subscription;
 
-  ngOnInit(){
+  ngOnInit() {
+    this.accountService.getMaintenancePage();
+
     this.localStorageService.avtiveCounterView();
     this.getDoggie();
     this.sub = this.route.queryParams.subscribe(params=>{

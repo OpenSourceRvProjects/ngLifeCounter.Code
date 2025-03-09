@@ -25,7 +25,9 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    debugger;
+
+    this.accountService.getMaintenancePage();
+
     if (this.localStorage.getUserData())
       this.router.navigate(['/'])
   }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PasswordChangeComponent } from '../password-change/password-change.component';
+import { AccountService } from '../../../Services/Accounts/account.service';
 
 @Component({
   selector: 'app-personal-profile',
@@ -11,8 +12,13 @@ import { PasswordChangeComponent } from '../password-change/password-change.comp
 export class PersonalProfileComponent {
 
 
-  constructor(private modalService: NgbModal, public router: Router) {
+  constructor(private modalService: NgbModal, public router: Router, private accountService: AccountService) {
     
+  }
+
+  ngOnInit() {
+    this.accountService.getMaintenancePage();
+
   }
 
 
