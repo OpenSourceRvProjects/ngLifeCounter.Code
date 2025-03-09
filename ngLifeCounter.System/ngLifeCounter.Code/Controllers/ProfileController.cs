@@ -16,7 +16,7 @@ namespace ngLifeCounter.MVC.Controllers
 	public class ProfileController : ControllerBase
 	{
 		private IProfileService _profileService;
-        public ProfileController(IProfileService profileService)
+		public ProfileController(IProfileService profileService)
         {
 			_profileService = profileService;		
         }
@@ -32,7 +32,7 @@ namespace ngLifeCounter.MVC.Controllers
 
 		[HttpGet]
 		[Route("getProfileData")]
-		public async Task<IActionResult> GetProfileData()
+		public virtual async Task<IActionResult> GetProfileData()
 		{
 			var images = await _profileService.GetProfileData();
 			return Ok(images);

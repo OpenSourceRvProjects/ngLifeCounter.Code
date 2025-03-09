@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ngLifeCounter.Constants", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ngLifeCounter.EmailSender", "..\ngLifeCounter.EmailSender\ngLifeCounter.EmailSender.csproj", "{AF313E5E-DA11-4EB9-A287-F7E7F417177D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ngLifeCounter.Tests.Stress", "..\ngLifeCounter.Tests.Stress\ngLifeCounter.Tests.Stress.csproj", "{8AF875F4-EE48-43BB-8020-7E221A53C389}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ngLifeCounter.Tests.Stress", "..\ngLifeCounter.Tests.Stress\ngLifeCounter.Tests.Stress.csproj", "{8AF875F4-EE48-43BB-8020-7E221A53C389}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ngLifeCounter.UnitTests", "..\ngLifeCounter.UnitTests\ngLifeCounter.UnitTests.csproj", "{647AEB3C-3914-4301-BACA-30C149816ED5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{8AF875F4-EE48-43BB-8020-7E221A53C389}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8AF875F4-EE48-43BB-8020-7E221A53C389}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8AF875F4-EE48-43BB-8020-7E221A53C389}.Release|Any CPU.Build.0 = Release|Any CPU
+		{647AEB3C-3914-4301-BACA-30C149816ED5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{647AEB3C-3914-4301-BACA-30C149816ED5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{647AEB3C-3914-4301-BACA-30C149816ED5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{647AEB3C-3914-4301-BACA-30C149816ED5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

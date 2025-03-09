@@ -74,7 +74,10 @@ namespace ngLifeCounter.MVC.Controllers
 			{
 				var response = await _accountService.GetSystemStatus();
 				response.Environment = _hostingEnv.EnvironmentName;
+				System.IO.File.AppendAllText("fileLog.txt", DateTime.Now.ToString() + Environment.NewLine);
+				
 				return Ok(response);
+
 			}
 			catch (Exception ex) {
 				return StatusCode(500, "Error getting health");
