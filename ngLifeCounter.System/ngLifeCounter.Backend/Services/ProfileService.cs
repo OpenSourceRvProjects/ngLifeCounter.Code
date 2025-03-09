@@ -25,7 +25,7 @@ namespace ngLifeCounter.Backend.Services
 
 		}
 
-		public async Task<ProfileDataModel> GetProfileData()
+        public virtual async Task<ProfileDataModel> GetProfileData()
 		{
 			var profile = await GetUserProfile();
 			return new ProfileDataModel()
