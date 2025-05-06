@@ -19,7 +19,7 @@
     <br>
     <div class="image-container">
       <!-- <img  style="display: flex; justify-content: center;" id="doggie" src="https://onedrive.live.com/embed?resid=E530B3F2B44ACA4B%21107019&authkey=%21AAWWKDbBtKS39_A" width="280"
-      height="300" style="border-radius: 50%;"> -->
+    height="300" style="border-radius: 50%;"> -->
       <img style="display: flex; justify-content: center;" id="doggie" [src]="dogURL" width="280"
            height="300" style="border-radius: 50%;">
 
@@ -37,13 +37,19 @@
     <br>
     <h4 *ngIf="isPublicCounter" style="text-align: center; color: white;">
       <!-- <i (click)="copyMessage()" class="fa fa-copy fa-2x"></i> -->
-      <app-copy-link  [counterID]="id" [isFromCounterView]="true"></app-copy-link>
+      <app-copy-link [counterID]="id" [isFromCounterView]="true"></app-copy-link>
     </h4>
     <hr>
 
     <h4 style="text-align: center; color: white;">
       <i (click)="reload()" class="fa fa-refresh"></i>
     </h4>
+    <div class="d-flex justify-content-center align-items-center">
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" name="Posprandial" id="flexSwitchCheckChecked">
+        <label style="color:white" class="form-check-label" for="flexSwitchCheckChecked">Refrescar automaticamente</label>
+      </div>
+    </div>
     <h4 id="completedYears" style="text-align: center; color: white;  "></h4>
     <br>
     <div class="text-center">
