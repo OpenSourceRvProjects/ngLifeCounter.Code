@@ -33,6 +33,8 @@ public partial class EventCounter
 
     public string? CustomMessage { get; set; }
 
+    public int? RefreshMinutesTime { get; set; }
+
     public virtual PersonalProfile PersonalProfile { get; set; } = null!;
 
     public virtual ICollection<Relapse> Relapses { get; set; } = new List<Relapse>();

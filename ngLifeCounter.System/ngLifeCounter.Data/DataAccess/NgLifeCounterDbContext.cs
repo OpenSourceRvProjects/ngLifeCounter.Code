@@ -7,12 +7,12 @@ namespace ngLifeCounter.Data.DataAccess;
 public partial class NgLifeCounterDbContext : DbContext
 {
 
-	private readonly string _connectionString;
-	public NgLifeCounterDbContext(string connectionString)
-	{
-		_connectionString = connectionString;
-	}
-	public NgLifeCounterDbContext()
+    private readonly string _connectionString;
+    public NgLifeCounterDbContext(string connectionString)
+    {
+        _connectionString = connectionString;
+    }
+    public NgLifeCounterDbContext()
     {
     }
 
@@ -34,19 +34,19 @@ public partial class NgLifeCounterDbContext : DbContext
     public virtual DbSet<SignUpRequest> SignUpRequests { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
-	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-	{
-		if (!optionsBuilder.IsConfigured)
-		{
-			optionsBuilder.UseSqlServer(_connectionString);
-		}
-		//Scaffold - DbContext "Server=.\SQLEXPRESS;Database=NgLifeCounterDB;Trusted_Connection=True;Encrypt=False" Microsoft.EntityFrameworkCore.SqlServer - OutputDir DataAccess - F
-	}
-	protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseSqlServer(_connectionString);
+        }
+        //Scaffold - DbContext "Server=.\SQLEXPRESS;Database=NgLifeCounterDB;Trusted_Connection=True;Encrypt=False" Microsoft.EntityFrameworkCore.SqlServer - OutputDir DataAccess - F
+    }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<CorrectLogin>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__CorrectL__3214EC07EDCE4682");
+            entity.HasKey(e => e.Id).HasName("PK__CorrectL__3214EC07916479BC");
 
             entity.ToTable("CorrectLogin");
 
@@ -58,7 +58,7 @@ public partial class NgLifeCounterDbContext : DbContext
             entity.HasOne(d => d.User).WithMany(p => p.CorrectLogins)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__CorrectLo__UserI__6FE99F9F");
+                .HasConstraintName("FK__CorrectLo__UserI__5AEE82B9");
         });
 
         modelBuilder.Entity<EventCounter>(entity =>
@@ -67,6 +67,7 @@ public partial class NgLifeCounterDbContext : DbContext
 
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.CreationDate).HasColumnType("datetime");
+            entity.Property(e => e.RefreshMinutesTime).HasDefaultValueSql("(NULL)");
             entity.Property(e => e.Status)
                 .HasDefaultValue(true)
                 .HasColumnName("status");
@@ -74,12 +75,12 @@ public partial class NgLifeCounterDbContext : DbContext
             entity.HasOne(d => d.PersonalProfile).WithMany(p => p.EventCounters)
                 .HasForeignKey(d => d.PersonalProfileId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__EventCoun__Perso__3F466844");
+                .HasConstraintName("FK__EventCoun__Perso__5BE2A6F2");
 
             entity.HasOne(d => d.User).WithMany(p => p.EventCounters)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__EventCoun__UserI__3E52440B");
+                .HasConstraintName("FK__EventCoun__UserI__5CD6CB2B");
         });
 
         modelBuilder.Entity<PersonalProfile>(entity =>
@@ -94,7 +95,7 @@ public partial class NgLifeCounterDbContext : DbContext
             entity.HasOne(d => d.User).WithMany(p => p.PersonalProfiles)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__PersonalP__UserI__3A81B327");
+                .HasConstraintName("FK__PersonalP__UserI__5DCAEF64");
         });
 
         modelBuilder.Entity<Relapse>(entity =>
@@ -123,7 +124,7 @@ public partial class NgLifeCounterDbContext : DbContext
 
         modelBuilder.Entity<ResetLoginPassword>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__ResetLog__3214EC0732943103");
+            entity.HasKey(e => e.Id).HasName("PK__ResetLog__3214EC072CED7C39");
 
             entity.ToTable("ResetLoginPassword");
 
@@ -134,7 +135,7 @@ public partial class NgLifeCounterDbContext : DbContext
             entity.HasOne(d => d.User).WithMany(p => p.ResetLoginPasswords)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__ResetLogi__UserI__02FC7413");
+                .HasConstraintName("FK__ResetLogi__UserI__619B8048");
         });
 
         modelBuilder.Entity<SignUpRequest>(entity =>
@@ -146,7 +147,7 @@ public partial class NgLifeCounterDbContext : DbContext
 
             entity.HasOne(d => d.User).WithMany(p => p.SignUpRequests)
                 .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__SignUpReq__UserI__5DCAEF64");
+                .HasConstraintName("FK__SignUpReq__UserI__628FA481");
         });
 
         modelBuilder.Entity<User>(entity =>
