@@ -17,6 +17,7 @@ const PROXY_CONFIG = [
       "/api/EventCounter/getCountersResume",
       "/api/Environment",
       "/api/EventCounter/changeCounterPrivacy",
+      "/api/EventCounter/setTimeRefreshCounterUI",
       "/api/EventCounter/editCounterEvent",
       "/api/Profile/getImages",
       "/api/Profile/addImages",

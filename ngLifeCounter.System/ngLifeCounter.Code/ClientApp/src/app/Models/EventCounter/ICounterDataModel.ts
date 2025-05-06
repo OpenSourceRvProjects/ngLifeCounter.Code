@@ -7,4 +7,5 @@ export interface ICounterDataModel {
     hour: number;
     minutes: number;
     isPublicCounter: boolean;
+    minutesToRefresh: boolean;
 }

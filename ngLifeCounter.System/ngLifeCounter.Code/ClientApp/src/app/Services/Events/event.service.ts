@@ -5,6 +5,7 @@ import { INewEventCounterModel } from 'src/app/Models/EventCounter/INewEventCoun
 import { ICounterPrivacySetModel } from 'src/app/Models/EventCounter/ICounterPrivacySetModel';
 import { TextValueItem, TextValueModel } from 'src/app/Models/TextValueItem';
 import { ICounterDataModel } from 'src/app/Models/EventCounter/ICounterDataModel';
+import { ICounterRefreshTimerSetModel } from '../../Models/EventCounter/ICounterRefreshTimerSetModel';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,11 @@ export class EventService {
   changeEventPrivacySetting(eventID: string, setting: ICounterPrivacySetModel ){
     var body = setting;
     return this.http.put(this.baseUrl +"api/EventCounter/changeCounterPrivacy?id=" + eventID, body)
+  }
+
+  changeRefreshMode(eventID: string, setting: ICounterRefreshTimerSetModel) {
+    var body = setting;
+    return this.http.put(this.baseUrl + "api/EventCounter/setTimeRefreshCounterUI?id=" + eventID, body)
   }
 
   editEventCounter(eventID: string, isRelapse: boolean, eventCounter: ICounterDataModel, selectedRelapseReason: TextValueModel, relapseMessage: string) {
