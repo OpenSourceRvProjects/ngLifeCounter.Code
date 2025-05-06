@@ -74,7 +74,17 @@ namespace ngLifeCounter.MVC.Controllers
 			return Ok();
 		}
 
-		[HttpPut]
+        [HttpPut]
+        [Route("setTimeRefreshCounterUI")]
+        [LoggedUserDataFilter]
+
+        public async Task<IActionResult> PutRefreshCounter(Guid id, [FromBody] CounterRefreshTimerSetModel setting)
+        {
+            await _eventService.SetRefresherCounterUI(id, setting);
+            return Ok();
+        }
+
+        [HttpPut]
 		[Route("editCounterEvent")]
 		[LoggedUserDataFilter]
 
