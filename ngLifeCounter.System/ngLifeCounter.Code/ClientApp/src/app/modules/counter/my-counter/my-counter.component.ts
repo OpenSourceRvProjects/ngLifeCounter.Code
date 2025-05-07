@@ -78,8 +78,8 @@ export class MyCounterComponent {
           debugger;
           if (this.refreshTime !== 0) {
             this.isRefreshActive = true;
-        //interval(1000 * 60 * this.refreshTime)
-            interval(10000)
+            interval(1000 * 60 * this.refreshTime)
+            //interval(10000)
               .subscribe(t => { window.location.reload() })
           }
 
