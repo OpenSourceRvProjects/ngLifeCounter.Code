@@ -119,6 +119,7 @@ namespace ngLifeCounter.Backend.Services
                 Hour = (int)counterDB.Hour,
                 Minutes = (int)counterDB.Minutes,
                 IsPublicCounter = counterDB.IsPublic,
+                MinutesToRefresh = counterDB.RefreshMinutesTime.HasValue ? counterDB.RefreshMinutesTime.Value : 0,
             };
         }
 
@@ -267,5 +268,6 @@ namespace ngLifeCounter.Backend.Services
             _dbContext.SaveChanges();
 
         }
+
     }
 }
