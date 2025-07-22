@@ -11,6 +11,10 @@ import { Router } from '@angular/router';
 })
 export class AccountService {
 
+  googleRegister(credential: any) {
+    this.http.post(this.baseUrl + 'api/Account/RegisterGoogleAuth', { idToken: credential });
+  }
+
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private localStorage: LocalStorageService, private router: Router) { }
 
   registerAccount(registerUser: IRegisterModel) {
@@ -50,6 +54,10 @@ export class AccountService {
 
   loginImpersonate(userID: string) {
     return this.http.get(this.baseUrl + `api/Account/impersonate?userID=${userID}`);
+  }
+
+  getGoogleClientID() {
+    return this.http.get(this.baseUrl + `api/Account/getGoogleClientID`);
   }
 
   getMaintenancePage() {

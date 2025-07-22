@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IRegisterModel } from 'src/app/Models/Account/IRegisterModel';
 import { AccountService } from 'src/app/Services/Accounts/account.service';
 
+declare const google: any;
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -19,11 +20,32 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.accountService.getGoogleClientID().
+      subscribe({
+        next: (data: any) => {
+          debugger;
+          google.accounts.id.initialize({
+            client_id: data.googleClientID,
+            callback: this.handleGoogleCredentialResponse.bind(this)
+          });
+        }
+      })
+
     this.accountService.getMaintenancePage();
     this.passwordConfirmation = "";
     this.errorMessage = "";
     this.processing = false;
     this.isFinishRegister =  false;
+  }
+
+  handleGoogleCredentialResponse(response: any) {
+    const credential = response.credential;
+    this.accountService.googleRegister(credential)
+    //this.http.post(this.baseUrl + 'api/GoogleAuth', { idToken: credential }).subscribe(result => {
+    //  console.log("User authenticated via Google!", result);
+    //}, error => {
+    //  console.error("Google login failed", error);
+    //});
   }
 
   registerAccount() {

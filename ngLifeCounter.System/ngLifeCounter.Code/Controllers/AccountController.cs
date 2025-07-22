@@ -9,165 +9,181 @@ using ngLifeCounter.MVC.Filters;
 
 namespace ngLifeCounter.MVC.Controllers
 {
-	[Route("api/[controller]")]
-	[ApiController]
-	public class AccountController : ControllerBase
-	{
-		private IHttpContextAccessor _accessor;
-		private IAccountUserService _accountService;
+    [Route("api/[controller]")]
+    [ApiController]
+    public class AccountController : ControllerBase
+    {
+        private IHttpContextAccessor _accessor;
+        private IAccountUserService _accountService;
+        private readonly IConfiguration _configuration;
+        private readonly IWebHostEnvironment _hostingEnv;
 
-		private readonly IWebHostEnvironment _hostingEnv;
+        public AccountController(IAccountUserService accountService, IWebHostEnvironment hostingEnvironment, IConfiguration configuration)
+        {
+            _accountService = accountService;
+            _hostingEnv = hostingEnvironment;
+            _configuration = configuration;
 
-		public AccountController(IAccountUserService accountService, IWebHostEnvironment hostingEnvironment)
-		{
-			_accountService = accountService;
-			_hostingEnv = hostingEnvironment;
+        }
 
-		}
-
-		[HttpGet]
-		[Route("validateRecoveryRequestID")]
-		public async Task<ActionResult> ResetPassword(Guid requestID)
-		{
-			var isValidID = await _accountService.ValidateRecoveryRequestID(requestID);
-			return Ok(isValidID);
-		}
-
-
-		[HttpGet]
-		[Route("resetPassword")]
-		public async Task<ActionResult> ResetPassword(string email)
-		{
-			try
-			{
-				await _accountService.SendPasswordResetEmail(email);
-				return Ok();
-			}
-			catch (Exception ex)
-			{
-				return BadRequest(ex.Message);
-			}
-		}
-
-		[HttpGet]
-		[Route("changePasswordWithURL")]
-		public async Task<ActionResult> ChangePasswordURL(Guid id, string password)
-		{
-			var result = await _accountService.ChangePasswordWithRequestLink(id, password);
-			return Ok(result);
-		}
-
-		// GET: api/<AccountController>
-		[HttpGet]
-		[Route("loginURL")]
-		public async Task<IActionResult> Get(string userName, string password)
-		{
-			var token = await _accountService.LoginAndRetrieveToken(userName, password);
-			return Ok(token);
-		}
-
-		[HttpGet]
-		[Route("getSystemStatus")]
-		public async Task<IActionResult> GetSystemStatus()
-		{
-			try
-			{
-				var response = await _accountService.GetSystemStatus();
-				response.Environment = _hostingEnv.EnvironmentName;
-				System.IO.File.AppendAllText("fileLog.txt", DateTime.Now.ToString() + Environment.NewLine);
-				
-				return Ok(response);
-
-			}
-			catch (Exception ex)
-			{
-				return StatusCode(500, "Error getting health");
-			}
-		}
+        [HttpGet]
+        [Route("validateRecoveryRequestID")]
+        public async Task<ActionResult> ResetPassword(Guid requestID)
+        {
+            var isValidID = await _accountService.ValidateRecoveryRequestID(requestID);
+            return Ok(isValidID);
+        }
 
 
-		[HttpGet]
-		[Route("getSystemStatusFailedAssert")]
-		public async Task<IActionResult> GetSystemStatusFailedAssert()
-		{
-			try
-			{
-				throw new Exception("Error");
-			}
-			catch (Exception ex)
-			{
-				return StatusCode(500, "Error getting health: " + ex.Message);
-			}
-		}
+        [HttpGet]
+        [Route("resetPassword")]
+        public async Task<ActionResult> ResetPassword(string email)
+        {
+            try
+            {
+                await _accountService.SendPasswordResetEmail(email);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
-		[HttpPost]
-		[Route("login")]
-		public async Task<IActionResult> GetToken([FromBody] LoginModel loginModel)
-		{
-			var token = await _accountService.LoginAndRetrieveToken(loginModel.UserName, loginModel.Password);
-			return Ok(token);
-		}
+        [HttpGet]
+        [Route("changePasswordWithURL")]
+        public async Task<ActionResult> ChangePasswordURL(Guid id, string password)
+        {
+            var result = await _accountService.ChangePasswordWithRequestLink(id, password);
+            return Ok(result);
+        }
+
+        // GET: api/<AccountController>
+        [HttpGet]
+        [Route("loginURL")]
+        public async Task<IActionResult> Get(string userName, string password)
+        {
+            var token = await _accountService.LoginAndRetrieveToken(userName, password);
+            return Ok(token);
+        }
+
+        [HttpGet]
+        [Route("getSystemStatus")]
+        public async Task<IActionResult> GetSystemStatus()
+        {
+            try
+            {
+                var response = await _accountService.GetSystemStatus();
+                response.Environment = _hostingEnv.EnvironmentName;
+                System.IO.File.AppendAllText("fileLog.txt", DateTime.Now.ToString() + Environment.NewLine);
+
+                return Ok(response);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Error getting health");
+            }
+        }
 
 
-		[HttpPost]
-		[Route("changePassword")]
-		[LoggedUserDataFilter]
-		[ExceptionManager]
-		[Authorize]
-		public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordModel changePasswordModel)
-		{
-			await _accountService.ChangePassword(changePasswordModel.OldPassword, changePasswordModel.NewPassword);
-			return Ok();
-		}
+        [HttpGet]
+        [Route("getSystemStatusFailedAssert")]
+        public async Task<IActionResult> GetSystemStatusFailedAssert()
+        {
+            try
+            {
+                throw new Exception("Error");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Error getting health: " + ex.Message);
+            }
+        }
 
-		[HttpGet]
-		[Route("impersonate")]
-		[LoggedUserDataFilter]
-		public async Task<IActionResult> Impersonate(Guid userID)
-		{
-			var token = await _accountService.LoginAndRetrieveTokenForImpersonate(userID);
-			return Ok(token);
-		}
+        [HttpPost]
+        [Route("login")]
+        public async Task<IActionResult> GetToken([FromBody] LoginModel loginModel)
+        {
+            var token = await _accountService.LoginAndRetrieveToken(loginModel.UserName, loginModel.Password);
+            return Ok(token);
+        }
 
-		// POST api/<AccountController>
-		[HttpPost]
-		[Route("signUp")]
-		public async Task<IActionResult> Post([FromBody] RegisterModel newRegister)
-		{
-			try
-			{
-				var result = await _accountService.RegisterUserAccount(newRegister);
-				return Ok(result);
-			}
-			catch (Exception ex)
-			{
-				return BadRequest(ex.Message);
-			}
-		}
 
-		[HttpGet]
-		[Route("maintenancePage")]
-		[AllowAnonymous]
-		public IActionResult MaintenancePage()
-		{
-			var flag = _accountService.GetMaintenancePageFlag();
-			var textFlag = false;
-			try
-			{
-				var newTextFlag = System.IO.File.ReadAllLines("maitenancePageValue.txt");
-				textFlag = bool.Parse(newTextFlag[0]);
+        [HttpPost]
+        [Route("changePassword")]
+        [LoggedUserDataFilter]
+        [ExceptionManager]
+        [Authorize]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordModel changePasswordModel)
+        {
+            await _accountService.ChangePassword(changePasswordModel.OldPassword, changePasswordModel.NewPassword);
+            return Ok();
+        }
 
-			}
-			catch (Exception ex)
-			{
-				textFlag = false;
-			}
+        [HttpGet]
+        [Route("impersonate")]
+        [LoggedUserDataFilter]
+        public async Task<IActionResult> Impersonate(Guid userID)
+        {
+            var token = await _accountService.LoginAndRetrieveTokenForImpersonate(userID);
+            return Ok(token);
+        }
 
-			return Ok(new
-			{
-				showMaintenancePage = flag || textFlag
-			});
-		}
+        // POST api/<AccountController>
+        [HttpPost]
+        [Route("signUp")]
+        public async Task<IActionResult> Post([FromBody] RegisterModel newRegister)
+        {
+            try
+            {
+                var result = await _accountService.RegisterUserAccount(newRegister);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
-	}
+        [HttpGet]
+        [Route("getGoogleClientID")]
+        public IActionResult GetGoogleClientID()
+        {
+            var clientId = _configuration["security:googleClientID"];
+            return Ok(new { googleClientID = clientId });
+        }
+
+        //[HttpPost]
+        //[Route("RegisterGoogleAuth")]
+        //public IActionResult regisgerWithGoogle()
+        //{
+
+        //}
+
+        [HttpGet]
+        [Route("maintenancePage")]
+        [AllowAnonymous]
+        public IActionResult MaintenancePage()
+        {
+            var flag = _accountService.GetMaintenancePageFlag();
+            var textFlag = false;
+            try
+            {
+                var newTextFlag = System.IO.File.ReadAllLines("maitenancePageValue.txt");
+                textFlag = bool.Parse(newTextFlag[0]);
+
+            }
+            catch (Exception ex)
+            {
+                textFlag = false;
+            }
+
+            return Ok(new
+            {
+                showMaintenancePage = flag || textFlag
+            });
+        }
+
+    }
 }
