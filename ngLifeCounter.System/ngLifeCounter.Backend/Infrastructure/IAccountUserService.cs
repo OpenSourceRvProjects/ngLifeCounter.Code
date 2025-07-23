@@ -23,7 +23,9 @@ namespace ngLifeCounter.Backend.Infrastructure
 		public bool GetMaintenancePageFlag();
 		public Task SetMaintenacePage(bool showMaintacePage);
 		public Task SetMaintenancePageWithKey(MaintenanceKeyInputModel input);
+		Task<GoogleUserInfo> VerifyGoogleToken(string idToken);
 
 
-	}
+
+    }
 }

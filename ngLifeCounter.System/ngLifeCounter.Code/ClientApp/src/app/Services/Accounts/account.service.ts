@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 export class AccountService {
 
   googleRegister(credential: any) {
-    this.http.post(this.baseUrl + 'api/Account/RegisterGoogleAuth', { idToken: credential });
+    return this.http.post(this.baseUrl + 'api/Account/registerGoogleAuth', { idToken: credential });
   }
 
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private localStorage: LocalStorageService, private router: Router) { }

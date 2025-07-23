@@ -154,12 +154,31 @@ namespace ngLifeCounter.MVC.Controllers
             return Ok(new { googleClientID = clientId });
         }
 
-        //[HttpPost]
-        //[Route("RegisterGoogleAuth")]
-        //public IActionResult regisgerWithGoogle()
-        //{
+        [HttpPost]
+        [Route("registerGoogleAuth")]
+        public async Task<IActionResult> regisgerWithGoogle(GoogleAuthRequest request)
+        {
+            var googleUser = await _accountService.VerifyGoogleToken(request.IdToken);
+            if (googleUser == null)
+                return Unauthorized("Invalid Google token");
 
-        //}
+            string fullName = googleUser.DisplayName ?? googleUser.Name ?? "";
+            string[] nameParts = fullName.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+            string firstName = nameParts.Length > 0 ? nameParts[0] : "";
+            string lastName1 = nameParts.Length > 1 ? nameParts[1] : "";
+
+            var response = await _accountService.RegisterUserAccount(new RegisterModel()
+            {
+                Email = googleUser.Email,
+                Name = firstName,
+                LastName1 = lastName1,
+                LastName2 = "",
+                UserName = googleUser.Email,
+            });
+
+            return(Ok(response));
+        }
 
         [HttpGet]
         [Route("maintenancePage")]

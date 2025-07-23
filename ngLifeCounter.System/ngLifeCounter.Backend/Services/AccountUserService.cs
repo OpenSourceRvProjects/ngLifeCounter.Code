@@ -162,7 +162,7 @@ namespace ngLifeCounter.Backend.Services
 				UserName = newRegister.UserName,
 				PasswordHash = encryptResult.EncodeddPassword,
 				Email = newRegister.Email,
-				Salt = encryptResult.Salt,
+				Salt = !string.IsNullOrWhiteSpace(encryptResult.Salt) ? encryptResult.Salt : "",
 				CreationDate = DateTime.Now,
 			};
 
@@ -381,7 +381,21 @@ namespace ngLifeCounter.Backend.Services
 				throw new Exception("Not valid server key was provided");
 		}
 
-		private async Task ModifyServerMaintenanceFile(bool showMaintacePage)
+        public async Task<GoogleUserInfo> VerifyGoogleToken(string idToken)
+        {
+            using var httpClient = new HttpClient();
+            var response = await httpClient.GetAsync($"https://oauth2.googleapis.com/tokeninfo?id_token={idToken}");
+
+            if (!response.IsSuccessStatusCode)
+                return null;
+
+            var json = await response.Content.ReadAsStringAsync();
+            var googleInfo = JsonSerializer.Deserialize<GoogleUserInfo>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            return googleInfo;
+        }
+
+        private async Task ModifyServerMaintenanceFile(bool showMaintacePage)
 		{
 			if (File.Exists("maitenancePageValue.txt"))
 				File.Delete("maitenancePageValue.txt");

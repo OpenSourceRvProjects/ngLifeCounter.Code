@@ -24,6 +24,7 @@ const PROXY_CONFIG = [
       "/api/Admin/getAllUsers",
       "/api/Account/impersonate",
       "/api/Account/getGoogleClientID",
+      "/api/Account/registerGoogleAuth",
       "/api/Profile/getProfileData",
       "/api/Relapses/getEventCounterRelapses",
       "/api/Relapses/getRelapseReasons",

@@ -28,8 +28,14 @@ export class RegisterComponent implements OnInit {
             client_id: data.googleClientID,
             callback: this.handleGoogleCredentialResponse.bind(this)
           });
+
+          google.accounts.id.renderButton(
+            document.getElementById('google-signin-button'),
+            { theme: 'outline', size: 'large' }
+          );
         }
       })
+
 
     this.accountService.getMaintenancePage();
     this.passwordConfirmation = "";
@@ -38,15 +44,35 @@ export class RegisterComponent implements OnInit {
     this.isFinishRegister =  false;
   }
 
+
+
   handleGoogleCredentialResponse(response: any) {
+    debugger;
+    this.errorMessage = "";
+    this.processing = true;
     const credential = response.credential;
-    this.accountService.googleRegister(credential)
+    this.accountService.googleRegister(credential).subscribe({
+      next: (data) => {
+        debugger;
+        this.processing = false;
+        this.isFinishRegister = true;
+        this.goToLoginPage();
+
+      }, error: (err) => {
+        debugger;
+        // alert("Error " + err.error)
+        this.processing = false;
+        alert("Hubo un problema al conectarte con tu cuenta de google!, quizá ya te encuentras registrado");
+        window.location.href = "/register";
+      }
+    })
     //this.http.post(this.baseUrl + 'api/GoogleAuth', { idToken: credential }).subscribe(result => {
     //  console.log("User authenticated via Google!", result);
     //}, error => {
     //  console.error("Google login failed", error);
     //});
   }
+
 
   registerAccount() {
     debugger;
