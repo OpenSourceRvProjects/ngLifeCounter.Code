@@ -16,11 +16,13 @@ namespace ngLifeCounter.MVC.Controllers
 
 		private IHttpContextAccessor _accessor;
 		private IEventCounterService _eventService;
+        private readonly IWebHostEnvironment _hostingEnv;
 
-		public EventCounterController(IHttpContextAccessor accessor, IEventCounterService eventService)
+        public EventCounterController(IHttpContextAccessor accessor, IEventCounterService eventService, IWebHostEnvironment hostingEnv)
 		{
 			_accessor = accessor;
 			_eventService = eventService;
+			_hostingEnv = hostingEnv;
 		}
 		// GET: api/<EventCounterController>
 		[HttpGet]
@@ -63,8 +65,30 @@ namespace ngLifeCounter.MVC.Controllers
 			return Ok();
 		}
 
-		// PUT api/<EventCounterController>/5
-		[HttpPut]
+        [HttpPost]
+        [LoggedUserDataFilter]
+		[Route("eventsBatchForTesting")]
+        public async Task<IActionResult> PostBatck([FromBody] List<NewEventCounterModel> newEventList)
+        {
+
+			if (_hostingEnv.EnvironmentName == "PROD")
+				return Ok();
+
+			foreach (var newEvent in newEventList)
+			{
+				try
+				{
+					await _eventService.AddEventCounter(newEvent);
+				}
+				catch (Exception ex) {
+					continue;
+				}
+			}
+            return Ok();
+        }
+
+        // PUT api/<EventCounterController>/5
+        [HttpPut]
 		[Route("changeCounterPrivacy")]
 		[LoggedUserDataFilter]
 
