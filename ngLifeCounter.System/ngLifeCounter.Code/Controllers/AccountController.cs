@@ -180,6 +180,18 @@ namespace ngLifeCounter.MVC.Controllers
             return(Ok(response));
         }
 
+        [HttpPost]
+        [Route("loginGoogleAuth")]
+        public async Task<IActionResult> loginWithGoogle(GoogleAuthRequest request)
+        {
+            var googleUser = await _accountService.VerifyGoogleToken(request.IdToken);
+            if (googleUser == null)
+                return Unauthorized("Invalid Google token");
+
+            var response = await _accountService.GoogleLoginAndRetrieveToken(googleUser.Email);
+            return (Ok(response));
+        }
+
         [HttpGet]
         [Route("maintenancePage")]
         [AllowAnonymous]

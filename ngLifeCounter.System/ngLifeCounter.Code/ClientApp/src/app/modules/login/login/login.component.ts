@@ -5,6 +5,8 @@ import { AccountService } from 'src/app/Services/Accounts/account.service';
 import { LocalStorageService } from 'src/app/Services/Storage/local-storage.service';
 import { NavMenuComponent } from 'src/app/nav-menu/nav-menu.component';
 
+declare const google: any;
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -26,10 +28,48 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
 
+    this.accountService.getGoogleClientID().
+      subscribe({
+        next: (data: any) => {
+          debugger;
+          google.accounts.id.initialize({
+            client_id: data.googleClientID,
+            callback: this.handleGoogleCredentialResponse.bind(this)
+          });
+
+          google.accounts.id.renderButton(
+            document.getElementById('google-signin-button'),
+            { theme: 'outline', size: 'large' }
+          );
+        }
+      })
+
     this.accountService.getMaintenancePage();
 
     if (this.localStorage.getUserData())
       this.router.navigate(['/'])
+  }
+
+  handleGoogleCredentialResponse(response: any) {
+    debugger;
+    this.errorMessage = "";
+    this.processing = true;
+    const credential = response.credential;
+    this.accountService.googleLogin(credential).subscribe({
+      next: (data) => {
+        debugger;
+        this.localStorage.saveUserData(data);
+        this.processing = false;
+        window.location.href = "/"
+
+      }, error: (err) => {
+        debugger;
+        // alert("Error " + err.error)
+        this.processing = false;
+        alert("Hubo un problema al conectarte con tu cuenta de google!, quizá ya te encuentras registrado");
+        window.location.href = "/login";
+      }
+    })
   }
 
   login() {

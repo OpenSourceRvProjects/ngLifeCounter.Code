@@ -15,6 +15,10 @@ export class AccountService {
     return this.http.post(this.baseUrl + 'api/Account/registerGoogleAuth', { idToken: credential });
   }
 
+  googleLogin(credential: any) {
+    return this.http.post(this.baseUrl + 'api/Account/loginGoogleAuth', { idToken: credential });
+  }
+
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private localStorage: LocalStorageService, private router: Router) { }
 
   registerAccount(registerUser: IRegisterModel) {
