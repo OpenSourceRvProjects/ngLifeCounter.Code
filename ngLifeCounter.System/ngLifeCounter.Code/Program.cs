@@ -113,12 +113,7 @@ builder.Services.AddDbContext<NgLifeCounterDbContext>(options => options.
 
 var app = builder.Build();
 
-app.Use(async (context, next) =>
-{
-    context.Response.Headers.Add("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
-    context.Response.Headers.Add("Cross-Origin-Embedder-Policy", "require-corp");
-    await next();
-});
+
 app.UseIpRateLimiting();
 
 // Configure the HTTP request pipeline.
