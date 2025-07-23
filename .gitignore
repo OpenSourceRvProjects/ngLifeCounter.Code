@@ -3,3 +3,4 @@
 ################################################################################
 
 /ngLifeCounter.System/ngLifeCounter.Code/appsettings.prod.json
+/ngLifeCounter.System/ngLifeCounter.Code/appsettings.uat.json
