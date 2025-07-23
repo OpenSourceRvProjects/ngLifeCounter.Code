@@ -9,20 +9,25 @@
           <h2 class="text-center mb-3">Life Counter</h2>
           <h2 class="text-center mb-4">Ingresar</h2>
           <hr />
-          <div class="d-flex justify-content-center my-3">
+          <div *ngIf="isEnableProviderLogin" class="d-flex justify-content-center my-3">
             <div id="google-signin-button"></div>
           </div>
           <div class="text-center mb-3">
             <h4 class="text-danger">{{ errorMessage }}</h4>
           </div>
-
+          <div *ngIf="!isEnableProviderLogin" class="d-grid my-3">
+            <button class="btn btn-outline-primary w-100" (click)="enableProviderLogin()">
+              <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo" style="width: 20px; margin-right: 8px;">
+              Iniciar sesión con otro proveedor
+            </button>
+          </div>
           <!--<div class="d-grid my-3">
     <button class="btn btn-outline-primary w-100" (click)="triggerGoogleLogin()">
       <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo" style="width: 20px; margin-right: 8px;">
       Iniciar sesión con Google
     </button>
   </div>-->
-          <form>
+          <form *ngIf="!isEnableProviderLogin">
             <div class="mb-3">
               <label for="userName" class="form-label">Nickname (Username)</label>
               <input type="text"
@@ -55,12 +60,13 @@
               <a href="/resetPassword">¡Olvidé mi contraseña!</a>
             </div>
 
-            <div *ngIf="processing" class="col-12 text-center mt-4">
-              <div style="width: 6rem; height: 6rem;" class="spinner-border" role="status">
-                <span class="visually-hidden">Loading...</span>
-              </div>
-            </div>
+
           </form>
+          <div *ngIf="processing" class="col-12 text-center mt-4">
+            <div style="width: 6rem; height: 6rem;" class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
