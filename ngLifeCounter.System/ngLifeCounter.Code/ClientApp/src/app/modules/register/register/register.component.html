@@ -33,6 +33,10 @@
             <div id="google-signin-button"></div>
           </div>
 
+          <div class="text-center mb-3">
+            <h4 class="text-danger">{{errorMessage}}</h4>
+          </div>
+
           <form>
             <div class="row mb-3">
               <div class="col-md-6 mb-3">
@@ -65,9 +69,7 @@
               <input type="password" [(ngModel)]="passwordConfirmation" class="form-control" id="confirmPassword" name="confirmPassword" required>
             </div>
 
-            <div class="text-center mb-3">
-              <h4 class="text-danger">{{errorMessage}}</h4>
-            </div>
+
 
             <div class="col-12 mb-3">
               <button type="submit" class="btn btn-register w-100" (click)="registerAccount()">Registrar*</button>
