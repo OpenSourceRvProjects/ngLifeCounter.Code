@@ -45,7 +45,7 @@ namespace ngLifeCounter.Backend.Services
         public async Task<LoginTokenDataModel> LoginAndRetrieveToken(string username, string password)
         {
             var response = new LoginTokenDataModel();
-            var personalProfile = _dbContext.PersonalProfiles.Include(i => i.User).FirstOrDefault(f => f.User.UserName == username);
+            var personalProfile = _dbContext.PersonalProfiles.Include(i => i.User).FirstOrDefault(f => f.User.UserName == username || f.User.Email == username);
             var user = personalProfile.User;
             string token = string.Empty;
 
@@ -96,7 +96,7 @@ namespace ngLifeCounter.Backend.Services
         public async Task<LoginTokenDataModel> GoogleLoginAndRetrieveToken(string username)
         {
             var response = new LoginTokenDataModel();
-            var personalProfile = _dbContext.PersonalProfiles.Include(i => i.User).FirstOrDefault(f => f.User.UserName == username);
+            var personalProfile = _dbContext.PersonalProfiles.Include(i => i.User).FirstOrDefault(f => f.User.UserName == username || f.User.Email == username);
             var user = personalProfile.User;
             string token = string.Empty;
 

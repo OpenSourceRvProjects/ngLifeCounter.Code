@@ -29,7 +29,7 @@
           <form-logo></form-logo>
           <h2 class="text-center mb-4">Life Counter. Registro</h2>
           <hr />
-          <div class="d-flex justify-content-center my-3">
+          <div *ngIf="isEnableProviderRegister" class="d-flex justify-content-center my-3">
             <div id="google-signin-button"></div>
           </div>
 
@@ -37,7 +37,14 @@
             <h4 class="text-danger">{{errorMessage}}</h4>
           </div>
 
-          <form>
+          <div *ngIf="!isEnableProviderRegister" class="d-grid my-3">
+            <button class="btn btn-outline-primary w-100" (click)="enableProviderRegister()">
+              <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo" style="width: 20px; margin-right: 8px;">
+              Regístrate con otro proveedor
+            </button>
+          </div>
+
+          <form *ngIf="!isEnableProviderRegister">
             <div class="row mb-3">
               <div class="col-md-6 mb-3">
                 <label for="firstName" class="form-label">Nombre:</label>
@@ -78,10 +85,11 @@
             <div class="col-12 text-center">
               <a href="/privacy">*Al crear tu cuenta, aceptas nuestro aviso de privacidad</a>
             </div>
-            <div class="col-12 text-center">
-              <a href="/login">¿Ya tienes cuenta? ¡Ingresa aquí!</a>
-            </div>
+
           </form>
+          <div class="col-12 text-center">
+            <a href="/login">¿Ya tienes cuenta? ¡Ingresa aquí!</a>
+          </div>
         </div>
       </div>
     </div>

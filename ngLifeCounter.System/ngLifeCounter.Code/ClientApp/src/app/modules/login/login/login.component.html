@@ -53,15 +53,16 @@
               <button type="submit" class="btn btn-register w-100" (click)="login()">Ingresar</button>
             </div>
 
-            <div *ngIf="!processing" class="col-12 text-center">
-              <a href="/register">¿No tienes cuenta? ¡Regístrate!</a>
-            </div>
-            <div *ngIf="!processing" class="col-12 text-center">
-              <a href="/resetPassword">¡Olvidé mi contraseña!</a>
-            </div>
+
 
 
           </form>
+          <div *ngIf="!processing" class="col-12 text-center">
+            <a href="/register">¿No tienes cuenta? ¡Regístrate!</a>
+          </div>
+          <div *ngIf="!processing" class="col-12 text-center">
+            <a href="/resetPassword">¡Olvidé mi contraseña!</a>
+          </div>
           <div *ngIf="processing" class="col-12 text-center mt-4">
             <div style="width: 6rem; height: 6rem;" class="spinner-border" role="status">
               <span class="visually-hidden">Loading...</span>

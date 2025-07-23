@@ -16,6 +16,7 @@ export class RegisterComponent implements OnInit {
   errorMessage?: string;
   processing?: boolean;
   isFinishRegister?: boolean;
+  isEnableProviderRegister = false;
 
   constructor(
     private accountService: AccountService,
@@ -31,10 +32,10 @@ export class RegisterComponent implements OnInit {
             callback: this.handleGoogleCredentialResponse.bind(this)
           });
 
-          google.accounts.id.renderButton(
-            document.getElementById('google-signin-button'),
-            { theme: 'outline', size: 'large' }
-          );
+          //google.accounts.id.renderButton(
+          //  document.getElementById('google-signin-button'),
+          //  { theme: 'outline', size: 'large' }
+          //);
         }
       });
 
@@ -65,6 +66,18 @@ export class RegisterComponent implements OnInit {
       });
     });
   }
+
+  enableProviderRegister() {
+    this.isEnableProviderRegister = true;
+
+    setTimeout(() => {
+      google.accounts.id.renderButton(
+        document.getElementById('google-signin-button'),
+        { theme: 'outline', size: 'large' }
+      );
+    });
+  }
+
 
   registerAccount() {
     this.errorMessage = "";
