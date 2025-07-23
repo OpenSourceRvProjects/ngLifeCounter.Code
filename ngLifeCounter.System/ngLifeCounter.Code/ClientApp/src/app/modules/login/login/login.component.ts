@@ -72,6 +72,18 @@ export class LoginComponent implements OnInit {
     })
   }
 
+  triggerGoogleLogin() {
+    google.accounts.id.prompt(); // Show the Google One Tap or popup
+  }
+
+  //triggerGoogleLogin() {
+  //  google.accounts.id.prompt((notification: any) => {
+  //    if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+  //      console.log('Google Sign-In prompt was skipped or not displayed.');
+  //    }
+  //  });
+  //}
+
   login() {
 
     if (this.loginModel.userName.trim() === '' || this.loginModel.password.trim() === '')
