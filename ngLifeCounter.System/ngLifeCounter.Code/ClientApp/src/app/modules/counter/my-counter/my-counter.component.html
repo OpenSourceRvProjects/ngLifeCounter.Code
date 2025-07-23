@@ -1,68 +1,83 @@
 <style>
-.image-container {
-  display: flex;
-  justify-content: center;
-}
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
 
-.backgroundGrad{
-    background: rgb(2,0,36);
+  .backgroundGrad {
+    min-height: 100%;
     background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(82,9,121,1) 47%, rgba(0,212,255,1) 100%);
-}
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .image-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  h4 {
+    text-align: center;
+    color: white;
+  }
+
+  hr {
+    border-color: white;
+  }
 </style>
 
-<div class="backgroundGrad" style="width: auto; height: 1000px">
-  <br />
-  <app-environment-banner></app-environment-banner>
+<div class="backgroundGrad">
+  <div class="container">
+    <app-environment-banner></app-environment-banner>
 
-  <div>
-    <br>
-    <br>
-    <div class="image-container">
-      <!-- <img  style="display: flex; justify-content: center;" id="doggie" src="https://onedrive.live.com/embed?resid=E530B3F2B44ACA4B%21107019&authkey=%21AAWWKDbBtKS39_A" width="280"
-    height="300" style="border-radius: 50%;"> -->
-      <img style="display: flex; justify-content: center;" id="doggie" [src]="dogURL" width="280"
-           height="300" style="border-radius: 50%;">
-
+    <div class="image-container my-4">
+      <img id="doggie"
+           [src]="dogURL"
+           width="280"
+           height="300"
+           style="border-radius: 50%;" />
     </div>
-    <br>
-    <h4 style="text-align: center; color: white;">{{eventName}} {{isCountDown ? ': faltan ' : ' desde hace'}}</h4>
-    <br>
-    <h4 id="noAlcoholDays" style="text-align: center; color: white;">{{viewDay}} días</h4>
-    <br>
-    <h4 id="noAlcoholHours" style="text-align: center; color: white;">{{viewHour}} horas</h4>
-    <br>
-    <h4 id="noAlcoholMinutes" style="text-align: center; color: white;">{{viewMinutes}} minutos</h4>
-    <br>
-    <h4 id="noAlcoholSeconds" style="text-align: center; color: white;">{{viewSeconds}} segundos</h4>
-    <br>
-    <h4 *ngIf="isPublicCounter" style="text-align: center; color: white;">
-      <!-- <i (click)="copyMessage()" class="fa fa-copy fa-2x"></i> -->
+
+    <h4>{{ eventName }} {{ isCountDown ? ': faltan ' : ' desde hace' }}</h4>
+    <h4 id="noAlcoholDays">{{ viewDay }} días</h4>
+    <h4 id="noAlcoholHours">{{ viewHour }} horas</h4>
+    <h4 id="noAlcoholMinutes">{{ viewMinutes }} minutos</h4>
+    <h4 id="noAlcoholSeconds">{{ viewSeconds }} segundos</h4>
+
+    <h4 *ngIf="isPublicCounter">
       <app-copy-link [counterID]="id" [isFromCounterView]="true"></app-copy-link>
     </h4>
-    <hr>
 
-    <h4 style="text-align: center; color: white;">
+    <hr />
+
+    <h4>
       <i (click)="reload()" class="fa fa-refresh"></i>
     </h4>
-    <div *ngIf="!isShared" class="d-flex justify-content-center align-items-center">
+
+    <div *ngIf="!isShared" class="d-flex justify-content-center align-items-center mb-3">
       <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" name="refresh" (click)="changeRefreshOption($event)" [(ngModel)]="isRefreshActive" id="flexSwitchRefresh">
-        <label style="color:white" class="form-check-label" for="flexSwitchRefresh">Refrescar automaticamente</label>
+        <input class="form-check-input"
+               type="checkbox"
+               name="refresh"
+               (click)="changeRefreshOption($event)"
+               [(ngModel)]="isRefreshActive"
+               id="flexSwitchRefresh" />
+        <label style="color:white" class="form-check-label" for="flexSwitchRefresh">
+          Refrescar automáticamente
+        </label>
       </div>
     </div>
 
-    <!--<div class="form-check form-switch">
-      <input class="form-check-input" type="checkbox" name="Posprandial" [(ngModel)]="isPospandrial" id="flexSwitchCheckChecked">
-      <label class="form-check-label" for="flexSwitchCheckChecked">Posprandial</label>
-    </div>-->
-    <h4 id="completedYears" style="text-align: center; color: white;  "></h4>
-    <br>
-    <div class="text-center">
-      <button (click)="goToListPage()" class="btn btn-success text">
+    <h4 id="completedYears"></h4>
+
+    <div class="text-center mt-4">
+      <button (click)="goToListPage()" class="btn btn-success">
         Ir a otros contadores
       </button>
     </div>
   </div>
-
-
 </div>

@@ -1,45 +1,51 @@
-<div class="backgroundLookAndFeel" style="width: auto; height: 1000px">
-
-  <br>
-  <div class="container">
+<div class="backgroundLookAndFeel">
+  <div class="container py-5">
     <app-environment-banner></app-environment-banner>
-    <br>
-    <br>
 
-    <div class="row d-flex justify-content-center align-items-center">
-      <div class="col-md-12">
-       
-        <div class="form-container" style="margin-top: 0px;">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="form-container">
           <form-logo></form-logo>
-          <h2 class="text-center mb-4">Life Counter</h2>
+          <h2 class="text-center mb-3">Life Counter</h2>
           <h2 class="text-center mb-4">Ingresar</h2>
-          <form>                             
+
+          <form>
             <div class="mb-3">
-              <label for="email" class="form-label">Nickname (Username)</label>
-              <input type="text" [(ngModel)]="loginModel.userName" class="form-control text-center" id="userName" name="userName" required>
+              <label for="userName" class="form-label">Nickname (Username)</label>
+              <input type="text"
+                     [(ngModel)]="loginModel.userName"
+                     class="form-control text-center"
+                     id="userName"
+                     name="userName"
+                     required />
             </div>
 
             <div class="mb-3">
               <label for="password" class="form-label">Contraseña:</label>
-              <input type="password" [(ngModel)]="loginModel.password" class="form-control text-center" id="password" name="password" required>
+              <input type="password"
+                     [(ngModel)]="loginModel.password"
+                     class="form-control text-center"
+                     id="password"
+                     name="password"
+                     required />
             </div>
 
-            <div class="text-center">
-              <h4 style="color: red;">{{errorMessage}}</h4>
+            <div class="text-center mb-3">
+              <h4 class="text-danger">{{ errorMessage }}</h4>
             </div>
 
-            <div *ngIf="!processing" class="col-12">
+            <div *ngIf="!processing" class="col-12 mb-3">
               <button type="submit" class="btn btn-register w-100" (click)="login()">Ingresar</button>
             </div>
 
-            <br>
             <div *ngIf="!processing" class="col-12 text-center">
-              <a href="/register" type="submit">¿No tienes cuenta? ¡Registrate!</a>
+              <a href="/register">¿No tienes cuenta? ¡Regístrate!</a>
             </div>
             <div *ngIf="!processing" class="col-12 text-center">
-              <a href="/resetPassword" type="submit">¡Olvide mi contraseña!</a>
+              <a href="/resetPassword">¡Olvidé mi contraseña!</a>
             </div>
-            <div *ngIf="processing" class="col-12 text-center">
+
+            <div *ngIf="processing" class="col-12 text-center mt-4">
               <div style="width: 6rem; height: 6rem;" class="spinner-border" role="status">
                 <span class="visually-hidden">Loading...</span>
               </div>
