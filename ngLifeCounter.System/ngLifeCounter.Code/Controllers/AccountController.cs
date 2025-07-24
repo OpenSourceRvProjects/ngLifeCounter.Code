@@ -192,6 +192,32 @@ namespace ngLifeCounter.MVC.Controllers
             return (Ok(response));
         }
 
+        [HttpPost]
+        [Route("registerMicrosoftAuth")]
+        public async Task<IActionResult> RegisterWithMicrosoft([FromBody] MicrosoftAuthRequest request)
+        {
+            var microsoftUser = await _accountService.VerifyMicrosoftToken(request.IdToken);
+            if (microsoftUser == null)
+                return Unauthorized("Invalid Microsoft token");
+
+            string fullName = microsoftUser.Name ?? microsoftUser.GivenName ?? "";
+            string[] nameParts = fullName.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+            string firstName = nameParts.Length > 0 ? nameParts[0] : "";
+            string lastName1 = nameParts.Length > 1 ? nameParts[1] : "";
+
+            var response = await _accountService.RegisterUserAccount(new RegisterModel()
+            {
+                Email = microsoftUser.Email,
+                Name = firstName,
+                LastName1 = lastName1,
+                LastName2 = ".",
+                UserName = microsoftUser.Email
+            });
+
+            return Ok(response);
+        }
+
         [HttpGet]
         [Route("maintenancePage")]
         [AllowAnonymous]

@@ -16,6 +16,7 @@ using ngLifeCounter.Models.Email;
 using Microsoft.AspNetCore.Http.Extensions;
 using ngLifeCounter.Models.Exceptions;
 using Microsoft.Extensions.Configuration;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace ngLifeCounter.Backend.Services
 {
@@ -459,6 +460,28 @@ namespace ngLifeCounter.Backend.Services
         {
             var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
             return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+        }
+
+        public async Task<MicrosoftUserInfo> VerifyMicrosoftToken(string idToken)
+        {
+            var handler = new JwtSecurityTokenHandler();
+            var token = handler.ReadJwtToken(idToken);
+
+            var email = token.Claims.FirstOrDefault(c => c.Type == "email")?.Value;
+            var name = token.Claims.FirstOrDefault(c => c.Type == "name")?.Value;
+            var givenName = token.Claims.FirstOrDefault(c => c.Type == "given_name")?.Value;
+            var familyName = token.Claims.FirstOrDefault(c => c.Type == "family_name")?.Value;
+
+            if (string.IsNullOrEmpty(email))
+                return null;
+
+            return new MicrosoftUserInfo
+            {
+                Email = email,
+                Name = name,
+                GivenName = givenName,
+                Surname = familyName
+            };
         }
     }
 }

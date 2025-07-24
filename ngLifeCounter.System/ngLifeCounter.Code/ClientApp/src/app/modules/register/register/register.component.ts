@@ -3,6 +3,7 @@ import { IRegisterModel } from 'src/app/Models/Account/IRegisterModel';
 import { AccountService } from 'src/app/Services/Accounts/account.service';
 
 declare const google: any;
+import * as msal from '@azure/msal-browser';
 
 @Component({
   selector: 'app-register',
@@ -17,13 +18,14 @@ export class RegisterComponent implements OnInit {
   processing?: boolean;
   isFinishRegister?: boolean;
   isEnableProviderRegister = false;
+  private msalInstance!: msal.PublicClientApplication;
 
   constructor(
     private accountService: AccountService,
     private ngZone: NgZone
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.accountService.getGoogleClientID().
       subscribe({
         next: (data: any) => {
@@ -31,13 +33,17 @@ export class RegisterComponent implements OnInit {
             client_id: data.googleClientID,
             callback: this.handleGoogleCredentialResponse.bind(this)
           });
-
-          //google.accounts.id.renderButton(
-          //  document.getElementById('google-signin-button'),
-          //  { theme: 'outline', size: 'large' }
-          //);
         }
       });
+
+    this.msalInstance = new msal.PublicClientApplication({
+      auth: {
+        clientId: 'bf7b7993-314e-411a-a67d-4da49366c464',
+        redirectUri: window.location.origin
+      }
+    });
+    // ⬅️ Required in MSAL v3+
+    await this.msalInstance.initialize();
 
     this.accountService.getMaintenancePage();
     this.passwordConfirmation = "";
@@ -70,6 +76,12 @@ export class RegisterComponent implements OnInit {
   enableProviderRegister() {
     this.isEnableProviderRegister = true;
 
+    const button = document.createElement("button");
+    button.innerText = "Regístrate con Outlook";
+    button.classList.add("btn", "btn-outline-primary", "w-100");
+    button.onclick = () => this.loginWithMicrosoft();
+
+
     setTimeout(() => {
       google.accounts.id.renderButton(
         document.getElementById('google-signin-button'),
@@ -78,6 +90,32 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+  loginWithMicrosoft() {
+    this.processing = true;
+    this.errorMessage = "";
+
+    this.msalInstance.loginPopup({
+      scopes: ["openid", "email", "profile"],
+    }).then((response: any) => {
+      const idToken = response.idToken;
+
+      this.accountService.microsoftRegister(idToken).subscribe({
+        next: () => {
+          this.processing = false;
+          this.isFinishRegister = true;
+          this.goToLoginPage();
+        },
+        error: () => {
+          this.processing = false;
+          this.errorMessage = "Error con el inicio de sesión de Microsoft. Quizá ya estás registrado.";
+        }
+      });
+    }).catch((error: any) => {
+      this.processing = false;
+      this.errorMessage = "Error al conectar con Microsoft";
+      console.error(error);
+    });
+  }
 
   registerAccount() {
     this.errorMessage = "";
