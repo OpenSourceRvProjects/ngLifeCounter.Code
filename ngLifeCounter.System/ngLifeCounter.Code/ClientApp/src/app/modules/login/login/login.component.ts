@@ -30,31 +30,35 @@ export class LoginComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.accountService.getMaintenancePage();
-
-    await this.accountService.initGoogleAuth(this.handleGoogleCredentialResponse.bind(this));
-
-    await this.accountService.initMicrosoftAuth();
-    
     if (this.localStorage.getUserData())
       this.router.navigate(['/'])
+
+    this.accountService.getMaintenancePage();
+    await this.accountService.initGoogleAuth(this.loginWithGoogle.bind(this));
+    await this.accountService.initMicrosoftAuth();
   }
 
+  //#region externalLoginAuth
+  loginWithGoogle(response: any) {
+    this.ngZone.run(() => {
+      this.errorMessage = "";
+      this.processing = true;
+      const credential = response.credential;
+      this.accountService.googleLogin(credential).subscribe({
+        next: (data) => {
+          debugger;
+          this.localStorage.saveUserData(data);
+          this.processing = false;
+          window.location.href = "/"
 
-
-  enableProviderLogin() {
-    this.isEnableProviderLogin = true;
-
-    const button = document.createElement("button");
-    button.innerText = "Regístrate con Outlook";
-    button.classList.add("btn", "btn-outline-primary", "w-100");
-    button.onclick = () => this.loginWithMicrosoft();
-
-    setTimeout(() => {
-      this.accountService.renderGoogleButton('google-signin-button');
+        }, error: (err) => {
+          debugger;
+          this.processing = false;
+          this.errorMessage = "Hubo un problema al conectarte con tu cuenta de google!, Probablemente aún no te registras con tu cuenta de google";
+        }
+      });
     });
   }
-
 
   loginWithMicrosoft() {
     this.processing = true;
@@ -85,43 +89,24 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  handleGoogleCredentialResponse(response: any) {
+  //#endregion
 
-    this.ngZone.run(() => {
-      this.errorMessage = "";
-      this.processing = true;
-      const credential = response.credential;
-      this.accountService.googleLogin(credential).subscribe({
-        next: (data) => {
-          debugger;
-          this.localStorage.saveUserData(data);
-          this.processing = false;
-          window.location.href = "/"
+  enableProviderLogin() {
+    this.isEnableProviderLogin = true;
 
-        }, error: (err) => {
-          debugger;
-          // alert("Error " + err.error)
-          this.processing = false;
-          this.errorMessage = "Hubo un problema al conectarte con tu cuenta de google!, Probablemente aún no te registras con tu cuenta de google";
-          //window.location.href = "/login";
-        }
-      });
+    const button = document.createElement("button");
+    button.innerText = "Regístrate con Outlook";
+    button.classList.add("btn", "btn-outline-primary", "w-100");
+    button.onclick = () => this.loginWithMicrosoft();
+
+    setTimeout(() => {
+      this.accountService.renderGoogleButton('google-signin-button');
     });
   }
-
-
 
   triggerGoogleLogin() {
     this.accountService.triggerGoogleLoginPrompt();
   }
-  //triggerGoogleLogin() {
-  //  google.accounts.id.prompt((notification: any) => {
-  //    if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-  //      console.log('Google Sign-In prompt was skipped or not displayed.');
-  //    }
-  //  });
-  //}
-
   login() {
 
     if (this.loginModel.userName.trim() === '' || this.loginModel.password.trim() === '')
