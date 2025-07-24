@@ -7,11 +7,15 @@ import { IChangePasswordModel } from 'src/app/Models/Profile/IChangePasswordMode
 import { Router } from '@angular/router';
 
 import * as msal from '@azure/msal-browser';
+declare const google: any;
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
+  private googleClientId: string = '';
+  private googleCallbackFn: (response: any) => void = () => { };
+
 
   private msalInstance!: msal.PublicClientApplication;
 
@@ -109,6 +113,29 @@ export class AccountService {
       throw new Error("MSAL instance not initialized. Call initMicrosoftAuth() first.");
     }
     return this.msalInstance;
+  }
+
+  async initGoogleAuth(callback: (response: any) => void): Promise<void> {
+    const response: any = await this.http.get(this.baseUrl + 'api/Account/getGoogleClientID').toPromise();
+
+    this.googleClientId = response.googleClientID;
+    this.googleCallbackFn = callback;
+
+    google.accounts.id.initialize({
+      client_id: this.googleClientId,
+      callback: this.googleCallbackFn
+    });
+  }
+
+  renderGoogleButton(containerId: string) {
+    google.accounts.id.renderButton(
+      document.getElementById(containerId),
+      { theme: 'outline', size: 'large' }
+    );
+  }
+
+  triggerGoogleLoginPrompt() {
+    google.accounts.id.prompt();
   }
 
 

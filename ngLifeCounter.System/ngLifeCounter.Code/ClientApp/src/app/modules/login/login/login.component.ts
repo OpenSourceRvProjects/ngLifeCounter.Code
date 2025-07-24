@@ -32,15 +32,7 @@ export class LoginComponent implements OnInit {
   async ngOnInit() {
     this.accountService.getMaintenancePage();
 
-    this.accountService.getGoogleClientID().
-      subscribe({
-        next: (data: any) => {
-          google.accounts.id.initialize({
-            client_id: data.googleClientID,
-            callback: this.handleGoogleCredentialResponse.bind(this)
-          });
-        }
-      })
+    await this.accountService.initGoogleAuth(this.handleGoogleCredentialResponse.bind(this));
 
     await this.accountService.initMicrosoftAuth();
     
@@ -48,46 +40,18 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/'])
   }
 
-  handleGoogleCredentialResponse(response: any) {
-
-    this.ngZone.run(() => {
-      this.errorMessage = "";
-      this.processing = true;
-      const credential = response.credential;
-      this.accountService.googleLogin(credential).subscribe({
-        next: (data) => {
-          debugger;
-          this.localStorage.saveUserData(data);
-          this.processing = false;
-          window.location.href = "/"
-
-        }, error: (err) => {
-          debugger;
-          // alert("Error " + err.error)
-          this.processing = false;
-          this.errorMessage = "Hubo un problema al conectarte con tu cuenta de google!, Probablemente aún no te registras con tu cuenta de google";
-          //window.location.href = "/login";
-        }
-      });
-    });
-  }
 
 
   enableProviderLogin() {
     this.isEnableProviderLogin = true;
-
 
     const button = document.createElement("button");
     button.innerText = "Regístrate con Outlook";
     button.classList.add("btn", "btn-outline-primary", "w-100");
     button.onclick = () => this.loginWithMicrosoft();
 
-
     setTimeout(() => {
-      google.accounts.id.renderButton(
-        document.getElementById('google-signin-button'),
-        { theme: 'outline', size: 'large' }
-      );
+      this.accountService.renderGoogleButton('google-signin-button');
     });
   }
 
@@ -121,11 +85,35 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  handleGoogleCredentialResponse(response: any) {
 
-  triggerGoogleLogin() {
-    google.accounts.id.prompt(); // Show the Google One Tap or popup
+    this.ngZone.run(() => {
+      this.errorMessage = "";
+      this.processing = true;
+      const credential = response.credential;
+      this.accountService.googleLogin(credential).subscribe({
+        next: (data) => {
+          debugger;
+          this.localStorage.saveUserData(data);
+          this.processing = false;
+          window.location.href = "/"
+
+        }, error: (err) => {
+          debugger;
+          // alert("Error " + err.error)
+          this.processing = false;
+          this.errorMessage = "Hubo un problema al conectarte con tu cuenta de google!, Probablemente aún no te registras con tu cuenta de google";
+          //window.location.href = "/login";
+        }
+      });
+    });
   }
 
+
+
+  triggerGoogleLogin() {
+    this.accountService.triggerGoogleLoginPrompt();
+  }
   //triggerGoogleLogin() {
   //  google.accounts.id.prompt((notification: any) => {
   //    if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
