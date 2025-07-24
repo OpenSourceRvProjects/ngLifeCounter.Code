@@ -130,7 +130,7 @@ export class AccountService {
   renderGoogleButton(containerId: string) {
     google.accounts.id.renderButton(
       document.getElementById(containerId),
-      { theme: 'outline', size: 'large' }
+      { theme: 'outline', size: 'extra_large', width: '10px' }
     );
   }
 
