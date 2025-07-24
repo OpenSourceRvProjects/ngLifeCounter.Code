@@ -94,7 +94,7 @@ namespace ngLifeCounter.Backend.Services
             return response;
         }
 
-        public async Task<LoginTokenDataModel> GoogleLoginAndRetrieveToken(string username)
+        public async Task<LoginTokenDataModel> ExternalVendorLoginAndRetrieveToken(string username)
         {
             var response = new LoginTokenDataModel();
             var personalProfile = _dbContext.PersonalProfiles.Include(i => i.User).FirstOrDefault(f => f.User.UserName == username || f.User.Email == username);

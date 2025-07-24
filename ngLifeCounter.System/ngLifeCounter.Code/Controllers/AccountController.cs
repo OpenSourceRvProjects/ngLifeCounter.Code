@@ -188,7 +188,7 @@ namespace ngLifeCounter.MVC.Controllers
             if (googleUser == null)
                 return Unauthorized("Invalid Google token");
 
-            var response = await _accountService.GoogleLoginAndRetrieveToken(googleUser.Email);
+            var response = await _accountService.ExternalVendorLoginAndRetrieveToken(googleUser.Email);
             return (Ok(response));
         }
 
@@ -216,6 +216,18 @@ namespace ngLifeCounter.MVC.Controllers
             });
 
             return Ok(response);
+        }
+
+        [HttpPost]
+        [Route("loginMicrosoftAuth")]
+        public async Task<IActionResult> loginWithMicrosoft(GoogleAuthRequest request)
+        {
+            var microsoftUser = await _accountService.VerifyMicrosoftToken(request.IdToken);
+            if (microsoftUser == null)
+                return Unauthorized("Invalid Google token");
+
+            var response = await _accountService.ExternalVendorLoginAndRetrieveToken(microsoftUser.Email);
+            return (Ok(response));
         }
 
         [HttpGet]

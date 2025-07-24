@@ -27,6 +27,7 @@ const PROXY_CONFIG = [
       "/api/Account/registerGoogleAuth",
       "/api/Account/registerMicrosoftAuth",
       "/api/Account/loginWithGoogle",
+      "/api/Account/loginMicrosoftAuth",
       "/api/Profile/getProfileData",
       "/api/Relapses/getEventCounterRelapses",
       "/api/Relapses/getRelapseReasons",

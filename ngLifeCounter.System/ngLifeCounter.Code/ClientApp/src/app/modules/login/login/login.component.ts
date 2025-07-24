@@ -6,6 +6,7 @@ import { LocalStorageService } from 'src/app/Services/Storage/local-storage.serv
 import { NavMenuComponent } from 'src/app/nav-menu/nav-menu.component';
 
 declare const google: any;
+import * as msal from '@azure/msal-browser';
 
 @Component({
   selector: 'app-login',
@@ -21,13 +22,15 @@ export class LoginComponent implements OnInit {
   errorMessage: string;
   processing: boolean = false;
   isEnableProviderLogin = false;
+  private msalInstance!: msal.PublicClientApplication;
   constructor(private router: Router, private accountService: AccountService, private localStorage: LocalStorageService, private ngZone: NgZone) {
     this.userName = "";
     this.password = "";
     this.errorMessage = "";
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.accountService.getMaintenancePage();
 
     this.accountService.getGoogleClientID().
       subscribe({
@@ -45,8 +48,16 @@ export class LoginComponent implements OnInit {
         }
       })
 
-    this.accountService.getMaintenancePage();
 
+    this.msalInstance = new msal.PublicClientApplication({
+      auth: {
+        clientId: 'bf7b7993-314e-411a-a67d-4da49366c464',
+        redirectUri: window.location.origin
+      }
+    });
+    // ⬅️ Required in MSAL v3+
+    await this.msalInstance.initialize();
+    
     if (this.localStorage.getUserData())
       this.router.navigate(['/'])
   }
@@ -79,11 +90,47 @@ export class LoginComponent implements OnInit {
   enableProviderLogin() {
     this.isEnableProviderLogin = true;
 
+
+    const button = document.createElement("button");
+    button.innerText = "Regístrate con Outlook";
+    button.classList.add("btn", "btn-outline-primary", "w-100");
+    button.onclick = () => this.loginWithMicrosoft();
+
+
     setTimeout(() => {
       google.accounts.id.renderButton(
         document.getElementById('google-signin-button'),
         { theme: 'outline', size: 'large' }
       );
+    });
+  }
+
+
+  loginWithMicrosoft() {
+    this.processing = true;
+    this.errorMessage = "";
+
+    this.msalInstance.loginPopup({
+      scopes: ["openid", "email", "profile"],
+    }).then((response: any) => {
+      const idToken = response.idToken;
+
+      this.accountService.microsofLogin(idToken).subscribe({
+        next: (data: any) => {
+          debugger;
+          this.localStorage.saveUserData(data);
+          this.processing = false;
+          window.location.href = "/"
+        },
+        error: () => {
+          this.processing = false;
+          this.errorMessage = "Error con el inicio de sesión de Microsoft. Quizá ya estás registrado.";
+        }
+      });
+    }).catch((error: any) => {
+      this.processing = false;
+      this.errorMessage = "Error al conectar con Microsoft";
+      console.error(error);
     });
   }
 

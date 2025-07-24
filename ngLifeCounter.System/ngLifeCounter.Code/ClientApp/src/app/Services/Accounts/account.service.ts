@@ -23,6 +23,9 @@ export class AccountService {
     return this.http.post(this.baseUrl + 'api/Account/registerMicrosoftAuth', { idToken: idToken });
   }
 
+  microsofLogin(idToken: any) {
+    return this.http.post(this.baseUrl + 'api/Account/loginMicrosoftAuth', { idToken: idToken });
+  }
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private localStorage: LocalStorageService, private router: Router) { }
 
   registerAccount(registerUser: IRegisterModel) {
