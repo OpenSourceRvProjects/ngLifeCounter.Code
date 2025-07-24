@@ -26,33 +26,18 @@ export class RegisterComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.accountService.getGoogleClientID().
-      subscribe({
-        next: (data: any) => {
-          google.accounts.id.initialize({
-            client_id: data.googleClientID,
-            callback: this.handleGoogleCredentialResponse.bind(this)
-          });
-        }
-      });
-
-    this.msalInstance = new msal.PublicClientApplication({
-      auth: {
-        clientId: 'bf7b7993-314e-411a-a67d-4da49366c464',
-        redirectUri: window.location.origin
-      }
-    });
-    // ⬅️ Required in MSAL v3+
-    await this.msalInstance.initialize();
-
     this.accountService.getMaintenancePage();
+    await this.accountService.initGoogleAuth(this.registerWithGoogle.bind(this));
+    await this.accountService.initMicrosoftAuth();
+
     this.passwordConfirmation = "";
     this.errorMessage = "";
     this.processing = false;
     this.isFinishRegister = false;
   }
 
-  handleGoogleCredentialResponse(response: any) {
+  //#region externalProviderRegister
+  registerWithGoogle(response: any) {
     // Run inside Angular zone so UI updates properly
     this.ngZone.run(() => {
       this.errorMessage = "";
@@ -63,7 +48,7 @@ export class RegisterComponent implements OnInit {
         next: (data) => {
           this.processing = false;
           this.isFinishRegister = true;
-          this.goToLoginPage();
+          //this.goToLoginPage();
         },
         error: (err) => {
           this.processing = false;
@@ -73,28 +58,13 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  enableProviderRegister() {
-    this.isEnableProviderRegister = true;
-
-    const button = document.createElement("button");
-    button.innerText = "Regístrate con Outlook";
-    button.classList.add("btn", "btn-outline-primary", "w-100");
-    button.onclick = () => this.loginWithMicrosoft();
-
-
-    setTimeout(() => {
-      google.accounts.id.renderButton(
-        document.getElementById('google-signin-button'),
-        { theme: 'outline', size: 'large' }
-      );
-    });
-  }
-
-  loginWithMicrosoft() {
+  registerWithMicrosoft() {
     this.processing = true;
     this.errorMessage = "";
 
-    this.msalInstance.loginPopup({
+    const msalInstance = this.accountService.getMsalInstance();
+
+    msalInstance.loginPopup({
       scopes: ["openid", "email", "profile"],
     }).then((response: any) => {
       const idToken = response.idToken;
@@ -103,7 +73,7 @@ export class RegisterComponent implements OnInit {
         next: () => {
           this.processing = false;
           this.isFinishRegister = true;
-          this.goToLoginPage();
+          //this.goToLoginPage();
         },
         error: () => {
           this.processing = false;
@@ -116,6 +86,21 @@ export class RegisterComponent implements OnInit {
       console.error(error);
     });
   }
+
+  enableProviderRegister() {
+    this.isEnableProviderRegister = true;
+
+    const button = document.createElement("button");
+    button.innerText = "Regístrate con Outlook";
+    button.classList.add("btn", "btn-outline-primary", "w-100");
+    button.onclick = () => this.registerWithMicrosoft();
+
+    setTimeout(() => {
+      this.accountService.renderGoogleButton('google-signin-button');
+    });
+  }
+
+  //#endregion
 
   registerAccount() {
     this.errorMessage = "";
