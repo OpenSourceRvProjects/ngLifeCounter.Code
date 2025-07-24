@@ -42,27 +42,10 @@ export class LoginComponent implements OnInit {
         }
       })
 
-    this.accountService.getMicrosoftClientID().subscribe({
-      next: (data: any) => {
-        this.initializeMicrosoftMsal(data.microsoftClientID);
-      }
-    });
-
-
+    await this.accountService.initMicrosoftAuth();
     
     if (this.localStorage.getUserData())
       this.router.navigate(['/'])
-  }
-
-  private async initializeMicrosoftMsal(clientId: string) {
-    this.msalInstance = new msal.PublicClientApplication({
-      auth: {
-        clientId: clientId,
-        redirectUri: window.location.origin
-      }
-    });
-
-    await this.msalInstance.initialize();
   }
 
   handleGoogleCredentialResponse(response: any) {
@@ -113,17 +96,18 @@ export class LoginComponent implements OnInit {
     this.processing = true;
     this.errorMessage = "";
 
-    this.msalInstance.loginPopup({
+    const msalInstance = this.accountService.getMsalInstance();
+
+    msalInstance.loginPopup({
       scopes: ["openid", "email", "profile"],
     }).then((response: any) => {
       const idToken = response.idToken;
 
       this.accountService.microsofLogin(idToken).subscribe({
         next: (data: any) => {
-          debugger;
           this.localStorage.saveUserData(data);
           this.processing = false;
-          window.location.href = "/"
+          window.location.href = "/";
         },
         error: () => {
           this.processing = false;

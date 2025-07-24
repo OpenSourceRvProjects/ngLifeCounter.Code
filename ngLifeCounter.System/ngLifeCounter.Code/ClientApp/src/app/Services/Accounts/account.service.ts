@@ -6,10 +6,14 @@ import { ILoginModel } from 'src/app/Models/Account/ILoginModel';
 import { IChangePasswordModel } from 'src/app/Models/Profile/IChangePasswordModel';
 import { Router } from '@angular/router';
 
+import * as msal from '@azure/msal-browser';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
+
+  private msalInstance!: msal.PublicClientApplication;
 
   googleRegister(credential: any) {
     return this.http.post(this.baseUrl + 'api/Account/registerGoogleAuth', { idToken: credential });
@@ -85,6 +89,29 @@ export class AccountService {
       }
     });
   }
+
+
+  async initMicrosoftAuth(): Promise<void> {
+    const response: any = await this.http.get(this.baseUrl + 'api/Account/getMicrosoftClientID').toPromise();
+
+    this.msalInstance = new msal.PublicClientApplication({
+      auth: {
+        clientId: response.microsoftClientID,
+        redirectUri: window.location.origin
+      }
+    });
+
+    await this.msalInstance.initialize();
+  }
+
+  getMsalInstance(): msal.PublicClientApplication {
+    if (!this.msalInstance) {
+      throw new Error("MSAL instance not initialized. Call initMicrosoftAuth() first.");
+    }
+    return this.msalInstance;
+  }
+
+
 
   blockMaintenancePageIfNotApplicable() {
     this.http.get(this.baseUrl + `api/Account/maintenancePage`).subscribe({
