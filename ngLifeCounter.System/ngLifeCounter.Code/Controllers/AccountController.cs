@@ -154,6 +154,14 @@ namespace ngLifeCounter.MVC.Controllers
             return Ok(new { googleClientID = clientId });
         }
 
+        [HttpGet]
+        [Route("getMicrosoftClientID")]
+        public IActionResult GetMicrosoftClientID()
+        {
+            var clientId = _configuration["security:microsoftClientID"];
+            return Ok(new { microsoftClientID = clientId });
+        }
+
         [HttpPost]
         [Route("registerGoogleAuth")]
         public async Task<IActionResult> regisgerWithGoogle(GoogleAuthRequest request)

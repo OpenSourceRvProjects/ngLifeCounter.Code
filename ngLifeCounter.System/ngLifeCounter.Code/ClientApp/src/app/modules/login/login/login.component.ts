@@ -35,31 +35,34 @@ export class LoginComponent implements OnInit {
     this.accountService.getGoogleClientID().
       subscribe({
         next: (data: any) => {
-          debugger;
           google.accounts.id.initialize({
             client_id: data.googleClientID,
             callback: this.handleGoogleCredentialResponse.bind(this)
           });
-
-          //google.accounts.id.renderButton(
-          //  document.getElementById('google-signin-button'),
-          //  { theme: 'outline', size: 'large' }
-          //);
         }
       })
 
-
-    this.msalInstance = new msal.PublicClientApplication({
-      auth: {
-        clientId: 'bf7b7993-314e-411a-a67d-4da49366c464',
-        redirectUri: window.location.origin
+    this.accountService.getMicrosoftClientID().subscribe({
+      next: (data: any) => {
+        this.initializeMicrosoftMsal(data.microsoftClientID);
       }
     });
-    // ⬅️ Required in MSAL v3+
-    await this.msalInstance.initialize();
+
+
     
     if (this.localStorage.getUserData())
       this.router.navigate(['/'])
+  }
+
+  private async initializeMicrosoftMsal(clientId: string) {
+    this.msalInstance = new msal.PublicClientApplication({
+      auth: {
+        clientId: clientId,
+        redirectUri: window.location.origin
+      }
+    });
+
+    await this.msalInstance.initialize();
   }
 
   handleGoogleCredentialResponse(response: any) {

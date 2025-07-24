@@ -71,6 +71,10 @@ export class AccountService {
     return this.http.get(this.baseUrl + `api/Account/getGoogleClientID`);
   }
 
+  getMicrosoftClientID() {
+    return this.http.get(this.baseUrl + `api/Account/getMicrosoftClientID`);
+  }
+
   getMaintenancePage() {
     this.http.get(this.baseUrl + `api/Account/maintenancePage`).subscribe({
       next: (data: any) => {
