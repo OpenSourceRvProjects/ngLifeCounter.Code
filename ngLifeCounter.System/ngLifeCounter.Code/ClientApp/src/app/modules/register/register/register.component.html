@@ -33,7 +33,7 @@
             <div id="google-signin-button"></div>
           </div>
           <div *ngIf="isEnableProviderRegister" class="d-flex justify-content-center my-3">
-            <button class="btn btn-outline-primary w-100" (click)="loginWithMicrosoft()">
+            <button class="btn btn-outline-primary w-40" (click)="loginWithMicrosoft()">
               <img src="https://img.icons8.com/color/24/000000/microsoft.png" alt="Microsoft logo" style="width: 20px; margin-right: 8px;">
               Regístrate con Outlook
             </button>
@@ -44,9 +44,10 @@
           </div>
 
           <div *ngIf="!isEnableProviderRegister" class="d-grid my-3">
-            <button class="btn btn-outline-primary w-100" (click)="enableProviderRegister()">
-              <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo" style="width: 20px; margin-right: 8px;">
-              Regístrate con otro proveedor
+            <button class="btn btn-outline-primary w-100 d-flex align-items-center justify-content-center gap-2" (click)="enableProviderRegister()">
+              <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo" style="width: 20px;">
+              <img src="https://img.icons8.com/color/24/000000/microsoft.png" alt="Microsoft logo" style="width: 20px;">
+              <span>Regístrate con otro proveedor</span>
             </button>
           </div>
 
