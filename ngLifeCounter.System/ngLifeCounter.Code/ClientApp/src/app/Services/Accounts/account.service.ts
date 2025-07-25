@@ -101,7 +101,7 @@ export class AccountService {
     this.msalInstance = new msal.PublicClientApplication({
       auth: {
         clientId: response.microsoftClientID,
-        redirectUri: window.location.origin
+        redirectUri: window.location.origin + '/auth'
       },
       cache: {
         cacheLocation: "localStorage",
@@ -111,8 +111,7 @@ export class AccountService {
 
 
     await this.msalInstance.initialize();
-    // Handle redirect if needed
-    await this.msalInstance.handleRedirectPromise();
+
   }
 
   getMsalInstance(): msal.PublicClientApplication {

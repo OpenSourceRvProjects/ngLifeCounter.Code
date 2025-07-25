@@ -84,7 +84,7 @@ export class LoginComponent implements OnInit {
       });
     }).catch((error: any) => {
       this.processing = false;
-      this.errorMessage = "Error al conectar con Microsoft";
+      this.errorMessage = "Error al conectar con Microsoft: " + error;
       console.error(error);
     });
   }
