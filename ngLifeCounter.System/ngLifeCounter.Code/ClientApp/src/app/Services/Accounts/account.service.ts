@@ -102,10 +102,17 @@ export class AccountService {
       auth: {
         clientId: response.microsoftClientID,
         redirectUri: window.location.origin
+      },
+      cache: {
+        cacheLocation: "localStorage",
+        storeAuthStateInCookie: false
       }
     });
 
+
     await this.msalInstance.initialize();
+    // Handle redirect if needed
+    await this.msalInstance.handleRedirectPromise();
   }
 
   getMsalInstance(): msal.PublicClientApplication {

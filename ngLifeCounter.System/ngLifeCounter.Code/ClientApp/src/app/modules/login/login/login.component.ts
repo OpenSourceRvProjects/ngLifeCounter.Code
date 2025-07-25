@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
           debugger;
           this.localStorage.saveUserData(data);
           this.processing = false;
-          window.location.href = "/"
+          this.router.navigate(['/']);
 
         }, error: (err) => {
           debugger;
