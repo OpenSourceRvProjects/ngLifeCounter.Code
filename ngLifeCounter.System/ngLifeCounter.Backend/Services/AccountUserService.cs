@@ -156,6 +156,7 @@ namespace ngLifeCounter.Backend.Services
                     RelapsesCount = s.Relapses.Count,
                     Name = s.PersonalProfiles.FirstOrDefault().Name,
                     LastName = s.PersonalProfiles.FirstOrDefault().LastName1,
+                    Email = s.Email,
                 }).ToListAsync();
 
             }
