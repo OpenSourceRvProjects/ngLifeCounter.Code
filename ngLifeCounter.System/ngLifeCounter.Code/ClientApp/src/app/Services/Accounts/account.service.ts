@@ -6,11 +6,34 @@ import { ILoginModel } from 'src/app/Models/Account/ILoginModel';
 import { IChangePasswordModel } from 'src/app/Models/Profile/IChangePasswordModel';
 import { Router } from '@angular/router';
 
+import * as msal from '@azure/msal-browser';
+declare const google: any;
+
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
+  private googleClientId: string = '';
+  private googleCallbackFn: (response: any) => void = () => { };
 
+
+  private msalInstance!: msal.PublicClientApplication;
+
+  googleRegister(credential: any) {
+    return this.http.post(this.baseUrl + 'api/Account/registerGoogleAuth', { idToken: credential });
+  }
+
+  googleLogin(credential: any) {
+    return this.http.post(this.baseUrl + 'api/Account/loginGoogleAuth', { idToken: credential });
+  }
+
+  microsoftRegister(idToken: any) {
+    return this.http.post(this.baseUrl + 'api/Account/registerMicrosoftAuth', { idToken: idToken });
+  }
+
+  microsofLogin(idToken: any) {
+    return this.http.post(this.baseUrl + 'api/Account/loginMicrosoftAuth', { idToken: idToken });
+  }
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private localStorage: LocalStorageService, private router: Router) { }
 
   registerAccount(registerUser: IRegisterModel) {
@@ -52,6 +75,14 @@ export class AccountService {
     return this.http.get(this.baseUrl + `api/Account/impersonate?userID=${userID}`);
   }
 
+  getGoogleClientID() {
+    return this.http.get(this.baseUrl + `api/Account/getGoogleClientID`);
+  }
+
+  getMicrosoftClientID() {
+    return this.http.get(this.baseUrl + `api/Account/getMicrosoftClientID`);
+  }
+
   getMaintenancePage() {
     this.http.get(this.baseUrl + `api/Account/maintenancePage`).subscribe({
       next: (data: any) => {
@@ -62,6 +93,58 @@ export class AccountService {
       }
     });
   }
+
+
+  async initMicrosoftAuth(): Promise<void> {
+    const response: any = await this.http.get(this.baseUrl + 'api/Account/getMicrosoftClientID').toPromise();
+
+    this.msalInstance = new msal.PublicClientApplication({
+      auth: {
+        clientId: response.microsoftClientID,
+        redirectUri: window.location.origin + '/auth'
+      },
+      cache: {
+        cacheLocation: "localStorage",
+        storeAuthStateInCookie: false
+      }
+    });
+
+
+    await this.msalInstance.initialize();
+
+  }
+
+  getMsalInstance(): msal.PublicClientApplication {
+    if (!this.msalInstance) {
+      throw new Error("MSAL instance not initialized. Call initMicrosoftAuth() first.");
+    }
+    return this.msalInstance;
+  }
+
+  async initGoogleAuth(callback: (response: any) => void): Promise<void> {
+    const response: any = await this.http.get(this.baseUrl + 'api/Account/getGoogleClientID').toPromise();
+
+    this.googleClientId = response.googleClientID;
+    this.googleCallbackFn = callback;
+
+    google.accounts.id.initialize({
+      client_id: this.googleClientId,
+      callback: this.googleCallbackFn
+    });
+  }
+
+  renderGoogleButton(containerId: string) {
+    google.accounts.id.renderButton(
+      document.getElementById(containerId),
+      { theme: 'outline', size: 'extra_large', width: '10px' }
+    );
+  }
+
+  triggerGoogleLoginPrompt() {
+    google.accounts.id.prompt();
+  }
+
+
 
   blockMaintenancePageIfNotApplicable() {
     this.http.get(this.baseUrl + `api/Account/maintenancePage`).subscribe({

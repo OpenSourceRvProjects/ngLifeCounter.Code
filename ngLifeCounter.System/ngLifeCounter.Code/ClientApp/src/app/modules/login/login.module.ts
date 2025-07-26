@@ -6,6 +6,7 @@ import { EnvironmentModule } from '../environment/environment.module';
 import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
+import { AuthRedirectComponent } from './login/AuthRedirectComponent';
 
 
 
@@ -13,6 +14,7 @@ import { SharedModule } from '../shared/shared.module';
     
   declarations: [
     LoginComponent,
+    AuthRedirectComponent
 
   ],
   imports: [

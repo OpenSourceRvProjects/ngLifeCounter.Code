@@ -15,5 +15,6 @@ namespace ngLifeCounter.Models.Account
 		public string LastName { get; set; }
 		public int CounterEventsCount { get; set; }
 		public int RelapsesCount { get; set; }
-	}
+        public string Email { get; set; }
+    }
 }
