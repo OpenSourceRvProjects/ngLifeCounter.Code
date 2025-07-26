@@ -6,4 +6,5 @@ export interface IUsersModel {
     lastName: string;
     counterEventsCount: number;
     relapsesCount: number;
+    email: string;
 }

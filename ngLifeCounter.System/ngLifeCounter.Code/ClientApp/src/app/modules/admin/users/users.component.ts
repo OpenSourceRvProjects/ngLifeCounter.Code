@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IUsersModel } from 'src/app/Models/Account/IUsersModel';
 import { AccountService } from 'src/app/Services/Accounts/account.service';
 import { LocalStorageService } from 'src/app/Services/Storage/local-storage.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-users',
@@ -10,26 +12,64 @@ import { LocalStorageService } from 'src/app/Services/Storage/local-storage.serv
 })
 export class UsersComponent {
 
-  constructor(private accountService : AccountService, private localStorageService : LocalStorageService) {
+  constructor(private accountService: AccountService, private localStorageService: LocalStorageService, private modalService: NgbModal, private sanitizer: DomSanitizer) {
   }
 
-  users : IUsersModel[] = [];
+  users: IUsersModel[] = [];
+  selectedUser: IUsersModel | null = null;
+  processing = false;
+  feedbackMessage: SafeHtml | string = "";
 
-  ngOnInit(){
+  @ViewChild('confirmModal') confirmModalRef!: TemplateRef<any>;
+
+  ngOnInit() {
     this.accountService.getAllUsers()
-    .subscribe({next: (data: any)=> {
-      this.users = data
-    }, error: (err)=> {
-    }})
+      .subscribe({
+        next: (data: any) => {
+          this.users = data
+        }, error: (err) => {
+        }
+      })
   }
 
-  impersonate(userID: string){
+  openConfirmModal(user: IUsersModel) {
+    this.selectedUser = user;
+    this.feedbackMessage = "";
+    this.modalService.open(this.confirmModalRef, { centered: true });
+  }
+
+  confirmResetPassword(modal: any) {
+    if (!this.selectedUser || this.processing) return;
+
+    this.processing = true;
+    this.accountService.sendRecoveryEmail(this.selectedUser.email)
+      .subscribe({
+        next: () => {
+          this.feedbackMessage = this.sanitizer.bypassSecurityTrustHtml(
+            `<p style="color:green">Correo enviado a ${this.selectedUser?.email}</p>`
+          );
+          this.processing = false;
+        },
+        error: (err) => {
+          modal.close();
+          this.feedbackMessage = this.sanitizer.bypassSecurityTrustHtml(
+            `<p style="color:red">ERROR! No se pudo enviar el correo</p>`
+          );
+          this.processing = false;
+
+        }
+      });
+  }
+
+  impersonate(userID: string) {
     this.accountService.loginImpersonate(userID)
-    .subscribe({next: (data: any)=>{
-      var response = data;
-      this.localStorageService.swapToLoginImpersonate(response);
-      window.location.href = "/";
-      
-    }})
+      .subscribe({
+        next: (data: any) => {
+          var response = data;
+          this.localStorageService.swapToLoginImpersonate(response);
+          window.location.href = "/";
+
+        }
+      })
   }
 }
