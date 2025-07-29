@@ -127,6 +127,7 @@ namespace ngLifeCounter.Backend.Services
         {
             var currentUserID = Guid.Parse(_accessor.HttpContext.Session.GetString("userID"));
             var counters = await _dbContext.EventCounters.Where(w => w.UserId == currentUserID)
+                .OrderByDescending(o => o.CreationDate)
                 .Select(s => new EventCounterItemModel
                 {
                     Id = s.Id,
@@ -136,7 +137,7 @@ namespace ngLifeCounter.Backend.Services
                     + s.StartMonth.ToString("00") + "/"
                     + s.StartYear,
                     CreationDate = s.CreationDate
-                }).OrderByDescending(o => o.CreationDate)
+                })
                 .ToListAsync();
 
             return counters;
