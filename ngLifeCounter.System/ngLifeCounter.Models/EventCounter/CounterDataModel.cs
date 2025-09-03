@@ -17,5 +17,7 @@ namespace ngLifeCounter.Models.EventCounter
         public int Minutes { get; set; }
 		public bool IsPublicCounter { get; set; }
         public int MinutesToRefresh { get; set; }
+        public string CounterRandomPhrase { get; set; }
+        public string CounterRandomAuthor { get; set; }
     }
 }

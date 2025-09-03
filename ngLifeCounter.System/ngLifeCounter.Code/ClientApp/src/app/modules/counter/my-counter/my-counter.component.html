@@ -33,13 +33,22 @@
 <div class="backgroundGrad">
   <div class="container">
     <app-environment-banner></app-environment-banner>
-
     <div class="image-container my-4">
       <img id="doggie"
            [src]="dogURL"
            width="280"
            height="300"
            style="border-radius: 50%;" />
+    </div>
+
+    <div>
+      <br />
+      <p style="text-align: center; font-size: 1.3rem; color: white">
+        <strong>"{{ phrase }}"</strong>
+      </p>
+      <p style="text-align: center; font-style: italic; margin-right: 20px; color: white">
+        — {{ author }}
+      </p>
     </div>
 
     <h4>{{ eventName }} {{ isCountDown ? ': faltan ' : ' desde hace' }}</h4>

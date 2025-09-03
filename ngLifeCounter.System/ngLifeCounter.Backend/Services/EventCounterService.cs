@@ -10,6 +10,7 @@ using System.Diagnostics.Tracing;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using EventCounter = ngLifeCounter.Data.DataAccess.EventCounter;
 
@@ -103,6 +104,24 @@ namespace ngLifeCounter.Backend.Services
                     counterData = GetDataFromDBModel(counterDB);
                 }
             }
+
+            try
+            {
+                var text = await File.ReadAllTextAsync("phrases.json");
+                var phraseModel = JsonSerializer.Deserialize<PhraseModel>(text);
+                var random = new Random();
+                int index = random.Next(phraseModel.frases_motivacionales.Count); // random index
+                var randomPhrase = phraseModel.frases_motivacionales[index];
+
+                counterData.CounterRandomPhrase = randomPhrase.frase;
+                counterData.CounterRandomAuthor = randomPhrase.autor;
+            }
+            catch (Exception ex) {
+                counterData.CounterRandomPhrase = string.Empty;
+                counterData.CounterRandomAuthor = string.Empty;
+            }
+
+
             return counterData;
 
         }

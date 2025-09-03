@@ -33,6 +33,9 @@ export class MyCounterComponent {
   viewHour: number = 0;
   viewSeconds: number = 0;
 
+  phrase: string = "";
+  author: string = "";
+
 
   imageCollection: IImageListModel = <IImageListModel>{};
   eventName: string = "";
@@ -74,6 +77,8 @@ export class MyCounterComponent {
           this.uuid = data.counterID;
           this.isPublicCounter = data.isPublicCounter;
           this.refreshTime = data.minutesToRefresh;
+          this.phrase = data.counterRandomPhrase;
+          this.author = data.counterRandomAuthor;
           this.putCounterTimeData();
           debugger;
           if (this.refreshTime !== 0) {
