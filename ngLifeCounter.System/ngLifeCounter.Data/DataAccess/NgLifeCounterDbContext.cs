@@ -6,6 +6,13 @@ namespace ngLifeCounter.Data.DataAccess;
 
 public partial class NgLifeCounterDbContext : DbContext
 {
+
+    private readonly string _connectionString;
+    public NgLifeCounterDbContext(string connectionString)
+    {
+        _connectionString = connectionString;
+    }
+
     public NgLifeCounterDbContext()
     {
     }
@@ -33,7 +40,11 @@ public partial class NgLifeCounterDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-       //ptionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=NgLifeCounterDB;Trusted_Connection=True;Encrypt=False");
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseSqlServer(_connectionString);
+        }
+        //Scaffold - DbContext "Server=.\SQLEXPRESS;Database=NgLifeCounterDB;Trusted_Connection=True;Encrypt=False" Microsoft.EntityFrameworkCore.SqlServer - OutputDir DataAccess - F
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
