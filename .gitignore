@@ -857,3 +857,4 @@
 /ngLifeCounter.System/ngLifeCounter.Backend/obj/Release/net8.0/ngLifeCounter.Backend.csproj.FileListAbsolute.txt
 /ngLifeCounter.System/ngLifeCounter.Backend/obj/Release/net8.0/ngLifeCounter.Backend.GeneratedMSBuildEditorConfig.editorconfig
 /ngLifeCounter.System/ngLifeCounter.Backend/obj/Release/net8.0/ngLifeCounter.Backend.pdb
+/ngLifeCounter.System/ngLifeCounter.DeploymentProcess/appsettings.deployment.json
