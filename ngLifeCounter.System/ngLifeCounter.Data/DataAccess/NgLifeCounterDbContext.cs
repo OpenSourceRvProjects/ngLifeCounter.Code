@@ -6,12 +6,6 @@ namespace ngLifeCounter.Data.DataAccess;
 
 public partial class NgLifeCounterDbContext : DbContext
 {
-
-    private readonly string _connectionString;
-    public NgLifeCounterDbContext(string connectionString)
-    {
-        _connectionString = connectionString;
-    }
     public NgLifeCounterDbContext()
     {
     }
@@ -33,14 +27,13 @@ public partial class NgLifeCounterDbContext : DbContext
 
     public virtual DbSet<SignUpRequest> SignUpRequests { get; set; }
 
+    public virtual DbSet<SystemMaintenance> SystemMaintenances { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        if (!optionsBuilder.IsConfigured)
-        {
-            optionsBuilder.UseSqlServer(_connectionString);
-        }
-        //Scaffold - DbContext "Server=.\SQLEXPRESS;Database=NgLifeCounterDB;Trusted_Connection=True;Encrypt=False" Microsoft.EntityFrameworkCore.SqlServer - OutputDir DataAccess - F
+       //ptionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=NgLifeCounterDB;Trusted_Connection=True;Encrypt=False");
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -148,6 +141,15 @@ public partial class NgLifeCounterDbContext : DbContext
             entity.HasOne(d => d.User).WithMany(p => p.SignUpRequests)
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("FK__SignUpReq__UserI__628FA481");
+        });
+
+        modelBuilder.Entity<SystemMaintenance>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__SystemMa__3214EC07F7FAFED4");
+
+            entity.ToTable("SystemMaintenance");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<User>(entity =>
