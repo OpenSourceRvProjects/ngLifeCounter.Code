@@ -7,7 +7,6 @@ var phaseArg = argsList.FirstOrDefault(arg => arg.StartsWith("--phase="));
 var phase = phaseArg?.Split('=')[1];
 
 
-
 try
 {
     var builder = WebApplication.CreateBuilder(args);
@@ -33,24 +32,50 @@ try
         using (var scope = serviceProvider.CreateScope())
         {
             var dbContext = scope.ServiceProvider.GetRequiredService<NgLifeCounterDbContext>();
-            var setting = dbContext.SystemMaintenances.Count();
+            var setting = await dbContext.SystemMaintenances.CountAsync();
             Console.WriteLine("SUCCESSFULLY CONNECTED TO DB SERVER...");
 
+            if (setting == 0)
+            {
+                await dbContext.SystemMaintenances.AddAsync(new SystemMaintenance() { Id = Guid.NewGuid(), IsOnMaintenance = true });
+                Console.WriteLine("Setting up maintenance page...");
+                await dbContext.SaveChangesAsync();
+            }
+            else
+            {
+                var sysMaintenance = dbContext.SystemMaintenances.FirstOrDefault();
+                sysMaintenance.IsOnMaintenance = true;
+                Console.WriteLine("Setting up maintenance page...");
+                await dbContext.SaveChangesAsync();
+
+            }
 
             // Perform your deployment logic here using dbContext
+
+            SetTimerSeconds(30);
         }
 
-        Console.WriteLine("Setting up maintenance page...");
 
-        SetTimerSeconds(10);
     }
 
 
-    if (phase == "pre")
+    if (phase == "post")
     {
 
         Console.WriteLine("Removing maintenance page...");
-        SetTimerSeconds(10);
+        using (var scope = serviceProvider.CreateScope())
+        {
+            var dbContext = scope.ServiceProvider.GetRequiredService<NgLifeCounterDbContext>();
+            var setting = await dbContext.SystemMaintenances.CountAsync();
+            Console.WriteLine("SUCCESSFULLY CONNECTED TO DB SERVER...");
+
+            var sysMaintenance = dbContext.SystemMaintenances.FirstOrDefault();
+            sysMaintenance.IsOnMaintenance = false;
+            Console.WriteLine("Dropping off maintenance page...");
+            SetTimerSeconds(5);
+            await dbContext.SaveChangesAsync();
+        }
+
     }
 
 }

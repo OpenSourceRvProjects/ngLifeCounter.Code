@@ -484,5 +484,11 @@ namespace ngLifeCounter.Backend.Services
                 Surname = familyName
             };
         }
+
+        public async Task<bool> GetDbSettingForMaintenancePage()
+        {
+            var flagRegister = await _dbContext.SystemMaintenances.FirstOrDefaultAsync();
+            return flagRegister == null ? false : flagRegister.IsOnMaintenance;
+        }
     }
 }

@@ -241,14 +241,17 @@ namespace ngLifeCounter.MVC.Controllers
         [HttpGet]
         [Route("maintenancePage")]
         [AllowAnonymous]
-        public IActionResult MaintenancePage()
+        public async Task<IActionResult> MaintenancePage()
         {
             var flag = _accountService.GetMaintenancePageFlag();
             var textFlag = false;
+            var dbFlag = false;
             try
             {
                 var newTextFlag = System.IO.File.ReadAllLines("maitenancePageValue.txt");
                 textFlag = bool.Parse(newTextFlag[0]);
+
+                dbFlag = await _accountService.GetDbSettingForMaintenancePage();
 
             }
             catch (Exception ex)
@@ -258,7 +261,7 @@ namespace ngLifeCounter.MVC.Controllers
 
             return Ok(new
             {
-                showMaintenancePage = flag || textFlag
+                showMaintenancePage = flag || textFlag || dbFlag
             });
         }
 
