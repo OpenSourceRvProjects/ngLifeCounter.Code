@@ -864,3 +864,4 @@
 /ngLifeCounter.System/ngLifeCounter.Data/obj/Release/net8.0/ngLifeCounter.Data.GlobalUsings.g.cs
 /ngLifeCounter.System/ngLifeCounter.Security/obj/Debug/net8.0/ngLifeCounter.Security.GlobalUsings.g.cs
 /ngLifeCounter.System/ngLifeCounter.Security/obj/Release/net8.0/ngLifeCounter.Security.GlobalUsings.g.cs
+/ngLifeCounter.System/ngLifeCounter.OnDeployment/appsettings.deployment.json
