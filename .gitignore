@@ -857,3 +857,10 @@
 /ngLifeCounter.System/ngLifeCounter.Backend/obj/Release/net8.0/ngLifeCounter.Backend.csproj.FileListAbsolute.txt
 /ngLifeCounter.System/ngLifeCounter.Backend/obj/Release/net8.0/ngLifeCounter.Backend.GeneratedMSBuildEditorConfig.editorconfig
 /ngLifeCounter.System/ngLifeCounter.Backend/obj/Release/net8.0/ngLifeCounter.Backend.pdb
+/ngLifeCounter.System/ngLifeCounter.Models/obj/Debug/net8.0/ngLifeCounter.Models.GlobalUsings.g.cs
+/ngLifeCounter.System/ngLifeCounter.Models/obj/Release/net8.0/ngLifeCounter.Models.GlobalUsings.g.cs
+/ngLifeCounter.System/ngLifeCounter.Data/bin/Debug/net8.0/ngLifeCounter.Data.deps.json
+/ngLifeCounter.System/ngLifeCounter.Data/obj/Debug/net8.0/ngLifeCounter.Data.GlobalUsings.g.cs
+/ngLifeCounter.System/ngLifeCounter.Data/obj/Release/net8.0/ngLifeCounter.Data.GlobalUsings.g.cs
+/ngLifeCounter.System/ngLifeCounter.Security/obj/Debug/net8.0/ngLifeCounter.Security.GlobalUsings.g.cs
+/ngLifeCounter.System/ngLifeCounter.Security/obj/Release/net8.0/ngLifeCounter.Security.GlobalUsings.g.cs
