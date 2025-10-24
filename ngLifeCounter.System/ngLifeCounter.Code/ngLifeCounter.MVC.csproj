@@ -87,14 +87,9 @@
 				<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
 			</ResolvedFileToPublish>
 		</ItemGroup>
-	</Target>
 
-	<!--  Post-phase: run only after Azure App Service deployment completes -->
-	<Target Name="AfterRemoteDeployment" AfterTargets="WebPublishComplete">
-		<Message Importance="high" Text="------> Azure deployment fully completed. Running POST phase..." />
-		<Exec Command="dotnet run --no-build --project ../ngLifeCounter.OnDeployment/ngLifeCounter.OnDeployment.csproj -- --phase=post" />
+		<Exec Command="dotnet run --no-build --project ../ngLifeCounter.OnDeployment\ngLifeCounter.OnDeployment.csproj  -- --phase=post" />
 	</Target>
-
 	<!--FOR FUTURE TESTING!-->
 	<!--<Target Name="AfterAzureDeploy" AfterTargets="WebPublishComplete">
 		<Message Text="> Calling remote POST phase endpoint..." Importance="high" />
