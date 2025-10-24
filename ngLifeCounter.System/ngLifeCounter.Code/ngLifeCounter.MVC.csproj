@@ -73,7 +73,7 @@
 
 	<Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
 		<!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
-		<Exec Command="dotnet run --no-build --project ../ngLifeCounter.OnDeployment\ngLifeCounter.OnDeployment.csproj -- --phase=pre" />
+		<Exec Command="dotnet run --no-build --project ../ngLifeCounter.OnDeployment/ngLifeCounter.OnDeployment.csproj -- --phase=pre" />
 
 		<Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
 		<Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --configuration production" />
@@ -87,8 +87,18 @@
 				<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
 			</ResolvedFileToPublish>
 		</ItemGroup>
-
-		<Exec Command="dotnet run --no-build --project ../ngLifeCounter.OnDeployment\ngLifeCounter.OnDeployment.csproj  -- --phase=post" />
-
 	</Target>
+
+	<!--  Post-phase: run only after Azure App Service deployment completes -->
+	<Target Name="AfterRemoteDeployment" AfterTargets="WebPublishComplete">
+		<Message Importance="high" Text="------> Azure deployment fully completed. Running POST phase..." />
+		<Exec Command="dotnet run --no-build --project ../ngLifeCounter.OnDeployment/ngLifeCounter.OnDeployment.csproj -- --phase=post" />
+	</Target>
+
+	<!--FOR FUTURE TESTING!-->
+	<!--<Target Name="AfterAzureDeploy" AfterTargets="WebPublishComplete">
+		<Message Text="> Calling remote POST phase endpoint..." Importance="high" />
+		<Exec Command="curl -X POST https://nglifecounter.azurewebsites.net/api/deploy/post-phase" />
+	</Target>-->
+
 </Project>
