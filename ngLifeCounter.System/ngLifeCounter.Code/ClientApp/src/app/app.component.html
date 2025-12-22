@@ -1,5 +1,39 @@
 <!-- <body style="background-color: black;color: #fff;"> -->
-  <app-nav-menu></app-nav-menu>
-  <main>
-    <router-outlet></router-outlet>
-  </main>
+  <style>
+ /* Make the app container a full-height column so footer stays at bottom */
+ :root, html, body, app-root {
+ height:100%;
+ }
+
+ .app-container {
+ display: flex;
+ flex-direction: column;
+ min-height:100vh;
+ }
+
+ main {
+ flex:10 auto; /* allow main to grow and take available space */
+ }
+
+ footer.app-footer {
+ flex-shrink:0;
+ background: #f8f9fa;
+ padding:0.75rem1rem;
+ text-align: center;
+ font-size:0.9rem;
+ border-top:1px solid rgba(0,0,0,0.05);
+ }
+ </style>
+
+  <div class="app-container">
+    <app-nav-menu></app-nav-menu>
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+
+    <footer class="app-footer" role="contentinfo">
+      <div class="container">
+        &copy; ngLifeCounter{{ dotnetVersion }}
+      </div>
+    </footer>
+  </div>

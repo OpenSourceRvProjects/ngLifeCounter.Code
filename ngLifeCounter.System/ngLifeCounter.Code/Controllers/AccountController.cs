@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.RateLimiting;
 using ngLifeCounter.Backend.Infrastructure;
 using ngLifeCounter.Models.Account;
 using ngLifeCounter.MVC.Filters;
+using System.Runtime.InteropServices;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -86,6 +87,17 @@ namespace ngLifeCounter.MVC.Controllers
             }
         }
 
+        /// <summary>
+        /// New endpoint: returns the runtime/framework description (e.g. ".NET10.0.0...")
+        /// GET api/account/dotnetVersion
+        /// </summary>
+        [HttpGet]
+        [Route("dotnetVersion")]
+        public IActionResult GetDotnetVersion()
+        {
+            var frameworkDescription = RuntimeInformation.FrameworkDescription;
+            return Ok(new { dotnetVersion = frameworkDescription });
+        }
 
         [HttpGet]
         [Route("getSystemStatusFailedAssert")]
