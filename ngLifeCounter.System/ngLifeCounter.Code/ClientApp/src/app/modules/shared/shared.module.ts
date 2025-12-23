@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CopyLinkComponent } from './copy-link/copy-link.component';
 import { RewardCoinComponent } from './reward-coin/reward-coin.component';
 import { FormLogoComponent } from './form-logo/form-logo.component';
+import { ContavidaAppComponent } from './contavida-banner/contavida-app.component';
 
 
 
@@ -12,11 +13,12 @@ import { FormLogoComponent } from './form-logo/form-logo.component';
     CopyLinkComponent,
     RewardCoinComponent,
     FormLogoComponent,
+    ContavidaAppComponent
   ],
   imports: [
     FormsModule,
     CommonModule,
   ],
-  exports: [CopyLinkComponent, RewardCoinComponent, FormLogoComponent]
+  exports: [CopyLinkComponent, RewardCoinComponent, FormLogoComponent, ContavidaAppComponent]
 })
 export class SharedModule { }

@@ -1,6 +1,7 @@
 <div class="backgroundLookAndFeel">
   <div class="container py-5">
     <app-environment-banner></app-environment-banner>
+    <app-contavida></app-contavida>
 
     <div class="row justify-content-center">
       <div class="col-md-8">
@@ -30,11 +31,11 @@
             </button>
           </div>
           <!--<div class="d-grid my-3">
-    <button class="btn btn-outline-primary w-100" (click)="triggerGoogleLogin()">
-      <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo" style="width: 20px; margin-right: 8px;">
-      Iniciar sesión con Google
-    </button>
-  </div>-->
+          <button class="btn btn-outline-primary w-100" (click)="triggerGoogleLogin()">
+            <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo" style="width: 20px; margin-right: 8px;">
+            Iniciar sesión con Google
+          </button>
+        </div>-->
           <form *ngIf="!isEnableProviderLogin">
             <div class="mb-3">
               <label for="userName" class="form-label">Nickname (Username)</label>
