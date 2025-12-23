@@ -7,7 +7,7 @@
 
   .backgroundGrad {
     min-height: 100%;
-    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(82,9,121,1) 47%, rgba(0,212,255,1) 100%);
+    background: linear-gradient( 90deg, rgba(2,0,36,1) 0%, rgba(82,9,121,1) 47%, rgba(0,212,255,1) 100% );
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
@@ -28,12 +28,81 @@
   hr {
     border-color: white;
   }
+
+  /* ❄️ TRUE CONTINUOUS SNOW */
+  .snow,
+  .snow::before,
+  .snow::after {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    background-repeat: repeat;
+    will-change: background-position;
+  }
+
+  .snow {
+    background-size: 340px 300px;
+    background-image: radial-gradient(3px 3px at 47px 61px, rgba(255,255,255,.4) 50%, transparent 51%), radial-gradient(2px 2px at 191px 143px, rgba(255,255,255,.35) 50%, transparent 51%), radial-gradient(3px 3px at 279px 217px, rgba(255,255,255,.45) 50%, transparent 51%), radial-gradient(2px 2px at 121px 251px, rgba(255,255,255,.4) 50%, transparent 51%);
+    animation: snowBack 47s linear infinite;
+    animation-delay: -23s;
+  }
+
+    .snow::before {
+      content: "";
+      background-size: 260px 230px;
+      background-image: radial-gradient(4px 4px at 33px 121px, rgba(255,255,255,.65) 50%, transparent 51%), radial-gradient(3px 3px at 173px 47px, rgba(255,255,255,.6) 50%, transparent 51%), radial-gradient(4px 4px at 219px 181px, rgba(255,255,255,.7) 50%, transparent 51%);
+      animation: snowMid 31s linear infinite;
+      animation-delay: -17s;
+    }
+
+    .snow::after {
+      content: "";
+      background-size: 180px 160px;
+      background-image: radial-gradient(6px 6px at 41px 39px, rgba(255,255,255,.95) 50%, transparent 51%), radial-gradient(5px 5px at 101px 123px, rgba(255,255,255,.9) 50%, transparent 51%), radial-gradient(4px 4px at 147px 71px, rgba(255,255,255,.85) 50%, transparent 51%);
+      animation: snowFront 19s linear infinite;
+      animation-delay: -11s;
+    }
+
+  @keyframes snowBack {
+    from {
+      background-position: 0 0;
+    }
+
+    to {
+      background-position: -120px 300px;
+    }
+  }
+
+  @keyframes snowMid {
+    from {
+      background-position: 0 0;
+    }
+
+    to {
+      background-position: 90px 230px;
+    }
+  }
+
+  @keyframes snowFront {
+    from {
+      background-position: 0 0;
+    }
+
+    to {
+      background-position: -160px 160px;
+    }
+  }
 </style>
+
+<!-- ❄️ SNOW OVERLAY -->
+<div class="snow"></div>
 
 <div class="backgroundGrad">
   <div class="container">
     <app-environment-banner></app-environment-banner>
     <app-contavida></app-contavida>
+
     <div class="image-container my-4">
       <img id="doggie"
            [src]="dogURL"
@@ -43,11 +112,10 @@
     </div>
 
     <div>
-      <br />
-      <p style="text-align: center; font-size: 1.3rem; color: white">
+      <p style="text-align:center; font-size:1.3rem; color:white;">
         <strong>"{{ phrase }}"</strong>
       </p>
-      <p style="text-align: center; font-style: italic; margin-right: 20px; color: white">
+      <p style="text-align:center; font-style:italic; color:white;">
         — {{ author }}
       </p>
     </div>
@@ -59,11 +127,14 @@
     <h4 id="noAlcoholSeconds">{{ viewSeconds }} segundos</h4>
 
     <h4 *ngIf="isPublicCounter">
-      <app-copy-link [counterID]="id" [isFromCounterView]="true"></app-copy-link>
+      <app-copy-link [counterID]="id"
+                     [isFromCounterView]="true">
+      </app-copy-link>
     </h4>
 
     <hr />
 
+    <!-- 🔁 RESTORED SECTION -->
     <h4>
       <i (click)="reload()" class="fa fa-refresh"></i>
     </h4>
@@ -76,7 +147,9 @@
                (click)="changeRefreshOption($event)"
                [(ngModel)]="isRefreshActive"
                id="flexSwitchRefresh" />
-        <label style="color:white" class="form-check-label" for="flexSwitchRefresh">
+        <label style="color:white"
+               class="form-check-label"
+               for="flexSwitchRefresh">
           Refrescar automáticamente
         </label>
       </div>
