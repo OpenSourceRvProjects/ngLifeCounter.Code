@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
       <div role="alert" class="alert alert-success d-flex justify-content-center">
         <span style="margin-top: 8px;">
           Estamos emocionados de presentar la plataforma bajo una nueva marca.
-          ContaVida estará disponible a partir de 2026,
+          ContaVida estará disponible a partir del <strong>14 de Enero de 2026 </strong>,
           <a
             href="https://contavida.azurewebsites.net/"
             target="_blank"
